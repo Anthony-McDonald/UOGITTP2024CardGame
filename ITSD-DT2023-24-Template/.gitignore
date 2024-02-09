@@ -27,15 +27,3 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
-### For Submission ###
-ITSD-DT2023-24-Template/conf/
-ITSD-DT2023-24-Template/logs/
-ITSD-DT2023-24-Template/project/
-ITSD-DT2023-24-Template/sbt-dist/
-ITSD-DT2023-24-Template/scripts/
-ITSD-DT2023-24-Template/target/
-ITSD-DT2023-24-Template/build.sbt
-ITSD-DT2023-24-Template/sbt
-ITSD-DT2023-24-Template/sbt.bat
-ITSD-DT2023-24-Template/app/assets/
