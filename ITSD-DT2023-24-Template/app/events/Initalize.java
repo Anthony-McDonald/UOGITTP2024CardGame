@@ -3,6 +3,7 @@ package events;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 import demo.CommandDemo;
 import demo.Loaders_2024_Check;
 import structures.GameState;
@@ -34,6 +35,22 @@ public class Initalize implements EventProcessor{
 		//board rendering below
 		Board board = gameState.getBoard();
 		board.renderBoard(out);
+		//insert code for creating and rendering hand, maybe contain it within player?
+		//code for setting mana and health
+		int manaGained = gameState.getTurnNumber()+1;
+		Player player1 = gameState.getPlayer1();
+		player1.setMana(player1.getMana()+manaGained);
+		BasicCommands.setPlayer1Health(out,player1);
+		BasicCommands.setPlayer1Mana(out,player1);
+		Player player2 = gameState.getPlayer2();
+		player2.setMana(player2.getMana()+manaGained);
+		BasicCommands.setPlayer2Health(out,player2);
+		BasicCommands.setPlayer2Mana(out,player2);
+
+
+
+
+
 
 
 	}
