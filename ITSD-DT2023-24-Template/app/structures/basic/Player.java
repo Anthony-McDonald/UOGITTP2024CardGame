@@ -1,5 +1,7 @@
 package structures.basic;
 
+import akka.actor.ActorRef;
+
 import java.util.ArrayList;
 /**
  * A basic representation of of the Player. A player
@@ -14,10 +16,13 @@ public class Player {
 	private int health;
 	private int mana;
 
-	public Player() {
+	private boolean userOwned;
+
+	public Player(boolean userOwned) {
 		super();
 		this.health = 20;
 		this.mana = 0;
+		this.userOwned = userOwned;
 	}
 	public Player(int health, int mana) {
 		super();
@@ -43,7 +48,7 @@ public class Player {
 	public int getHealth() {
 		return health;
 	}
-	public void setHealth(int health) {
+	public void setHealth(int health, ActorRef out) {
 		this.health = health;
 	}
 	public int getMana() {
