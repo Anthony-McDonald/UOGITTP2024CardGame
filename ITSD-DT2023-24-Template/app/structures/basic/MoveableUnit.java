@@ -1,8 +1,10 @@
 package structures.basic;
 
+import akka.actor.ActorRef;
+
 public interface MoveableUnit {
-	public void attackUnit(MoveableUnit m);
-	public void moveUnit();
+	public void attackUnit(MoveableUnit m, ActorRef out);
+	public void moveUnit(ActorRef out, Tile tile);
 
 	public int getMaxHealth();
 	
@@ -10,11 +12,11 @@ public interface MoveableUnit {
 
 	public int getCurrentHealth();
 
-	public void setCurrentHealth(int currentHealth);
+	public void setCurrentHealth(int currentHealth, ActorRef out);
 
 	public int getAttack();
 
-	public void setAttack(int attack);
+	public void setAttack(int attack, ActorRef out);
 
 	public int getTurnSummoned();
 

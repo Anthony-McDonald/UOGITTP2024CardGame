@@ -1,7 +1,9 @@
 package structures.basic;
 
+import akka.actor.ActorRef;
+
 public class Creature extends Card implements MoveableUnit {
-	
+
 	private int maxHealth;
 	private int currentHealth;
 	private int attack;
@@ -22,20 +24,20 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	@Override
-	public void attackUnit(MoveableUnit m) {
+	public void attackUnit(MoveableUnit m, ActorRef out) {
 		int enemyHealth = m.getCurrentHealth();
 		enemyHealth = enemyHealth - this.attack;
-		m.setCurrentHealth(enemyHealth);
+		m.setCurrentHealth(enemyHealth, out);
 	}
 
 
 	@Override
-	public void moveUnit() {
+	public void moveUnit(ActorRef out, Tile tile) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
+
 	public int getMaxHealth() {
 		return maxHealth;
 	}
@@ -48,7 +50,7 @@ public class Creature extends Card implements MoveableUnit {
 		return currentHealth;
 	}
 
-	public void setCurrentHealth(int currentHealth) {
+	public void setCurrentHealth(int currentHealth, ActorRef out) {
 		this.currentHealth = currentHealth;
 	}
 
@@ -56,7 +58,7 @@ public class Creature extends Card implements MoveableUnit {
 		return attack;
 	}
 
-	public void setAttack(int attack) {
+	public void setAttack(int attack, ActorRef out) {
 		this.attack = attack;
 	}
 
@@ -92,6 +94,6 @@ public class Creature extends Card implements MoveableUnit {
 		this.userOwned = userOwned;
 	}
 
-	
-	
+
+
 }
