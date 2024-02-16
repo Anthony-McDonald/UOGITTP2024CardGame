@@ -24,9 +24,9 @@ public interface MoveableUnit {
 
 	public void setLastTurnMoved(int lastTurnMoved);
 	
-	public MoveableUnit getUnit();
+	public Unit getUnit();
 
-	public void setUnit(MoveableUnit unit);
+	public void setUnit(Unit unit);
 	
 	public boolean isUserOwned();
 

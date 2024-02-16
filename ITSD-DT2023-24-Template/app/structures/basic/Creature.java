@@ -7,10 +7,10 @@ public class Creature extends Card implements MoveableUnit {
 	private int attack;
 	private int turnSummoned;
 	private int lastTurnMoved;
-	private MoveableUnit unit;
+	private Unit unit;
 	private boolean userOwned;
-
-	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig, int maxHealth, int currentHealth, int attack, int turnSummoned, int lastTurnMoved, MoveableUnit unit, boolean userOwned) {
+//need to change constructor for creature
+	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig, int maxHealth, int currentHealth, int attack, int turnSummoned, int lastTurnMoved, Unit unit, boolean userOwned) {
 		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
 		this.maxHealth = maxHealth;
 		this.currentHealth = currentHealth;
@@ -76,11 +76,11 @@ public class Creature extends Card implements MoveableUnit {
 		this.lastTurnMoved = lastTurnMoved;
 	}
 
-	public MoveableUnit getUnit() {
+	public Unit getUnit() {
 		return unit;
 	}
 
-	public void setUnit(MoveableUnit unit) {
+	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
 

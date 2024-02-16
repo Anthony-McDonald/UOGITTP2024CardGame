@@ -1,3 +1,5 @@
+package structures.basic;
+
 import structures.basic.MoveableUnit;
 import structures.basic.Player;
 
@@ -7,8 +9,9 @@ public class Avatar implements MoveableUnit {
     private int attack;
     private int turnSummoned;
     private int lastTurnMoved;
-    MoveableUnit Unit;
-    Player player;
+	private Unit unit;
+    private Player player;
+
 
 	@Override
 	public void attackUnit(MoveableUnit m) {
@@ -71,13 +74,13 @@ public class Avatar implements MoveableUnit {
 	}
 
 	@Override
-	public MoveableUnit getUnit() {
+	public Unit getUnit() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setUnit(MoveableUnit unit) {
+	public void setUnit(Unit unit) {
 		// TODO Auto-generated method stub
 		
 	}
