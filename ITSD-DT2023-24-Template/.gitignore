@@ -40,3 +40,4 @@ sbt
 sbt.bat
 app/assets/
 null/
+.idea/
