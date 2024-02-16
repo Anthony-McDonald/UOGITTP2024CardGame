@@ -27,6 +27,7 @@ public class Tile {
 	int height;
 	int tilex;
 	int tiley;
+	private MoveableUnit unit;
 	
 	public Tile() {}
 	
@@ -113,7 +114,12 @@ public class Tile {
 		return null;
 		
 	}
-	
-	
-	
+
+	public MoveableUnit getUnit() {
+		return this.unit;
+	}
+
+	public void setUnit (MoveableUnit unit){
+		this.unit = unit;
+	}
 }
