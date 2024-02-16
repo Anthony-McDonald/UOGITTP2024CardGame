@@ -35,6 +35,7 @@ public class Initalize implements EventProcessor{
 		Board board = gameState.getBoard();
 		board.renderBoard(out);
 
+
 	}
 
 }
