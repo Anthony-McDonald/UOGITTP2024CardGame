@@ -10,7 +10,8 @@ import structures.basic.Board;
  *
  */
 public class GameState {
-	private Player player;
+	private Player player1;
+	private Player player2;
 	private Board board;
 	private int turnNumber = 1;
 	private String lastMessage = "Initial message";
@@ -18,17 +19,18 @@ public class GameState {
 	
 	public boolean something = false;
 
-	public GameState(Player player, Board board) {
-		this.player = player;
-		this.board = board;
+	public GameState() {
+		this.player1 = new Player();
+		this.player2 = new Player();
+		this.board = new Board();
 	}
 
-	public Player getPlayer() {
-		return player;
+	public Player getPlayer1() {
+		return player1;
 	}
 
-	public void setPlayer(Player player) {
-		this.player = player;
+	public Player getPlayer2() {
+		return player2;
 	}
 
 	public Board getBoard() {
