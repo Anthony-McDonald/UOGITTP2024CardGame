@@ -39,3 +39,4 @@ build.sbt
 sbt
 sbt.bat
 app/assets/
+null/
