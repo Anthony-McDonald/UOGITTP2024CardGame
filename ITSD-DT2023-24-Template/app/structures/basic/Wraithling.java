@@ -1,7 +1,7 @@
 package structures.basic;
 
 public class Wraithling implements MoveableUnit{
-
+	
 	@Override
 	public void attackUnit(MoveableUnit m) {
 		// TODO Auto-generated method stub
@@ -17,7 +17,7 @@ public class Wraithling implements MoveableUnit{
 	@Override
 	public int getMaxHealth() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class Wraithling implements MoveableUnit{
 	@Override
 	public int getAttack() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
