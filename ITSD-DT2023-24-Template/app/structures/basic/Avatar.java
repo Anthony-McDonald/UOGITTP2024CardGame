@@ -1,3 +1,5 @@
+import structures.basic.MoveableUnit;
+import structures.basic.Player;
 
 public class Avatar implements MoveableUnit {
     private int maxHealth;
@@ -98,6 +100,10 @@ public class Avatar implements MoveableUnit {
 		
 	}
 
-    
-    
+	@Override
+	public int getMaxHealth() {
+		return this.maxHealth;
+	}
+
+
 }
