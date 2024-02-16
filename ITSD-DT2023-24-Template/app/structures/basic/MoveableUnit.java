@@ -4,6 +4,7 @@ public interface MoveableUnit {
 	public void attackUnit(MoveableUnit m);
 	public void moveUnit();
 
+	public int getMaxHealth();
 	
 	public void setMaxHealth(int maxHealth);
 
