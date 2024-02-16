@@ -1,6 +1,6 @@
 package structures.basic;
 
-public class Creature implements MoveableUnit {
+public class Creature extends Card implements MoveableUnit {
 	
 	private int maxHealth;
 	private int currentHealth;
