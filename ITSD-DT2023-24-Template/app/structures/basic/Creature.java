@@ -17,7 +17,7 @@ public class Creature extends Card implements MoveableUnit {
 		this.attack = attack;
 		this.turnSummoned = turnSummoned;
 		this.lastTurnMoved = lastTurnMoved;
-		this.unit = unit;
+		this.unit = unit; //need to change this with basic object builder
 		this.userOwned = userOwned;
 	}
 
