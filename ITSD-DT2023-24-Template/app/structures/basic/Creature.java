@@ -10,7 +10,8 @@ public class Creature extends Card implements MoveableUnit {
 	private MoveableUnit unit;
 	private boolean userOwned;
 
-	public Creature (int maxHealth, int currentHealth, int attack, int turnSummoned, int lastTurnMoved, MoveableUnit unit, boolean userOwned) {
+	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig, int maxHealth, int currentHealth, int attack, int turnSummoned, int lastTurnMoved, MoveableUnit unit, boolean userOwned) {
+		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
 		this.maxHealth = maxHealth;
 		this.currentHealth = currentHealth;
 		this.attack = attack;
@@ -22,8 +23,9 @@ public class Creature extends Card implements MoveableUnit {
 
 	@Override
 	public void attackUnit(MoveableUnit m) {
-		// TODO Auto-generated method stub
-		
+		int enemyHealth = m.getCurrentHealth();
+		enemyHealth = enemyHealth - this.attack;
+		m.setCurrentHealth(enemyHealth);
 	}
 
 
