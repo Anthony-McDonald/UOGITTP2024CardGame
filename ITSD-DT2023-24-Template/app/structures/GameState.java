@@ -20,8 +20,8 @@ public class GameState {
 	public boolean something = false;
 
 	public GameState() {
-		this.player1 = new Player();
-		this.player2 = new Player();
+		this.player1 = new Player(true);
+		this.player2 = new Player(false);
 		this.board = new Board();
 	}
 
