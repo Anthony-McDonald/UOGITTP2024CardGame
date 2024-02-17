@@ -11,7 +11,7 @@ public class Board {
         this.tiles = new Tile [9][5];
         for (int i = 0; i<9;i++){
             for (int j = 0; j<5;j++){
-                tiles[i][j] = BasicObjectBuilders.loadTile(i+1,j+1);
+                tiles[i][j] = BasicObjectBuilders.loadTile(i,j);
             }
         }
     }
@@ -24,7 +24,7 @@ public class Board {
     }
 
     public Tile getTile (int x, int y){
-        Tile tile = this.tiles[x-1][y-1];
+        Tile tile = this.tiles[x][y];
         return tile;
     }
 
