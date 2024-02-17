@@ -1,6 +1,7 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 
 import java.util.ArrayList;
 /**
@@ -48,14 +49,24 @@ public class Player {
 	public int getHealth() {
 		return health;
 	}
-	public void setHealth(int health) {
+	public void setHealth(int health, ActorRef out) {
 		this.health = health;
+		if (this.userOwned){ //if human
+			BasicCommands.setPlayer1Health(out, this);
+		}else{
+			BasicCommands.setPlayer2Health(out, this);
+		}
 	}
 	public int getMana() {
 		return mana;
 	}
-	public void setMana(int mana) {
+	public void setMana(int mana, ActorRef out) {
 		this.mana = mana;
+		if (this.userOwned){
+			BasicCommands.setPlayer1Mana(out, this);
+		}else{
+			BasicCommands.setPlayer2Mana(out, this);
+		}
 	}
 
 	public boolean isUserOwned() {
