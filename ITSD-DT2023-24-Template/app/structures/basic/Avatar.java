@@ -27,9 +27,9 @@ public class Avatar implements MoveableUnit {
 		this.lastTurnMoved = 0;
 		this.userOwned = player.isUserOwned();
 		if (this.userOwned){ //if human
-			this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 1000, Unit.class);
+			this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 1000, Unit.class); //need to update
 		}else { //if AI
-			this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, 1001, Unit.class);
+			this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, 1001, Unit.class); //need to update
 		}
 	}
 
