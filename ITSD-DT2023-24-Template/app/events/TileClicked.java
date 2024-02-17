@@ -43,13 +43,39 @@ public class TileClicked implements EventProcessor{
 
 				if(currentTile.getUnit().isUserOwned()){
 					//if unit clicked was friendly.
+					if (gameState.getLastMessage().equals(GameState.noEvent)){
+						//insert logic about highlighting appropriate tiles for move/attack
+						//set last message to FriendlyUnitClicked
 
+					}else if(gameState.getLastMessage().equals(GameState.spellCardClicked)||gameState.getLastMessage().equals("CreatureCardClicked")){
+						//insert message to player saying card can't be played here
+						//set last message to NoEvent
+					}else{
+						//other logic?? think can delete
+					}
 				}else{
 					//if unit clicked was enemy
+					if (gameState.getLastMessage().equals(GameState.friendlyUnitClicked)){
+						//initiate attack logic
+						//set last message to NoEvent
+					}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)){
+						//maybe we change for specific spell cards since there are only 3?
+						//if Dark Terminus, place logic here
+						//set last message to NoEvent
+					}else if (gameState.getLastMessage().equals(GameState.noEvent)){
+						//no action, inform player
+
+					}
 				}
 
 			}else{
 				//logic for if current tile has no unit
+				if (gameState.getLastMessage().equals(GameState.friendlyUnitClicked)){
+					//initiate move logic
+
+				}else if (gameState.getLastMessage().equals(GameState.creatureCardClicked)){
+
+				}
 
 
 			}

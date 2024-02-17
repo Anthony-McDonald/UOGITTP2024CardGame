@@ -35,6 +35,11 @@ public class GameState {
 	
 	public boolean something = false;
 
+	public static final String noEvent = "NoEvent";
+	public static final String spellCardClicked = "SpellCardClicked";
+	public static final String friendlyUnitClicked = "FriendlyUnitClicked";
+	public static final String creatureCardClicked = "CreatureCardClicked";
+
 	public GameState() {
 		this.player1 = new Player(true);
 		this.player2 = new Player(false);
