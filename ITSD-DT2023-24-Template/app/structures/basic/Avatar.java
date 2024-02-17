@@ -1,6 +1,7 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.MoveableUnit;
 import structures.basic.Player;
@@ -46,79 +47,78 @@ public class Avatar implements MoveableUnit {
 
 	@Override
 	public void setMaxHealth(int maxHealth) {
-		// TODO Auto-generated method stub
+		this.maxHealth = maxHealth;
 		
 	}
 
 	@Override
 	public int getCurrentHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.currentHealth;
 	}
 
 	@Override
 	public void setCurrentHealth(int currentHealth, ActorRef out) {
-		// TODO Auto-generated method stub
+		this.currentHealth = currentHealth;
+		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
+		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg
 		
 	}
 
 	@Override
 	public int getAttack() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return this.attack;
 	}
 
 	@Override
 	public void setAttack(int attack, ActorRef out) {
-		// TODO Auto-generated method stub
+		this.attack = attack;
+		BasicCommands.setUnitAttack(out,this.unit,this.attack); //renders on front end
 		
 	}
 
 	@Override
 	public int getTurnSummoned() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return this.turnSummoned;
 	}
 
 	@Override
 	public void setTurnSummoned(int turnSummoned) {
-		// TODO Auto-generated method stub
+		this.turnSummoned = turnSummoned;
 		
 	}
 
 	@Override
 	public int getLastTurnMoved() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.lastTurnMoved;
 	}
 
 	@Override
 	public void setLastTurnMoved(int lastTurnMoved) {
-		// TODO Auto-generated method stub
+		this.lastTurnMoved = lastTurnMoved;
 		
 	}
 
 	@Override
 	public Unit getUnit() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.unit;
 	}
 
 	@Override
 	public void setUnit(Unit unit) {
-		// TODO Auto-generated method stub
+		this.unit = unit;
 		
 	}
 
 	@Override
 	public boolean isUserOwned() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.userOwned;
 	}
 
 	@Override
 	public void setUserOwned(boolean userOwned) {
-		// TODO Auto-generated method stub
+		this.userOwned = userOwned;
 		
 	}
 
