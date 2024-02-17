@@ -4,6 +4,8 @@ import akka.actor.ActorRef;
 import structures.GameState;
 import structures.basic.MoveableUnit;
 import structures.basic.Player;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 public class Avatar implements MoveableUnit {
     private int maxHealth;
@@ -13,7 +15,22 @@ public class Avatar implements MoveableUnit {
     private int lastTurnMoved;
 	private Unit unit;
     private Player player;
+	private boolean userOwned;
 
+	public Avatar(Player player) {
+		this.player = player;
+		this.maxHealth = player.getHealth();
+		this.currentHealth = maxHealth;
+		this.attack = 2;
+		this.turnSummoned = 1;
+		this.lastTurnMoved = 0;
+		this.userOwned = player.isUserOwned();
+		if (this.userOwned){ //if human
+			this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 0, Unit.class);
+		}else { //if AI
+			this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, 0, Unit.class);
+		}
+	}
 
 	@Override
 	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
