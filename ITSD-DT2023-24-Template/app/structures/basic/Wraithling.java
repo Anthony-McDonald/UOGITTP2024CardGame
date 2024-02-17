@@ -2,10 +2,7 @@ package structures.basic;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
-<<<<<<< HEAD
-=======
 
->>>>>>> d5b565f48bfd4239cf84993b7f2d92e3332d5c50
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import structures.GameState;
 
@@ -76,11 +73,7 @@ public class Wraithling implements MoveableUnit{
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
 			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();
 			}
-
-			//logic to delete unit from the tile when dead
-			
 			//need to incorporate the tile setter to make it null when a creature dies
-
 		}
 	}
 
