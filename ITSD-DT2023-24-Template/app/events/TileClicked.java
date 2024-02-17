@@ -65,6 +65,9 @@ public class TileClicked implements EventProcessor{
 					}else if (gameState.getLastMessage().equals(GameState.noEvent)){
 						//no action, inform player
 
+					}else if(gameState.getLastMessage().equals(GameState.creatureCardClicked)){
+						//inform player that not action can be taken
+						//set last message to NoEvent
 					}
 				}
 
@@ -74,7 +77,12 @@ public class TileClicked implements EventProcessor{
 					//initiate move logic
 
 				}else if (gameState.getLastMessage().equals(GameState.creatureCardClicked)){
-
+					//initiate summon logic
+				}else if (gameState.getLastMessage().equals(GameState.noEvent)){
+					//inform player no action
+				}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)){
+					//depends on card, if Dark terminus, won't work
+					//if Wraithling swarm or Horn, might work? we need to decide
 				}
 
 
