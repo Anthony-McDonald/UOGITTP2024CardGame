@@ -1,10 +1,11 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import structures.GameState;
 
 public interface MoveableUnit {
-	public void attackUnit(MoveableUnit m, ActorRef out);
-	public void moveUnit(ActorRef out, Tile tile);
+	public void attackUnit(MoveableUnit m, ActorRef out, GameState gameState);
+	public void moveUnit(ActorRef out, Tile tile, GameState gameState);
 
 	public int getMaxHealth();
 	

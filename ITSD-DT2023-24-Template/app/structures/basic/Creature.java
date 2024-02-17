@@ -2,6 +2,7 @@ package structures.basic;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import structures.GameState;
 
 public class Creature extends Card implements MoveableUnit {
 
@@ -25,7 +26,7 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	@Override
-	public void attackUnit(MoveableUnit m, ActorRef out) {
+	public void attackUnit(MoveableUnit m, ActorRef out, GameState gameState) {
 		//logic about whether they can attack will be in TileClicked
 		int enemyHealth = m.getCurrentHealth();
 		BasicCommands.playUnitAnimation(out, this.unit, UnitAnimationType.attack); //attack animation
@@ -39,7 +40,7 @@ public class Creature extends Card implements MoveableUnit {
 
 
 	@Override
-	public void moveUnit(ActorRef out, Tile tile) {
+	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
 		//logic about whether they can move will be within TileClicked
 		BasicCommands.moveUnitToTile(out, this.unit, tile); //front end rendering
 		tile.setUnit(this); //sets tiles unit to be this.

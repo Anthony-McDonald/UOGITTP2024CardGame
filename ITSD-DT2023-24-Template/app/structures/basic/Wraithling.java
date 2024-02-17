@@ -1,17 +1,18 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import structures.GameState;
 
 public class Wraithling implements MoveableUnit{
 	
 	@Override
-	public void attackUnit(MoveableUnit m, ActorRef out) {
+	public void attackUnit(MoveableUnit m, ActorRef out, GameState gameState) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void moveUnit(ActorRef out, Tile tile) {
+	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
 		// TODO Auto-generated method stub
 		
 	}

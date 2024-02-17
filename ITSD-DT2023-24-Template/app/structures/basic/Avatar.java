@@ -1,6 +1,7 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import structures.GameState;
 import structures.basic.MoveableUnit;
 import structures.basic.Player;
 
@@ -15,9 +16,15 @@ public class Avatar implements MoveableUnit {
 
 
 	@Override
-	public void attackUnit(MoveableUnit m, ActorRef out) {
+	public void attackUnit(MoveableUnit m, ActorRef out, GameState gameState) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
@@ -98,11 +105,7 @@ public class Avatar implements MoveableUnit {
 		
 	}
 
-	@Override
-	public void moveUnit(ActorRef out, Tile tile) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public int getMaxHealth() {
