@@ -3,6 +3,7 @@ package events;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 import structures.GameState;
 
 /**
@@ -20,8 +21,9 @@ public class OtherClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		
-		
+		gameState.setLastMessage(GameState.noEvent);
+		BasicCommands.addPlayer1Notification(out, "No action available. Select a card, unit or tile.", 2);
+		gameState.getBoard().renderBoard(out); //resets board to base highlighting
 	}
 
 }
