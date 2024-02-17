@@ -40,8 +40,10 @@ public class Initalize implements EventProcessor{
 		int manaGained = gameState.getTurnNumber()+1;
 		Player player1 = gameState.getPlayer1();
 		player1.setMana(player1.getMana()+manaGained, out);
+		BasicCommands.setPlayer1Health(out, player1); //only needed here, after this Player.setHealth will handle this
 		Player player2 = gameState.getPlayer2();
 		player2.setMana(player2.getMana()+manaGained, out);
+		BasicCommands.setPlayer2Health(out, player2); //only needed here, after this Player.setHealth will handle this
 
 
 
