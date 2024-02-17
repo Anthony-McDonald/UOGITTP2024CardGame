@@ -1,6 +1,7 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 
 public class Creature extends Card implements MoveableUnit {
 
@@ -25,15 +26,25 @@ public class Creature extends Card implements MoveableUnit {
 
 	@Override
 	public void attackUnit(MoveableUnit m, ActorRef out) {
+		//logic about whether they can attack will be in TileClicked
 		int enemyHealth = m.getCurrentHealth();
+		BasicCommands.playUnitAnimation(out, this.unit, UnitAnimationType.attack); //attack animation
 		enemyHealth = enemyHealth - this.attack;
 		m.setCurrentHealth(enemyHealth, out);
+		if (enemyHealth>0){ //if enemy is alive, counterattack
+			BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.attack);//unit attack animation
+			this.setCurrentHealth((this.currentHealth-m.getAttack()),out);
+		}
 	}
 
 
 	@Override
 	public void moveUnit(ActorRef out, Tile tile) {
-		// TODO Auto-generated method stub
+		//logic about whether they can move will be within TileClicked
+		BasicCommands.moveUnitToTile(out, this.unit, tile); //front end rendering
+		tile.setUnit(this); //sets tiles unit to be this.
+
+
 
 	}
 
@@ -43,6 +54,7 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	public void setMaxHealth(int maxHealth) {
+
 		this.maxHealth = maxHealth;
 	}
 
@@ -51,7 +63,9 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	public void setCurrentHealth(int currentHealth, ActorRef out) {
+		//need to add logic about dying? add in death animation?
 		this.currentHealth = currentHealth;
+		BasicCommands.setUnitHealth(out, this.unit, currentHealth);
 	}
 
 	public int getAttack() {
@@ -59,6 +73,7 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	public void setAttack(int attack, ActorRef out) {
+		BasicCommands.setUnitAttack(out, this.unit, attack); //renders attack on front end
 		this.attack = attack;
 	}
 
