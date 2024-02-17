@@ -71,8 +71,8 @@ public class Wraithling implements MoveableUnit{
 			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
 			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
-			
-			//need to incorporate the tile setter to make it null when a creature dies
+			this.tile.setUnit(null);
+
 		}
 	}
 
