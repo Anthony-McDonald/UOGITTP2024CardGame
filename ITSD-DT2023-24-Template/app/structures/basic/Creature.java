@@ -3,6 +3,8 @@ package structures.basic;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 public class Creature extends Card implements MoveableUnit {
 
@@ -23,6 +25,7 @@ public class Creature extends Card implements MoveableUnit {
 		this.turnSummoned = turnSummoned;
 		this.lastTurnMoved = lastTurnMoved;
 		this.unit = unit; //need to change this with basic object builder
+		//BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 1000, Unit.class)
 		this.userOwned = userOwned;
 	}
 
@@ -67,9 +70,15 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	public void setCurrentHealth(int currentHealth, ActorRef out) {
-		//need to add logic about dying? add in death animation?
 		this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit, currentHealth);
+		
+		if (this.currentHealth < 1) {
+			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
+			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
+			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
+			//logic to delete unit from the tile when dead
+		}
 	}
 
 	public int getAttack() {
