@@ -61,6 +61,9 @@ public class Player {
 		return mana;
 	}
 	public void setMana(int mana, ActorRef out) {
+		if (mana>9){ //to prevent player mana from increasing over 9.
+			mana = 9;
+		}
 		this.mana = mana;
 		if (this.userOwned){
 			BasicCommands.setPlayer1Mana(out, this);
