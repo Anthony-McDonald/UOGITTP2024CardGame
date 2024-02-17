@@ -22,4 +22,13 @@ public class Board {
             }
         }
     }
+
+    public Tile getTile (int x, int y){
+        Tile tile = this.tiles[x-1][y-1];
+        return tile;
+    }
+
+    public Tile [][] getAllTiles (){
+        return this.tiles;
+    }
 }
