@@ -58,9 +58,13 @@ public class Wraithling implements MoveableUnit{
 
 	@Override
 	public int getCurrentHealth() {
+<<<<<<< HEAD
 
 		return this.currentHealth;
 
+=======
+		return this.currentHealth;
+>>>>>>> main
 	}
 
 	@Override
@@ -71,8 +75,13 @@ public class Wraithling implements MoveableUnit{
 		if (this.currentHealth < 1) {
 			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
+<<<<<<< HEAD
 			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();
 			}
+=======
+			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
+			
+>>>>>>> main
 			//need to incorporate the tile setter to make it null when a creature dies
 		}
 	}
