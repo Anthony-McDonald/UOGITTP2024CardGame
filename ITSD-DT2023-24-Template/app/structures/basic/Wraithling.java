@@ -1,6 +1,8 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import structures.GameState;
 
@@ -16,18 +18,30 @@ public class Wraithling implements MoveableUnit{
 	private Tile tile;
 	
 	public Wraithling() {
-		
+		this.maxHealth = 1;
+		this.attack = 1;
+		this.userOwned = true;
 	}
 	
 	@Override
 	public void attackUnit(ActorRef out, Tile tile, GameState gameState) {
-		// TODO Auto-generated method stub
+		MoveableUnit m = tile.getUnit();
+		//insert logic about if attack is possible.
+		int enemyHealth = m.getCurrentHealth();
+		BasicCommands.playUnitAnimation(out, this.unit, UnitAnimationType.attack); //attack animation
+		enemyHealth = enemyHealth - this.attack;
+		m.setCurrentHealth(enemyHealth, out);
+		if (enemyHealth>0){ //if enemy is alive, counterattack
+			BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.attack);//unit attack animation
+			this.setCurrentHealth((this.currentHealth-m.getAttack()),out);
+		}
 		
 	}
 
 	@Override
 	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
-		// TODO Auto-generated method stub
+		BasicCommands.moveUnitToTile(out, this.unit, tile); //front end rendering
+		tile.setUnit(this); //sets tiles unit to be this.
 		
 	}
 
