@@ -79,7 +79,10 @@ public class Creature extends Card implements MoveableUnit {
 			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
 			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
+
 			//logic to delete unit from the tile when dead
+			
+			//need to incorporate the tile setter to make it null when a creature dies
 		}
 	}
 

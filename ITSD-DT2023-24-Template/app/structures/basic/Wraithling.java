@@ -2,6 +2,10 @@ package structures.basic;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5b565f48bfd4239cf84993b7f2d92e3332d5c50
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import structures.GameState;
 
@@ -39,7 +43,8 @@ public class Wraithling implements MoveableUnit{
 
 	@Override
 	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
-		// TODO Auto-generated method stub
+		BasicCommands.moveUnitToTile(out, this.unit, tile); //front end rendering
+		tile.setUnit(this); //sets tiles unit to be this.
 		
 	}
 
@@ -56,7 +61,9 @@ public class Wraithling implements MoveableUnit{
 
 	@Override
 	public int getCurrentHealth() {
-		return 0;
+
+		return this.currentHealth;
+
 	}
 
 	@Override
@@ -67,15 +74,20 @@ public class Wraithling implements MoveableUnit{
 		if (this.currentHealth < 1) {
 			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
-			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();
+			}
+
 			//logic to delete unit from the tile when dead
+			
+			//need to incorporate the tile setter to make it null when a creature dies
+
 		}
 	}
 
 	@Override
 	public int getAttack() {
 		// TODO Auto-generated method stub
-		return 1;
+		return this.attack;
 	}
 
 	@Override
