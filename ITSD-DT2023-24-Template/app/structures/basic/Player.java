@@ -58,6 +58,11 @@ public class Player {
 		this.mana = mana;
 	}
 
+	public boolean isUserOwned() {
+		return userOwned;
+	}
 
-
+	public void setUserOwned(boolean userOwned) {
+		this.userOwned = userOwned;
+	}
 }
