@@ -40,4 +40,8 @@ public interface MoveableUnit {
 	public Tile getTile();
 	
 	public void setTile(Tile tile);
+
+	public int getLastTurnAttacked ();
+
+	public void setLastTurnAttacked(int lastTurnAttacked);
 }

@@ -16,7 +16,8 @@ public class Wraithling implements MoveableUnit{
 	private boolean userOwned;
 	@JsonIgnore
 	private Tile tile;
-	
+	private int lastTurnAttacked;
+
 	public Wraithling() {
 		this.maxHealth = 1;
 		this.attack = 1;
@@ -148,6 +149,16 @@ public class Wraithling implements MoveableUnit{
 	@Override
 	public void setTile(Tile tile) {
 		this.tile = tile;
+	}
+
+	@Override
+	public int getLastTurnAttacked() {
+		return this.lastTurnAttacked;
+	}
+
+	@Override
+	public void setLastTurnAttacked(int lastTurnAttacked) {
+		this.lastTurnAttacked=lastTurnAttacked;
 	}
 
 

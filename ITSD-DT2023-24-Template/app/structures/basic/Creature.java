@@ -16,7 +16,9 @@ public class Creature extends Card implements MoveableUnit {
 	private boolean userOwned;
 	@JsonIgnore
 	private Tile tile;
-//need to change constructor for creature
+	private int lastTurnAttacked;
+
+	//need to change constructor for creature
 	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig, int maxHealth, int currentHealth, int attack, int turnSummoned, int lastTurnMoved, Unit unit, boolean userOwned) {
 		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
 		this.maxHealth = maxHealth;
@@ -131,6 +133,16 @@ public class Creature extends Card implements MoveableUnit {
 	
 	public void setTile(Tile tile) {
 		this.tile = tile;
+	}
+
+	@Override
+	public int getLastTurnAttacked() {
+		return this.lastTurnAttacked;
+	}
+
+	@Override
+	public void setLastTurnAttacked(int lastTurnAttacked) {
+		this.lastTurnAttacked=lastTurnAttacked;
 	}
 
 

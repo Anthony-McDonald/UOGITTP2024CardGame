@@ -20,6 +20,7 @@ public class Avatar implements MoveableUnit {
 	private boolean userOwned;
 	@JsonIgnore
 	private Tile tile;
+	private int lastTurnAttacked;
 
 	public Avatar(Player player) {
 		this.player = player;
@@ -158,6 +159,16 @@ public class Avatar implements MoveableUnit {
 	
 	public void setTile(Tile tile) {
 		 this.tile = tile;
+	}
+
+	@Override
+	public int getLastTurnAttacked() {
+		return this.lastTurnAttacked;
+	}
+
+	@Override
+	public void setLastTurnAttacked(int lastTurnAttacked) {
+		this.lastTurnAttacked=lastTurnAttacked;
 	}
 
 
