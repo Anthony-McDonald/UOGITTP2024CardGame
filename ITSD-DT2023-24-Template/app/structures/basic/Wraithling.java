@@ -1,6 +1,7 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import structures.GameState;
 
 public class Wraithling implements MoveableUnit{
@@ -11,6 +12,7 @@ public class Wraithling implements MoveableUnit{
 	private int lastTurnMoved;
 	private Unit unit;
 	private boolean userOwned;
+	@JsonIgnore
 	private Tile tile;
 	
 	public Wraithling() {

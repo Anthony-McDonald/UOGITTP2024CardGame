@@ -1,6 +1,7 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.MoveableUnit;
@@ -17,6 +18,7 @@ public class Avatar implements MoveableUnit {
 	private Unit unit;
     private Player player;
 	private boolean userOwned;
+	@JsonIgnore
 	private Tile tile;
 
 	public Avatar(Player player) {
