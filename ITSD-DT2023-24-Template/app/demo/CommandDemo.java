@@ -177,7 +177,7 @@ public class CommandDemo {
 		// Mana
 		for (int m = 0; m<10; m++) {
 			BasicCommands.addPlayer1Notification(out, "setPlayer1Mana ("+m+")", 1);
-			humanPlayer.setMana(m);
+			humanPlayer.setMana(m,out);
 			BasicCommands.setPlayer1Mana(out, humanPlayer);
 			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		}
@@ -185,7 +185,7 @@ public class CommandDemo {
 		// Mana
 		for (int m = 0; m<10; m++) {
 			BasicCommands.addPlayer1Notification(out, "setPlayer2Mana ("+m+")", 1);
-			aiPlayer.setMana(m);
+			aiPlayer.setMana(m,out);
 			BasicCommands.setPlayer2Mana(out, aiPlayer);
 			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		}
