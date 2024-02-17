@@ -36,6 +36,8 @@ public class Avatar implements MoveableUnit {
 		}
 	}
 
+
+
 	@Override
 	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
 		// TODO Auto-generated method stub
@@ -133,6 +135,21 @@ public class Avatar implements MoveableUnit {
 	}
 
 	public void actionableTiles(ActorRef out, GameState gameState){
+		//need to add logic about last turnMoved and lastTurn attacked
+		int xPos = this.tile.getTilex();
+		int yPos = this.tile.getTiley();
+		Board board = gameState.getBoard();
+		//check for enemies within adjacent squares then highlight red
+		for (int i =xPos -1; i<=xPos+1; i++ ){
+			for (int j = yPos -1; i<=yPos+1;j++){
+				//if board has unit, and if unit is an enemy, highlight red
+				if (board.getTile(xPos,yPos).getUnit()!=null && board.getTile(xPos,yPos).getUnit().isUserOwned()!= this.userOwned){
+					Tile redTile = board.getTile(xPos, yPos);
+					BasicCommands.drawTile(out, redTile, 2);
+
+				}
+			}
+		}
 
 	}
 	public Tile getTile() {
