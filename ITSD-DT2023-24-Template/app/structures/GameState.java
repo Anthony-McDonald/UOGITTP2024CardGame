@@ -14,7 +14,7 @@ import structures.basic.Tile;
  */
 public class GameState {
 	private Player player1;
-	private Player player2;
+	private Player player2; //convert to AI class when we make it?
 	private Board board;
 	private int turnNumber = 1;
 	private int lastCardClicked; //gives hand position of card
