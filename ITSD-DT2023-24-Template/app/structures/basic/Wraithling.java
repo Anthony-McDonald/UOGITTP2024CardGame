@@ -4,6 +4,18 @@ import akka.actor.ActorRef;
 import structures.GameState;
 
 public class Wraithling implements MoveableUnit{
+	private int maxHealth;
+	private int currentHealth;
+	private int attack;
+	private int turnSummoned;
+	private int lastTurnMoved;
+	private Unit unit;
+	private boolean userOwned;
+	private Tile tile;
+	
+	public Wraithling() {
+		
+	}
 	
 	@Override
 	public void attackUnit(ActorRef out, Tile tile, GameState gameState) {
@@ -107,14 +119,12 @@ public class Wraithling implements MoveableUnit{
 
 	@Override
 	public Tile getTile() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.tile;
 	}
 
 	@Override
-	public Tile setTile(Tile tile) {
-		// TODO Auto-generated method stub
-		return null;
+	public void setTile(Tile tile) {
+		this.tile = tile;
 	}
 
 

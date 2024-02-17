@@ -17,6 +17,7 @@ public class Avatar implements MoveableUnit {
 	private Unit unit;
     private Player player;
 	private boolean userOwned;
+	private Tile tile;
 
 	public Avatar(Player player) {
 		this.player = player;
@@ -133,11 +134,11 @@ public class Avatar implements MoveableUnit {
 
 	}
 	public Tile getTile() {
-		return null;
+		return this.tile;
 	}
 	
-	public Tile setTile(Tile tile) {
-		return tile;
+	public void setTile(Tile tile) {
+		 this.tile = tile;
 	}
 
 

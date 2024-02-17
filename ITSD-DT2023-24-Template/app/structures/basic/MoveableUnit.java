@@ -39,5 +39,5 @@ public interface MoveableUnit {
 
 	public Tile getTile();
 	
-	public Tile setTile(Tile tile);
+	public void setTile(Tile tile);
 }

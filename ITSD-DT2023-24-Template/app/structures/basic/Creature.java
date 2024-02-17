@@ -13,6 +13,7 @@ public class Creature extends Card implements MoveableUnit {
 	private int lastTurnMoved;
 	private Unit unit;
 	private boolean userOwned;
+	private Tile tile;
 //need to change constructor for creature
 	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig, int maxHealth, int currentHealth, int attack, int turnSummoned, int lastTurnMoved, Unit unit, boolean userOwned) {
 		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
@@ -117,11 +118,11 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	public Tile getTile() {
-		return null;
+		return this.tile;
 	}
 	
-	public Tile setTile(Tile tile) {
-		return tile;
+	public void setTile(Tile tile) {
+		this.tile = tile;
 	}
 
 
