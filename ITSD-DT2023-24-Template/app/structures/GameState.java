@@ -20,7 +20,17 @@ public class GameState {
 	private int lastCardClicked; //gives hand position of card
 	private Tile lastTileClicked;
 	private MoveableUnit lastUnitClicked;
-	private String lastMessage = "Initial message";
+	private String lastMessage = "NoEvent";
+	/*
+	Possible messages:
+	NoEvent : Nothing of consequence
+	SpellCardClicked
+	CreatureCardClicked (creature CARD clicked)
+	FriendlyUnitClicked (friendly avatar, wraithling or creature unit clicked)
+
+
+	 */
+
 	public boolean gameInitalised = false;
 	
 	public boolean something = false;
