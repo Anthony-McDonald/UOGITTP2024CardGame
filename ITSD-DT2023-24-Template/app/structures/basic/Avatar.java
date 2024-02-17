@@ -129,5 +129,10 @@ public class Avatar implements MoveableUnit {
 		return this.maxHealth;
 	}
 
+	public void actionableTiles(ActorRef out, GameState gameState){
+
+	}
+
+
 
 }

@@ -101,6 +101,10 @@ public class Wraithling implements MoveableUnit{
 		
 	}
 
+	public void actionableTiles(ActorRef out, GameState gameState){
+
+	}
+
 
 
 }

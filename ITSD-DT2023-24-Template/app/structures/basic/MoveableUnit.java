@@ -33,7 +33,9 @@ public interface MoveableUnit {
 	
 	public boolean isUserOwned();
 
-	public void setUserOwned(boolean userOwned);	
+	public void setUserOwned(boolean userOwned);
+
+	public void actionableTiles(ActorRef out, GameState gameState);
 
 
 }

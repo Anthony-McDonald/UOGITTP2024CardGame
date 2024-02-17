@@ -112,6 +112,10 @@ public class Creature extends Card implements MoveableUnit {
 		this.userOwned = userOwned;
 	}
 
+	public void actionableTiles(ActorRef out, GameState gameState){
+
+	}
+
 
 
 }
