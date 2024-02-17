@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Player {
 
 	private ArrayList<Card> hand = new ArrayList<Card>();
+	private ArrayList<Card> discardPile = new ArrayList<Card>();
 	private int health;
 	private int mana;
 
@@ -23,6 +24,14 @@ public class Player {
 		super();
 		this.health = health;
 		this.mana = mana;
+	}
+
+	public ArrayList<Card> getDiscardPile() {
+		return discardPile;
+	}
+
+	public void addToDiscardPile(Card card) {
+		this.getDiscardPile().add(card);
 	}
 
 	public ArrayList<Card> getHand() {
