@@ -4,7 +4,7 @@ import akka.actor.ActorRef;
 import structures.GameState;
 
 public interface MoveableUnit {
-	public void attackUnit(MoveableUnit m, ActorRef out, GameState gameState);
+	public void attackUnit(ActorRef out, Tile tile, GameState gameState);
 	public void moveUnit(ActorRef out, Tile tile, GameState gameState);
 
 	public int getMaxHealth();

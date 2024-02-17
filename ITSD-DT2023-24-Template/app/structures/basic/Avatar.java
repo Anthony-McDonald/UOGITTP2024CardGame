@@ -16,7 +16,7 @@ public class Avatar implements MoveableUnit {
 
 
 	@Override
-	public void attackUnit(MoveableUnit m, ActorRef out, GameState gameState) {
+	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
 		// TODO Auto-generated method stub
 		
 	}

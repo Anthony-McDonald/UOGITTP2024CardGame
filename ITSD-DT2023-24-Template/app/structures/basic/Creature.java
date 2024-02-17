@@ -26,8 +26,9 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	@Override
-	public void attackUnit(MoveableUnit m, ActorRef out, GameState gameState) {
+	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
 		//logic about whether they can attack will be in TileClicked
+		MoveableUnit m = tile.getUnit();
 		int enemyHealth = m.getCurrentHealth();
 		BasicCommands.playUnitAnimation(out, this.unit, UnitAnimationType.attack); //attack animation
 		enemyHealth = enemyHealth - this.attack;
