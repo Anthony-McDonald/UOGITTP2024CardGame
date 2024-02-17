@@ -121,5 +121,6 @@ public class Tile {
 
 	public void setUnit (MoveableUnit unit){
 		this.unit = unit;
+		unit.setTile(this);
 	}
 }

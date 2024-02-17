@@ -37,5 +37,7 @@ public interface MoveableUnit {
 
 	public void actionableTiles(ActorRef out, GameState gameState);
 
-
+	public Tile getTile();
+	
+	public Tile setTile(Tile tile);
 }

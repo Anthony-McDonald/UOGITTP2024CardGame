@@ -105,6 +105,18 @@ public class Wraithling implements MoveableUnit{
 
 	}
 
+	@Override
+	public Tile getTile() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Tile setTile(Tile tile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

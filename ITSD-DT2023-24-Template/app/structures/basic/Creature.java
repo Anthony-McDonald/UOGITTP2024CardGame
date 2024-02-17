@@ -116,6 +116,13 @@ public class Creature extends Card implements MoveableUnit {
 
 	}
 
+	public Tile getTile() {
+		return null;
+	}
+	
+	public Tile setTile(Tile tile) {
+		return tile;
+	}
 
 
 }

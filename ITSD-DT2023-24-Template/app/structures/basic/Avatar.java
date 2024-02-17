@@ -132,7 +132,13 @@ public class Avatar implements MoveableUnit {
 	public void actionableTiles(ActorRef out, GameState gameState){
 
 	}
-
+	public Tile getTile() {
+		return null;
+	}
+	
+	public Tile setTile(Tile tile) {
+		return tile;
+	}
 
 
 }
