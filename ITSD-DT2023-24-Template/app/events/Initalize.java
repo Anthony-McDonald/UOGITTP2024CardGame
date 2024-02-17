@@ -63,21 +63,21 @@ public class Initalize implements EventProcessor{
 		//need the following two commands Unit.setPositionByTile and BasicCommands.drawUnit for initial summon
 		playerAvatar.getUnit().setPositionByTile(playerStartTile);//sets player avatar on tile in front end
 		BasicCommands.drawUnit(out, playerAvatar.getUnit(), playerStartTile); //sets player avatar on tile in front end
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.setUnitHealth(out, playerAvatar.getUnit(), playerAvatar.getCurrentHealth());
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.setUnitAttack(out, playerAvatar.getUnit(), playerAvatar.getAttack());
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 
 		Tile aiStartTile = gameState.getBoard().getTile(7,2);
 		aiStartTile.setUnit(aiAvatar); //sets ai avatar on tile in back end
 		aiAvatar.getUnit().setPositionByTile(aiStartTile);//sets ai avatar on tile in front end
 		BasicCommands.drawUnit(out,aiAvatar.getUnit(),aiStartTile); //sets ai avatar on tile in front end
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.setUnitHealth(out, aiAvatar.getUnit(), aiAvatar.getCurrentHealth());
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.setUnitAttack(out, aiAvatar.getUnit(), aiAvatar.getAttack());
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 
 
 
