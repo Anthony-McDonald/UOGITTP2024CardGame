@@ -1,6 +1,7 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import commands.BasicCommands;
 import structures.GameState;
 import utils.BasicObjectBuilders;
@@ -15,6 +16,7 @@ public class Creature extends Card implements MoveableUnit {
 	private int lastTurnMoved;
 	private Unit unit;
 	private boolean userOwned;
+	@JsonIgnore
 	private Tile tile;
 //need to change constructor for creature
 	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig, int maxHealth, int currentHealth, int attack, int turnSummoned, int lastTurnMoved, Unit unit, boolean userOwned) {
