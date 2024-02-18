@@ -121,8 +121,10 @@ public class Tile {
 
 	public void setUnit (MoveableUnit unit){
 		this.unit = unit;
-		Tile tileForUnit = this;
-		this.unit.setTile(tileForUnit);
-//
+		if (unit !=null) { //if not setting tile to null, avoids nullPointer exception
+			Tile tileForUnit = this;
+			this.unit.setTile(tileForUnit);
+		}
+
 	}
 }

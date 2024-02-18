@@ -47,7 +47,17 @@ public class Avatar implements MoveableUnit {
 
 	@Override
 	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
-		// TODO Auto-generated method stub
+		//insert logic about if move can occur
+		this.setLastTurnMoved(gameState.getTurnNumber());
+		gameState.setLastMessage(GameState.noEvent);
+		this.tile.setUnit(null);
+		tile.setUnit(this); //sets unit on tile in backend
+		gameState.getBoard().renderBoard(out);
+		BasicCommands.addPlayer1Notification(out, "moveUnitToTile", 3);
+		BasicCommands.moveUnitToTile(out, this.unit, tile);
+		try {Thread.sleep(4000);} catch (InterruptedException e) {e.printStackTrace();}
+
+
 
 	}
 
@@ -143,11 +153,11 @@ public class Avatar implements MoveableUnit {
 		Board board = gameState.getBoard();
 
 		if (this.turnSummoned!=gameState.getTurnNumber()){//hasn't been summoned this turn, allow action
-//			System.out.println("Unit hasn't been summoned this turn");
+			System.out.println("Unit hasn't been summoned this turn");
 			if (this.lastTurnAttacked != gameState.getTurnNumber()){//hasn't attacked this turn can still move and attack
-//				System.out.println("Unit hasn't attacked this turn so it can still move and attack");
+				System.out.println("Unit hasn't attacked this turn so it can still move and attack");
 				if (this.lastTurnMoved!= gameState.getTurnNumber()){//hasn't moved this turn
-//					System.out.println("Highlighting tiles white");
+					System.out.println("Highlighting tiles white");
 					//can still move and attack
 					//highlighting for moving (white)
 					gameState.setLastUnitClicked(this);

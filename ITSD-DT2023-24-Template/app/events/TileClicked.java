@@ -77,7 +77,8 @@ public class TileClicked implements EventProcessor{
 			}else{
 				//logic for if current tile has no unit
 				if (gameState.getLastMessage().equals(GameState.friendlyUnitClicked)){
-					//initiate move logic
+					MoveableUnit unitToMove = gameState.getLastUnitClicked();
+					unitToMove.moveUnit(out,currentTile,gameState);
 
 				}else if (gameState.getLastMessage().equals(GameState.creatureCardClicked)){
 					//initiate summon logic
