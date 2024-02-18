@@ -30,6 +30,7 @@ public class EndTurnClicked implements EventProcessor{
 		//increase both players mana by (turn number+1)
 		String nextTurnMessage = "It's now turn " + gameState.getTurnNumber() + "! Make your moves.";
 		BasicCommands.addPlayer1Notification(out, nextTurnMessage, 2 );
+		gameState.setLastMessage(GameState.noEvent);
 
 
 
