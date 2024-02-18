@@ -9,16 +9,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import structures.basic.Player;
-
 public class Hand {
     private ArrayList<Card> hand = new ArrayList<>();
     private HashMap<String, Class<? extends Card>> convertMap = new HashMap<>();
     Player player;
 
     public Hand(Player player) {
-    this.player = player;
-    this.fillHashMap();
+        this.player = player;
+        this.fillHashMap();
     }
 
     public ArrayList<Card> getHand() {
@@ -29,7 +27,7 @@ public class Hand {
         return convertMap;
     }
 
-    public void setConvertMap(HashMap<String, Class<? extends Card>> compare) {
+    public void setConvertMap(HashMap<String, Class<? extends Card>> convertMap) {
         this.convertMap = convertMap;
     }
 
@@ -44,38 +42,37 @@ public class Hand {
         this.getHand().remove(card);
     }
 
-    private Card cardDifferentiator(Card card) {
-        
+    private Class<? extends Card> cardDifferentiator(Class<? extends Card> card) {
+        for (Map.Entry<String, Class<? extends Card>> entry : this.getConvertMap().entrySet()) {
+            String key = entry.getKey();
+            if (card.getSimpleName().equals(key)) {
+                return this.getConvertMap().get(key);
+            }
+        }
+        return null;
     }
 
-    public void drawToHand(Card card) {
+    public void drawToHand(Class<? extends Card> card) {
         int maxHandSize = 5;
-        card = this.cardDifferentiator(card);
+
         if (this.getHand().size() < maxHandSize) {
-            player.addToHand(card);
+            player.addToHand(cardDifferentiator(card));
         } else {
             player.addToDiscardPile(card);
         }
-
     }
 
     private void fillHashMap() {
-
         ArrayList<String> cardNamesFormatted = camelCaseifier(getCardNames());
         ArrayList<Class<? extends Card>> cardClassesExtendingCard = getCardClasses();
-
-        Map<String, Class<? extends Card>> finalHashMap = new HashMap<>();
 
         for (Class<? extends Card> classReflected : cardClassesExtendingCard) {
             for (String cardName : cardNamesFormatted) {
                 if (classReflected.getSimpleName().equals(cardName)) {
-                    finalHashMap.put(cardName, classReflected);
+                    convertMap.put(cardName, classReflected);
                 }
             }
-
         }
-
-
     }
 
     private ArrayList<String> getCardNames() {
@@ -127,8 +124,6 @@ public class Hand {
             } catch (ClassNotFoundException c) {
                 c.printStackTrace();
             }
-
-
         }
 
         return cardClasses;
@@ -139,12 +134,12 @@ public class Hand {
 
         for (String cardName : cardNames) {
             StringBuilder camelify = new StringBuilder();
-            String[] seperateWords = cardName.split(" ");
+            String[] separateWords = cardName.split(" ");
 
-            camelify.append(seperateWords[0].toLowerCase());
+            camelify.append(separateWords[0].toLowerCase());
 
-            for (int i = 0; i < seperateWords.length; i++) {
-                String word = seperateWords[i];
+            for (int i = 1; i < separateWords.length; i++) {
+                String word = separateWords[i];
 
                 camelify.append(Character.toUpperCase(word.charAt(0)));
                 camelify.append(word.substring(1).toLowerCase());
@@ -153,6 +148,4 @@ public class Hand {
         }
         return arrayFormatted;
     }
-
-
 }
