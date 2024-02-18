@@ -19,16 +19,23 @@ public class Player {
 	private Hand handObject;
 
 	public Player() {
-		super();
 		this.health = 20;
 		this.mana = 0;
 		this.handObject = new Hand(this);
 	}
 
-	public Player(int health, int mana) {
-		super();
-		this.health = health;
-		this.mana = mana;
+
+	public void setDiscardPile(ArrayList<Class<? extends Card>> discardPile) {
+		this.discardPile = discardPile;
+	}
+
+	public Hand getHandObject() {
+		return handObject;
+	}
+
+
+	public void setHandObject(Hand handObject) {
+		this.handObject = handObject;
 	}
 
 	public ArrayList<Class<? extends Card>> getDiscardPile() {
@@ -48,7 +55,11 @@ public class Player {
 	}
 
 	public void addToHand(Class<? extends Card> card) {
-		this.hand.add(card);
+		this.getHandObject().drawToHand(card);
+	}
+
+	private boolean isCardClass(Class<? extends  Card> card) {
+		return Card.class.isAssignableFrom(card);
 	}
 
 	public void removeCard(Class<? extends Card> card) {
