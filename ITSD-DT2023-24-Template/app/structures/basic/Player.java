@@ -4,8 +4,9 @@ import akka.actor.ActorRef;
 import commands.BasicCommands;
 
 import java.util.ArrayList;
+
 /**
- * A basic representation of of the Player. A player
+ * A basic representation of the Player. A player
  * has health and mana.
  *
  * @author Dr. Richard McCreadie
@@ -13,37 +14,60 @@ import java.util.ArrayList;
  */
 public class Player {
 
-	private ArrayList<Card> hand = new ArrayList<Card>();
+	private ArrayList<Class<? extends Card>> hand = new ArrayList<>();
+	private ArrayList<Class<? extends Card>> discardPile = new ArrayList<>();
 	private int health;
 	private int mana;
-
-	private boolean userOwned;
+    private boolean userOwned;
+    private Hand handObject;
 
 	public Player(boolean userOwned) {
 		super();
 		this.health = 20;
 		this.mana = 0;
-		this.userOwned = userOwned;
-	}
-	public Player(int health, int mana) {
-		super();
-		this.health = health;
-		this.mana = mana;
+        this.userOwned = userOwned;
+        this.handObject = new Hand(this);
 	}
 
-	public ArrayList<Card> getHand() {
+    public void setDiscardPile(ArrayList<Class<? extends Card>> discardPile) {
+        this.discardPile = discardPile;
+    }
+
+	public Hand getHandObject() {
+		return handObject;
+	}
+
+
+	public void setHandObject(Hand handObject) {
+		this.handObject = handObject;
+	}
+
+	public ArrayList<Class<? extends Card>> getDiscardPile() {
+		return discardPile;
+	}
+
+	public void addToDiscardPile(Class<? extends Card> card) {
+		this.discardPile.add(card);
+	}
+
+	public ArrayList<Class<? extends Card>> getHand() {
 		return hand;
 	}
 
-	public void setHand(ArrayList<Card> hand) {
+	public void setHand(ArrayList<Class<? extends Card>> hand) {
 		this.hand = hand;
 	}
-	public void addToHand(Card card) {
-		this.getHand().add(card);
+
+	public void addToHand(Class<? extends Card> card) {
+		this.getHandObject().drawToHand(card);
 	}
 
-	public void removeCard(Card card) {
-		this.getHand().remove(card);
+	private boolean isCardClass(Class<? extends  Card> card) {
+		return Card.class.isAssignableFrom(card);
+	}
+
+	public void removeCard(Class<? extends Card> card) {
+		this.hand.remove(card);
 	}
 
 	public int getHealth() {
@@ -57,6 +81,7 @@ public class Player {
 			BasicCommands.setPlayer2Health(out, this);
 		}
 	}
+
 	public int getMana() {
 		return mana;
 	}
