@@ -28,6 +28,11 @@ public class Player {
         this.userOwned = userOwned;
         this.handObject = new Hand(this);
 	}
+	public Player(int health, int mana) {
+		super();
+		this.health = health;
+		this.mana = mana;
+	}
 
     public void setDiscardPile(ArrayList<Class<? extends Card>> discardPile) {
         this.discardPile = discardPile;
