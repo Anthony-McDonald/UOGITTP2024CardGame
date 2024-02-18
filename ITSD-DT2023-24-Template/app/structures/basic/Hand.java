@@ -101,31 +101,31 @@ public class Hand {
     private ArrayList<Class<? extends Card>> getCardClasses() {
         ArrayList<Class<? extends Card>> cardClasses = new ArrayList<>();
 
-        // subject to change, directory here wrong atm
-        File cardClassDirectory = new File("structures/basic");
-        File[] classList = cardClassDirectory.listFiles();
-
-        for (File cardClass : classList) {
-
-            String cardClassName = cardClass.getName();
-            cardClassName = cardClassName.substring(0, cardClassName.length() - 6);
-
-            try {
-                Class<?> classReflect = Class.forName(cardClassName);
-
-                if (Card.class.isAssignableFrom(classReflect)) {
-                    if (!classReflect.getSimpleName().equals("Creature") && (!classReflect.getSimpleName().equals("Spell"))) {
-                        cardClasses.add((Class<? extends Card>) classReflect);
-                    }
-
-                } else {
-                    System.out.println("Does not extend from Card");
-                }
-
-            } catch (ClassNotFoundException c) {
-                c.printStackTrace();
-            }
-        }
+//        // subject to change, directory here wrong atm
+//        File cardClassDirectory = new File("structures/basic");
+//        File[] classList = cardClassDirectory.listFiles();
+//
+//        for (File cardClass : classList) {
+//
+//            String cardClassName = cardClass.getName();
+//            cardClassName = cardClassName.substring(0, cardClassName.length() - 6);
+//
+//            try {
+//                Class<?> classReflect = Class.forName(cardClassName);
+//
+//                if (Card.class.isAssignableFrom(classReflect)) {
+//                    if (!classReflect.getSimpleName().equals("Creature") && (!classReflect.getSimpleName().equals("Spell"))) {
+//                        //cardClasses.add((Class<? extends Card>) classReflect);
+//                    }
+//
+//                } else {
+//                    System.out.println("Does not extend from Card");
+//                }
+//
+//            } catch (ClassNotFoundException c) {
+//                c.printStackTrace();
+//            }
+//        }
 
         return cardClasses;
     }
