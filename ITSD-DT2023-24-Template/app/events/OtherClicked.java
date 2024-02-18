@@ -21,6 +21,7 @@ public class OtherClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		gameState.setLastMessage(GameState.noEvent);
 		BasicCommands.addPlayer1Notification(out, "No action available. Select a card, unit or tile.", 2);
 		gameState.getBoard().renderBoard(out); //resets board to base highlighting

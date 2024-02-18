@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
 import structures.GameState;
+import structures.basic.MoveableUnit;
 import structures.basic.Tile;
 
 /**
@@ -30,7 +31,7 @@ public class TileClicked implements EventProcessor{
 	 */
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		int tilex = message.get("tilex").asInt();
 		int tiley = message.get("tiley").asInt();
 		
@@ -45,7 +46,9 @@ public class TileClicked implements EventProcessor{
 					//if unit clicked was friendly.
 					if (gameState.getLastMessage().equals(GameState.noEvent)){
 						//insert logic about highlighting appropriate tiles for move/attack
-						//set last message to FriendlyUnitClicked
+						MoveableUnit unit = currentTile.getUnit();
+						System.out.println("Friendly unit clicked, test that it has detected");
+						unit.actionableTiles(out,gameState);
 
 					}else if(gameState.getLastMessage().equals(GameState.spellCardClicked)||gameState.getLastMessage().equals("CreatureCardClicked")){
 						//insert message to player saying card can't be played here
