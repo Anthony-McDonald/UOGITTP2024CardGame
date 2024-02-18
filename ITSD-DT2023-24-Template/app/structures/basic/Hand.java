@@ -115,7 +115,8 @@ public class Hand {
                         cardClasses.add((Class<? extends Card>) readClass);
                     }
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+//                    Uncommenting this will show every missing file still needing to be added
+//                    e.printStackTrace();
                 }
             }
         }
