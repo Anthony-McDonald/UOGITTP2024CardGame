@@ -48,17 +48,94 @@ public class Avatar implements MoveableUnit {
 	@Override
 	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
 		//insert logic about if move can occur
-		this.setLastTurnMoved(gameState.getTurnNumber());
-		gameState.setLastMessage(GameState.noEvent);
-		this.tile.setUnit(null);
-		tile.setUnit(this); //sets unit on tile in backend
-		gameState.getBoard().renderBoard(out);
-		BasicCommands.addPlayer1Notification(out, "moveUnitToTile", 3);
-		BasicCommands.moveUnitToTile(out, this.unit, tile);
-		try {Thread.sleep(4000);} catch (InterruptedException e) {e.printStackTrace();}
+		if (gameState.getTurnNumber()!= this.lastTurnMoved) { //hasn't moved this turn
+			if (this.canMove(tile, gameState.getBoard())) {
+				this.setLastTurnMoved(gameState.getTurnNumber());
+				gameState.setLastMessage(GameState.noEvent);
+				this.tile.setUnit(null);
+				tile.setUnit(this); //sets unit on tile in backend
+				gameState.getBoard().renderBoard(out);
+				BasicCommands.addPlayer1Notification(out, "Moving unit", 3);
+				BasicCommands.moveUnitToTile(out, this.unit, tile);
+				try {
+					Thread.sleep(4000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			} else {
+				BasicCommands.addPlayer1Notification(out, "Unit can't move here.", 3);
+				try {
+					Thread.sleep(250);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}else{ //has moved this turn
+			gameState.setLastMessage(GameState.noEvent);
+			BasicCommands.addPlayer1Notification(out, "Unit has already moved this turn.", 3);
+			try {
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 
 
 
+	}
+	public boolean canMove (Tile targetTile, Board board){ //method for determining if a unit can move to a tile
+		Tile currentTile = this.tile;
+		int xPos = currentTile.getTilex();
+		int yPos = currentTile.getTiley();
+		for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+			for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+				if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+					Tile highlightTile = board.getTile(i,j);
+					if (highlightTile.getUnit()==null){//tile has no unit, safe for highlighting
+						if (targetTile.equals(highlightTile) ){
+							return true;
+						}
+					}
+				}
+			}
+		}
+		//the below conditions are for highlighting directions +2 in cardinal directions for movement
+		if(xPos-2>=0){
+			if (board.getTile(xPos-1,yPos).getUnit() == null) { //if space - 1 is empty
+				Tile highlightTile = board.getTile(xPos-2, yPos);
+				if (targetTile.equals(highlightTile)&& highlightTile.getUnit() ==null){
+					return true;
+				}
+
+
+			}
+		}
+		if(xPos+2<=8){
+			if (board.getTile(xPos+1,yPos).getUnit() == null) { //if space + 1 is empty
+				Tile highlightTile = board.getTile(xPos+2, yPos);
+				if (targetTile.equals(highlightTile)&& highlightTile.getUnit() ==null){
+					return true;
+				}
+
+			}
+		}
+		if(yPos-2>=0){
+			if (board.getTile(xPos,yPos-1).getUnit() == null) { //if space - 1 is empty
+				Tile highlightTile = board.getTile(xPos, yPos-2);
+				if (targetTile.equals(highlightTile)&& highlightTile.getUnit() ==null){
+					return true;
+				}
+			}
+		}
+		if(yPos+2<=4){
+			if (board.getTile(xPos,yPos+1).getUnit() == null) { //if space + 1 is empty
+				Tile highlightTile = board.getTile(xPos, yPos+2);
+				if (targetTile.equals(highlightTile)&& highlightTile.getUnit() ==null){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -176,29 +253,37 @@ public class Avatar implements MoveableUnit {
 					//the below conditions are for highlighting directions +2 in cardinal directions for movement
 					if(xPos-2>=0){
 						if (board.getTile(xPos-1,yPos).getUnit() == null) { //if space - 1 is empty
-							Tile highlightTile = board.getTile(xPos-2, yPos);
-							BasicCommands.drawTile(out, highlightTile,1);
+							Tile highlightTile = board.getTile(xPos - 2, yPos);
+							if (highlightTile.getUnit() == null){
+								BasicCommands.drawTile(out, highlightTile, 1);
+							}
 
 						}
 					}
 					if(xPos+2<=8){
 						if (board.getTile(xPos+1,yPos).getUnit() == null) { //if space + 1 is empty
 							Tile highlightTile = board.getTile(xPos+2, yPos);
-							BasicCommands.drawTile(out, highlightTile,1);
+							if (highlightTile.getUnit() == null) {
+								BasicCommands.drawTile(out, highlightTile, 1);
+							}
 
 						}
 					}
 					if(yPos-2>=0){
 						if (board.getTile(xPos,yPos-1).getUnit() == null) { //if space - 1 is empty
 							Tile highlightTile = board.getTile(xPos, yPos-2);
-							BasicCommands.drawTile(out, highlightTile,1);
+							if (highlightTile.getUnit() == null) {
+								BasicCommands.drawTile(out, highlightTile, 1);
+							}
 
 						}
 					}
 					if(yPos+2<=4){
 						if (board.getTile(xPos,yPos+1).getUnit() == null) { //if space + 1 is empty
 							Tile highlightTile = board.getTile(xPos, yPos+2);
-							BasicCommands.drawTile(out, highlightTile,1);
+							if (highlightTile.getUnit() == null) {
+								BasicCommands.drawTile(out, highlightTile, 1);
+							}
 
 						}
 					}
