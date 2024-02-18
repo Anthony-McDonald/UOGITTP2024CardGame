@@ -42,6 +42,7 @@ public class Hand {
         this.getHand().remove(card);
     }
 
+    // Makes use of hashmap defined
     private Class<? extends Card> cardDifferentiator(Class<? extends Card> card) {
         for (Map.Entry<String, Class<? extends Card>> entry : this.getConvertMap().entrySet()) {
             String key = entry.getKey();
