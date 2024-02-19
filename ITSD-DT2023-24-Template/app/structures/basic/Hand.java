@@ -64,7 +64,7 @@ public class Hand {
     }
 
     private void fillHashMap() {
-        ArrayList<String> cardNamesFormatted = camelCaseifier(getCardNames());
+        ArrayList<String> cardNamesFormatted = formatAsClassifier(getCardNames());
         ArrayList<Class<? extends Card>> cardClassesExtendingCard = getCardClasses();
 
         for (Class<? extends Card> classReflected : cardClassesExtendingCard) {
@@ -128,22 +128,22 @@ public class Hand {
     }
 
 
-    private ArrayList<String> camelCaseifier(ArrayList<String> cardNames) {
+    private ArrayList<String> formatAsClassifier(ArrayList<String> cardNames) {
         ArrayList<String> arrayFormatted = new ArrayList<String>();
 
         for (String cardName : cardNames) {
-            StringBuilder camelify = new StringBuilder();
+            StringBuilder formatAsClass = new StringBuilder();
             String[] separateWords = cardName.split(" ");
 
-            camelify.append(separateWords[0].toLowerCase());
+            formatAsClass.append(separateWords[0].toUpperCase());
 
             for (int i = 1; i < separateWords.length; i++) {
                 String word = separateWords[i];
 
-                camelify.append(Character.toUpperCase(word.charAt(0)));
-                camelify.append(word.substring(1).toLowerCase());
+                formatAsClass.append(Character.toUpperCase(word.charAt(0)));
+                formatAsClass.append(word.substring(1).toLowerCase());
             }
-            arrayFormatted.add(camelify.toString());
+            arrayFormatted.add(formatAsClass.toString());
         }
         return arrayFormatted;
     }
