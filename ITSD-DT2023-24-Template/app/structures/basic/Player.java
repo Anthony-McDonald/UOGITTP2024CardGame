@@ -2,6 +2,7 @@ package structures.basic;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 
@@ -14,8 +15,8 @@ import java.util.ArrayList;
  */
 public class Player {
 
-	private ArrayList<Class<? extends Card>> hand = new ArrayList<>();
-	private ArrayList<Class<? extends Card>> discardPile = new ArrayList<>();
+	private ArrayList<Card> hand = new ArrayList<>();
+	private ArrayList<Card> discardPile = new ArrayList<>();
 	private int health;
 	private int mana;
     private boolean userOwned;
@@ -34,7 +35,7 @@ public class Player {
 		this.mana = mana;
 	}
 
-    public void setDiscardPile(ArrayList<Class<? extends Card>> discardPile) {
+    public void setDiscardPile(ArrayList<Card> discardPile) {
         this.discardPile = discardPile;
     }
 
@@ -47,31 +48,28 @@ public class Player {
 		this.handObject = handObject;
 	}
 
-	public ArrayList<Class<? extends Card>> getDiscardPile() {
+	public ArrayList<Card> getDiscardPile() {
 		return discardPile;
 	}
 
-	public void addToDiscardPile(Class<? extends Card> card) {
+	public void addToDiscardPile(Card card) {
 		this.discardPile.add(card);
 	}
 
-	public ArrayList<Class<? extends Card>> getHand() {
+	public ArrayList<Card> getHand() {
 		return hand;
 	}
 
-	public void setHand(ArrayList<Class<? extends Card>> hand) {
+	public void setHand(ArrayList<Card> hand) {
 		this.hand = hand;
 	}
 
-	public void addToHand(Class<? extends Card> card) {
+	public void addToHand(Card card) {
 		this.getHandObject().drawToHand(card);
 	}
 
-	private boolean isCardClass(Class<? extends  Card> card) {
-		return Card.class.isAssignableFrom(card);
-	}
 
-	public void removeCard(Class<? extends Card> card) {
+	public void removeCard(Card card) {
 		this.hand.remove(card);
 	}
 

@@ -43,17 +43,23 @@ public class Hand {
     }
 
     // Makes use of hashmap defined
-    private Class<? extends Card> cardDifferentiator(Class<? extends Card> card) {
-        for (Map.Entry<String, Class<? extends Card>> entry : this.getConvertMap().entrySet()) {
-            String key = entry.getKey();
-            if (card.getSimpleName().equals(key)) {
-                return this.getConvertMap().get(key);
+    private Card cardDifferentiator(Card card) {
+        String cardNameToGet = card.getCardname();
+
+        Class<? extends  Card> classReturned = this.getConvertMap().get(cardNameToGet);
+
+        if (classReturned != null) {
+            try {
+                return classReturned.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
+
         return null;
     }
 
-    public void drawToHand(Class<? extends Card> card) {
+    public void drawToHand(Card card) {
         int maxHandSize = 5;
 
         if (this.getHand().size() < maxHandSize) {
@@ -64,87 +70,101 @@ public class Hand {
     }
 
     private void fillHashMap() {
-        ArrayList<String> cardNamesFormatted = formatAsClassifier(getCardNames());
-        ArrayList<Class<? extends Card>> cardClassesExtendingCard = getCardClasses();
-
-        for (Class<? extends Card> classReflected : cardClassesExtendingCard) {
-            for (String cardName : cardNamesFormatted) {
-                if (classReflected.getSimpleName().equals(cardName)) {
-                    convertMap.put(cardName, classReflected);
-                }
-            }
-        }
+        this.getConvertMap().put("Bad Omen", BadOmen.class);
+        this.getConvertMap().put("Bloodmoon Priestess", BloodmoonPriestess.class);
+        this.getConvertMap().put("Truestrike", Truestrike.class);
+        this.getConvertMap().put("Horn of the Forsaken", HornOfTheForsaken.class);
+        this.getConvertMap().put("Silverguard Squire", SilverguardSquire.class);
+        this.getConvertMap().put("Silverguard Knight", SilverguardKnight.class);
+        this.getConvertMap().put("Shadowdancer", Shadowdancer.class);
+        this.getConvertMap().put("Wraithling Swarm", WraithlingSwarm.class);
+        this.getConvertMap().put("Nightsorrow Assassin", NightsorrowAssassin.class);
+        this.getConvertMap().put("Gloom Chaser", GloomChaser.class);
+        this.getConvertMap().put("Beamshock", Beamshock.class);
     }
 
-    private ArrayList<String> getCardNames() {
-        ArrayList<String> cardNames = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-        File cardJsonDirectory = new File("conf/gameconfs/cards");
+//    private void fillHashMap() {
+//        ArrayList<String> cardNamesFormatted = formatAsClassifier(getCardNames());
+//        ArrayList<Class<? extends Card>> cardClassesExtendingCard = getCardClasses();
+//
+//        for (Class<? extends Card> classReflected : cardClassesExtendingCard) {
+//            for (String cardName : cardNamesFormatted) {
+//                if (classReflected.getSimpleName().equals(cardName)) {
+//                    convertMap.put(cardName, classReflected);
+//                }
+//            }
+//        }
+//    }
 
-        File[] individualJsons = cardJsonDirectory.listFiles();
+//    private ArrayList<String> getCardNames() {
+//        ArrayList<String> cardNames = new ArrayList<>();
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        File cardJsonDirectory = new File("conf/gameconfs/cards");
+//
+//        File[] individualJsons = cardJsonDirectory.listFiles();
+//
+//        for (File cardJson : individualJsons) {
+//
+//            try {
+//                JsonNode node = objectMapper.readTree(cardJson);
+//
+//                String cardName = node.get("cardname").asText();
+//                cardNames.add(cardName);
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return cardNames;
+//    }
 
-        for (File cardJson : individualJsons) {
-
-            try {
-                JsonNode node = objectMapper.readTree(cardJson);
-
-                String cardName = node.get("cardname").asText();
-                cardNames.add(cardName);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return cardNames;
-    }
-
-    @SuppressWarnings("unchecked")
-    private ArrayList<Class<? extends Card>> getCardClasses() {
-        ArrayList<Class<? extends Card>> cardClasses = new ArrayList<>();
-
-//        // subject to change, directory here wrong atm
-        File cardClassDirectory = new File(".");
-        File[] classList = cardClassDirectory.listFiles();
-
-        if (cardClassDirectory != null) {
-            for (File cardClass : classList) {
-                String className = cardClass.getName().replace(".class", "");
-                try {
-                    Class<?> readClass = Class.forName(className);
-                    if (isCardSubclass(readClass)) {
-                        cardClasses.add((Class<? extends Card>) readClass);
-                    }
-                } catch (ClassNotFoundException e) {
-//                    Uncommenting this will show every missing file still needing to be added
-//                    e.printStackTrace();
-                }
-            }
-        }
-
-        return cardClasses;
-    }
-    private boolean isCardSubclass(Class<?> clazz) {
-        return Card.class.isAssignableFrom(clazz);
-    }
+//    @SuppressWarnings("unchecked")
+//    private ArrayList<Class<? extends Card>> getCardClasses() {
+//        ArrayList<Class<? extends Card>> cardClasses = new ArrayList<>();
+//
+////        // subject to change, directory here wrong atm
+//        File cardClassDirectory = new File(".");
+//        File[] classList = cardClassDirectory.listFiles();
+//
+//        if (cardClassDirectory != null) {
+//            for (File cardClass : classList) {
+//                String className = cardClass.getName().replace(".class", "");
+//                try {
+//                    Class<?> readClass = Class.forName(className);
+//                    if (isCardSubclass(readClass)) {
+//                        cardClasses.add((Class<? extends Card>) readClass);
+//                    }
+//                } catch (ClassNotFoundException e) {
+////                    Uncommenting this will show every missing file still needing to be added
+////                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//        return cardClasses;
+//    }
+//    private boolean isCardSubclass(Class<?> clazz) {
+//        return Card.class.isAssignableFrom(clazz);
+//    }
 
 
-    private ArrayList<String> formatAsClassifier(ArrayList<String> cardNames) {
-        ArrayList<String> arrayFormatted = new ArrayList<String>();
-
-        for (String cardName : cardNames) {
-            StringBuilder formatAsClass = new StringBuilder();
-            String[] separateWords = cardName.split(" ");
-
-            formatAsClass.append(separateWords[0].toUpperCase());
-
-            for (int i = 1; i < separateWords.length; i++) {
-                String word = separateWords[i];
-
-                formatAsClass.append(Character.toUpperCase(word.charAt(0)));
-                formatAsClass.append(word.substring(1).toLowerCase());
-            }
-            arrayFormatted.add(formatAsClass.toString());
-        }
-        return arrayFormatted;
-    }
+//    private ArrayList<String> formatAsClassifier(ArrayList<String> cardNames) {
+//        ArrayList<String> arrayFormatted = new ArrayList<String>();
+//
+//        for (String cardName : cardNames) {
+//            StringBuilder formatAsClass = new StringBuilder();
+//            String[] separateWords = cardName.split(" ");
+//
+//            formatAsClass.append(separateWords[0].toUpperCase());
+//
+//            for (int i = 1; i < separateWords.length; i++) {
+//                String word = separateWords[i];
+//
+//                formatAsClass.append(Character.toUpperCase(word.charAt(0)));
+//                formatAsClass.append(word.substring(1).toLowerCase());
+//            }
+//            arrayFormatted.add(formatAsClass.toString());
+//        }
+//        return arrayFormatted;
+//    }
 }
