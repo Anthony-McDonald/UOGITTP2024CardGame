@@ -8,6 +8,7 @@ import structures.basic.MoveableUnit;
 import structures.basic.Player;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+import utils.UnitCommands;
 
 public class Avatar implements MoveableUnit {
     private int maxHealth;
@@ -41,38 +42,7 @@ public class Avatar implements MoveableUnit {
 
 	@Override
 	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
-		MoveableUnit m = tile.getUnit();
-		//insert logic about if attack is possible.
-		if (this.lastTurnAttacked != gameState.getTurnNumber()) {
-			if (this.canAttack(tile, gameState.getBoard())) {
-				this.lastTurnAttacked = gameState.getTurnNumber();
-				int enemyHealth = m.getCurrentHealth();
-				BasicCommands.playUnitAnimation(out, this.unit, UnitAnimationType.attack); //attack animation
-				enemyHealth = enemyHealth - this.attack;
-				m.setCurrentHealth(enemyHealth, out);
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				if (enemyHealth > 0) { //if enemy is alive, counterattack
-					BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.attack);//unit attack animation
-					this.setCurrentHealth((this.currentHealth - m.getAttack()), out);
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				gameState.setLastMessage(GameState.noEvent);
-			} else {
-				//attack not possible on this unit, inform user.
-				//
-			}
-		}else{
-			//already attacked this turn
-			gameState.setLastMessage(GameState.noEvent);
-		}
+		UnitCommands.attackUnit(this, out, tile, gameState);
 	}
 
 	public boolean canAttack (Tile targetTile, Board board){
