@@ -41,8 +41,54 @@ public class Avatar implements MoveableUnit {
 
 	@Override
 	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
-		// TODO Auto-generated method stub
-		
+		MoveableUnit m = tile.getUnit();
+		//insert logic about if attack is possible.
+		if (this.lastTurnAttacked != gameState.getTurnNumber()) {
+			if (this.canAttack(tile, gameState.getBoard())) {
+				int enemyHealth = m.getCurrentHealth();
+				BasicCommands.playUnitAnimation(out, this.unit, UnitAnimationType.attack); //attack animation
+				enemyHealth = enemyHealth - this.attack;
+				m.setCurrentHealth(enemyHealth, out);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if (enemyHealth > 0) { //if enemy is alive, counterattack
+					BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.attack);//unit attack animation
+					this.setCurrentHealth((this.currentHealth - m.getAttack()), out);
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			} else {
+				//attack not possible on this unit, inform user.
+			}
+		}else{
+			 //already attacked this turn
+		}
+	}
+
+	public boolean canAttack (Tile targetTile, Board board){
+		Tile currentTile = this.tile;
+		int xPos = currentTile.getTilex();
+		int yPos = currentTile.getTiley();
+		for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+			for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+				if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+					Tile highlightTile = board.getTile(i,j);
+					if (highlightTile.getUnit()!=null && highlightTile.getUnit().isUserOwned()!=this.userOwned){
+						//if tile has unit and unit is enemy
+						if (targetTile.equals(highlightTile) ){
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
