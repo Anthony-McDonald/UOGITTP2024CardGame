@@ -45,6 +45,7 @@ public class Avatar implements MoveableUnit {
 		//insert logic about if attack is possible.
 		if (this.lastTurnAttacked != gameState.getTurnNumber()) {
 			if (this.canAttack(tile, gameState.getBoard())) {
+				this.lastTurnAttacked = gameState.getTurnNumber();
 				int enemyHealth = m.getCurrentHealth();
 				BasicCommands.playUnitAnimation(out, this.unit, UnitAnimationType.attack); //attack animation
 				enemyHealth = enemyHealth - this.attack;
