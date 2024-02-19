@@ -5,6 +5,7 @@ import commands.BasicCommands;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import structures.GameState;
+import utils.UnitCommands;
 
 public class Wraithling implements MoveableUnit{
 	private int maxHealth;
@@ -26,24 +27,13 @@ public class Wraithling implements MoveableUnit{
 	
 	@Override
 	public void attackUnit(ActorRef out, Tile tile, GameState gameState) {
-		MoveableUnit m = tile.getUnit();
-		//insert logic about if attack is possible.
-		int enemyHealth = m.getCurrentHealth();
-		BasicCommands.playUnitAnimation(out, this.unit, UnitAnimationType.attack); //attack animation
-		enemyHealth = enemyHealth - this.attack;
-		m.setCurrentHealth(enemyHealth, out);
-		if (enemyHealth>0){ //if enemy is alive, counterattack
-			BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.attack);//unit attack animation
-			this.setCurrentHealth((this.currentHealth-m.getAttack()),out);
-		}
+		UnitCommands.attackUnit(this, out, tile,gameState);
 		
 	}
 
 	@Override
 	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
-		BasicCommands.moveUnitToTile(out, this.unit, tile); //front end rendering
-		tile.setUnit(this); //sets tiles unit to be this.
-		
+		UnitCommands.moveUnit(this,out,tile,gameState);
 	}
 
 	@Override
