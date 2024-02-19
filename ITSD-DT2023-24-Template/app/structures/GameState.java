@@ -76,6 +76,7 @@ public class GameState {
 
 	public void setLastMessage(String lastMessage) {
 		this.lastMessage = lastMessage;
+		System.out.println(this.lastMessage);
 	}
 
 	public boolean isGameInitalised() {
