@@ -3,8 +3,10 @@ package structures.basic;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import org.checkerframework.checker.units.qual.C;
+import utils.OrderedCardLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A basic representation of the Player. A player
@@ -17,10 +19,14 @@ public class Player {
 
 	private ArrayList<Card> hand = new ArrayList<>();
 	private ArrayList<Card> discardPile = new ArrayList<>();
+
+	private List<Card> playerDeck = new ArrayList<>();
 	private int health;
 	private int mana;
     private boolean userOwned;
     private Hand handObject;
+
+	private OrderedCardLoader orderedCardLoader = new OrderedCardLoader();
 
 	public Player(boolean userOwned) {
 		super();
@@ -28,6 +34,12 @@ public class Player {
 		this.mana = 0;
         this.userOwned = userOwned;
         this.handObject = new Hand(this);
+
+		if (userOwned) {
+			this.playerDeck = OrderedCardLoader.getPlayer1Cards(1);
+		} else {
+			this.playerDeck = OrderedCardLoader.getPlayer2Cards(1);
+		}
 	}
 	public Player(int health, int mana) {
 		super();
@@ -38,6 +50,20 @@ public class Player {
     public void setDiscardPile(ArrayList<Card> discardPile) {
         this.discardPile = discardPile;
     }
+
+	public void printDeck() {
+		for (Card card : this.getPlayerDeck()) {
+			System.out.println(card.getCardname());
+		}
+	}
+
+	public List<Card> getPlayerDeck() {
+		return playerDeck;
+	}
+
+	public void setPlayerDeck(List<Card> playerDeck) {
+		this.playerDeck = playerDeck;
+	}
 
 	public Hand getHandObject() {
 		return handObject;

@@ -9,7 +9,10 @@ import demo.Loaders_2024_Check;
 import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
+import utils.OrderedCardLoader;
 import utils.StaticConfFiles;
+
+import java.util.ArrayList;
 
 /**
  * Indicates that both the core game loop in the browser is starting, meaning
@@ -26,6 +29,7 @@ public class Initalize implements EventProcessor{
 	public static void main(String[] args) {
 		Player testPlayer = new Player (true);
 		Avatar avatar = new Avatar(testPlayer);
+
 		System.out.println(avatar.getAttack());
 		System.out.println(avatar.getCurrentHealth());
 	}

@@ -71,16 +71,26 @@ public class Hand {
 
     private void fillHashMap() {
         this.getConvertMap().put("Bad Omen", BadOmen.class);
-        this.getConvertMap().put("Bloodmoon Priestess", BloodmoonPriestess.class);
-        this.getConvertMap().put("Truestrike", Truestrike.class);
         this.getConvertMap().put("Horn of the Forsaken", HornOfTheForsaken.class);
-        this.getConvertMap().put("Silverguard Squire", SilverguardSquire.class);
-        this.getConvertMap().put("Silverguard Knight", SilverguardKnight.class);
-        this.getConvertMap().put("Shadowdancer", Shadowdancer.class);
+        this.getConvertMap().put("Gloom Chaser", GloomChaser.class);
+        this.getConvertMap().put("Shadow Watcher", ShadowWatcher.class);
         this.getConvertMap().put("Wraithling Swarm", WraithlingSwarm.class);
         this.getConvertMap().put("Nightsorrow Assassin", NightsorrowAssassin.class);
-        this.getConvertMap().put("Gloom Chaser", GloomChaser.class);
+        this.getConvertMap().put("Rock Pulveriser", RockPulveriser.class);
+        this.getConvertMap().put("Dark Terminus", DarkTerminus.class);
+        this.getConvertMap().put("Bloodmoon Priestess", BloodmoonPriestess.class);
+        this.getConvertMap().put("Shadowdancer", Shadowdancer.class);
+        // Should be bot
+        this.getConvertMap().put("Skyrock Golem", SkyrockGolem.class);
+        this.getConvertMap().put("Swamp Entangler", SwampEntangler.class);
+        this.getConvertMap().put("Silverguard Knight", SilverguardKnight.class);
+        this.getConvertMap().put("Saberspine Tiger", SaberspineTiger.class);
         this.getConvertMap().put("Beamshock", Beamshock.class);
+        this.getConvertMap().put("Young Flamewing", YoungFlamewing.class);
+        this.getConvertMap().put("Silverguard Squire", SilverguardSquire.class);
+        this.getConvertMap().put("Ironcliff Guardian", IroncliffGuardian.class);
+        this.getConvertMap().put("Sundrop Elixir", SundropElixir.class);
+        this.getConvertMap().put("Truestrike", Truestrike.class);
     }
 
 //    private void fillHashMap() {
