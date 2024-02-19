@@ -60,7 +60,10 @@ public class TileClicked implements EventProcessor{
 					//if unit clicked was enemy
 					if (gameState.getLastMessage().equals(GameState.friendlyUnitClicked)){
 						//initiate attack logic
-						//set last message to NoEvent
+
+						MoveableUnit attacker = gameState.getLastUnitClicked();
+						attacker.attackUnit(out, currentTile,gameState);
+
 					}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)){
 						//maybe we change for specific spell cards since there are only 3?
 						//if Dark Terminus, place logic here

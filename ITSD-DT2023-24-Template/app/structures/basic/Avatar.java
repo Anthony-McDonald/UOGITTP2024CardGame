@@ -63,11 +63,14 @@ public class Avatar implements MoveableUnit {
 						e.printStackTrace();
 					}
 				}
+				gameState.setLastMessage(GameState.noEvent);
 			} else {
 				//attack not possible on this unit, inform user.
+				//
 			}
 		}else{
-			 //already attacked this turn
+			//already attacked this turn
+			gameState.setLastMessage(GameState.noEvent);
 		}
 	}
 
