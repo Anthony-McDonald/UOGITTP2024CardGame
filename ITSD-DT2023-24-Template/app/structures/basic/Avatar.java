@@ -45,25 +45,7 @@ public class Avatar implements MoveableUnit {
 		UnitCommands.attackUnit(this, out, tile, gameState);
 	}
 
-	public boolean canAttack (Tile targetTile, Board board){
-		Tile currentTile = this.tile;
-		int xPos = currentTile.getTilex();
-		int yPos = currentTile.getTiley();
-		for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
-			for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
-				if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
-					Tile highlightTile = board.getTile(i,j);
-					if (highlightTile.getUnit()!=null && highlightTile.getUnit().isUserOwned()!=this.userOwned){
-						//if tile has unit and unit is enemy
-						if (targetTile.equals(highlightTile) ){
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
+
 
 	@Override
 	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
