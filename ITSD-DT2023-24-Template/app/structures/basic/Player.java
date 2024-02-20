@@ -2,10 +2,8 @@ package structures.basic;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
-import org.checkerframework.checker.units.qual.C;
 import utils.OrderedCardLoader;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +24,7 @@ public class Player {
 	private int health;
 	private int mana;
     private boolean userOwned;
-    private Hand handObject;
+    private CardConverter cardConverterObject;
 
 	private final OrderedCardLoader orderedCardLoader = new OrderedCardLoader();
 
@@ -35,7 +33,7 @@ public class Player {
 		this.health = 20;
 		this.mana = 0;
         this.userOwned = userOwned;
-        this.handObject = new Hand(this);
+        this.cardConverterObject = new CardConverter(this);
 
 		if (userOwned) {
 			this.playerDeck = OrderedCardLoader.getPlayer1Cards(2);
@@ -99,13 +97,13 @@ public class Player {
 		this.playerDeck = playerDeck;
 	}
 
-	public Hand getHandObject() {
-		return handObject;
+	public CardConverter getHandObject() {
+		return cardConverterObject;
 	}
 
 
-	public void setHandObject(Hand handObject) {
-		this.handObject = handObject;
+	public void setHandObject(CardConverter cardConverterObject) {
+		this.cardConverterObject = cardConverterObject;
 	}
 
 	public ArrayList<Card> getDiscardPile() {

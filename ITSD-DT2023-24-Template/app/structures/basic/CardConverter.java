@@ -1,21 +1,13 @@
 package structures.basic;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import scala.Int;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-
-public class Hand {
+public class CardConverter {
     private ArrayList<Card> hand = new ArrayList<>();
     private HashMap<String, Class<? extends Card>> convertMap = new HashMap<>();
     private HashMap<String, Unit> unitMap = new HashMap<>();
@@ -23,7 +15,7 @@ public class Hand {
     private HashMap<String, ArrayList<Integer>> valueMap = new HashMap<>();
     Player player;
 
-    public Hand(Player player) {
+    public CardConverter(Player player) {
         this.player = player;
         this.fillHashMaps();
     }
