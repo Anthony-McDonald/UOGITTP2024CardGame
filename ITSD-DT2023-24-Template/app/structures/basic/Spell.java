@@ -92,6 +92,10 @@ public class Spell extends Card {
 	public void spellEffect(MoveableUnit unit){
 		
 	}
+
+	public void spellEffect(Tile tile) {
+
+	}
 	
 	public void spellEffect(){
 		

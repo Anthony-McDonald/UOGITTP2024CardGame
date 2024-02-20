@@ -9,4 +9,8 @@ public class WraithlingSwarm extends Spell{
     public WraithlingSwarm(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, boolean isUserOwned) {
         super(id, cardname, manacost, miniCard, bigCard, isCreature, isUserOwned);
     }
+
+    public void spellEffect(){
+
+    }
 }

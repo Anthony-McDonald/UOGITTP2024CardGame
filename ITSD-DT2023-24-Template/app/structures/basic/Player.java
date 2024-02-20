@@ -200,7 +200,7 @@ public class Player {
 			if (cardSelected.isCreature) {
 //			summonCreature(cardSelected);
 			} else {
-//			useSpellEffect(cardSelected);
+				((Spell) cardSelected).spellEffect();
 			}
 		} else {
 			System.out.println("Player does not have enough mana");
