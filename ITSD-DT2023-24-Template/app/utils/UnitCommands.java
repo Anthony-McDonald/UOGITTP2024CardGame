@@ -190,6 +190,8 @@ public class UnitCommands {
                                 } else if (highlightTile.getUnit() instanceof Provoke) {
                                     BasicCommands.drawTile(out,highlightTile, 2);
                                     hasProvokeAdjacent = true;
+                                    BasicCommands.addPlayer1Notification(out, "This unit is within range of a Provoke ability. Cannot move & can only attack provokers.", 2);
+
                                 }
                             }
                         }

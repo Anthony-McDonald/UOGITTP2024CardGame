@@ -116,7 +116,7 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	public void actionableTiles(ActorRef out, GameState gameState){
-
+		UnitCommands.actionableTiles(this, out, gameState);
 	}
 
 	public Tile getTile() {
