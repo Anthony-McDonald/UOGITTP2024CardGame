@@ -4,6 +4,26 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import allCards.BadOmen;
+import allCards.Beamshock;
+import allCards.BloodmoonPriestess;
+import allCards.DarkTerminus;
+import allCards.GloomChaser;
+import allCards.HornOfTheForsaken;
+import allCards.IroncliffGuardian;
+import allCards.NightsorrowAssassin;
+import allCards.RockPulveriser;
+import allCards.SaberspineTiger;
+import allCards.ShadowWatcher;
+import allCards.Shadowdancer;
+import allCards.SilverguardKnight;
+import allCards.SilverguardSquire;
+import allCards.SkyrockGolem;
+import allCards.SundropElixir;
+import allCards.SwampEntangler;
+import allCards.Truestrike;
+import allCards.WraithlingSwarm;
+import allCards.YoungFlamewing;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 

@@ -4,12 +4,9 @@ import akka.actor.ActorRef;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import commands.BasicCommands;
 import structures.GameState;
-<<<<<<< HEAD
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
-=======
 import utils.UnitCommands;
->>>>>>> 3294e50edf308eed0b58e7170d0cf89fdf80507a
 
 public class Creature extends Card implements MoveableUnit {
 
