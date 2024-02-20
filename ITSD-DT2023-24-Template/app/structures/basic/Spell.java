@@ -6,6 +6,8 @@ public class Spell extends Card {
 		
 	}
 
+
+
 	public void spellEffect(MoveableUnit unit){
 		
 	}

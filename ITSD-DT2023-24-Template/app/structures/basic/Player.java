@@ -2,8 +2,11 @@ package structures.basic;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import utils.OrderedCardLoader;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A basic representation of the Player. A player
@@ -14,19 +17,37 @@ import java.util.ArrayList;
  */
 public class Player {
 
-	private ArrayList<Class<? extends Card>> hand = new ArrayList<>();
-	private ArrayList<Class<? extends Card>> discardPile = new ArrayList<>();
+	private ArrayList<Card> hand = new ArrayList<>();
+	private ArrayList<Card> discardPile = new ArrayList<>();
+
+	private List<Card> playerDeck = new ArrayList<>();
 	private int health;
 	private int mana;
     private boolean userOwned;
-    private Hand handObject;
+    private CardConverter cardConverterObject;
+
+	private final OrderedCardLoader orderedCardLoader = new OrderedCardLoader();
 
 	public Player(boolean userOwned) {
 		super();
 		this.health = 20;
 		this.mana = 0;
         this.userOwned = userOwned;
-        this.handObject = new Hand(this);
+        this.cardConverterObject = new CardConverter(this);
+
+		if (userOwned) {
+			this.playerDeck = OrderedCardLoader.getPlayer1Cards(2);
+		} else {
+			this.playerDeck = OrderedCardLoader.getPlayer2Cards(2);
+		}
+
+		this.playerDeck = shuffleCards(convertDeck());
+
+		int startingHandSize = 3;
+		for (int i = 0; i < startingHandSize; i++) {
+			drawCard();
+		}
+
 	}
 	public Player(int health, int mana) {
 		super();
@@ -34,44 +55,101 @@ public class Player {
 		this.mana = mana;
 	}
 
-    public void setDiscardPile(ArrayList<Class<? extends Card>> discardPile) {
+    public void setDiscardPile(ArrayList<Card> discardPile) {
         this.discardPile = discardPile;
     }
 
-	public Hand getHandObject() {
-		return handObject;
+	private List<Card> convertDeck() {
+		List<Card> internalList = this.getPlayerDeck();
+
+		for (int i = 0; i < this.getPlayerDeck().size(); i++) {
+			internalList.set(i, this.getHandObject().cardDifferentiator(internalList.get(i)));
+		}
+
+		return internalList;
+	}
+
+	private List<Card> shuffleCards(List<Card> cardList) {
+//		System.out.println("BEFORE SHUFFLE");
+//		for (Card card : cardList) {
+//			System.out.println(card);
+//		}
+		List<Card> internalList = cardList;
+		Collections.shuffle(internalList);
+		return internalList;
+	}
+
+	public void printDeck() {
+		for (Card card : this.getPlayerDeck()) {
+			if (card != null) {
+				System.out.println(card.getClass() + " main ");
+			} else {
+				System.out.println("card is null");
+			}
+		}
+	}
+
+	public List<Card> getPlayerDeck() {
+		return playerDeck;
+	}
+
+	public void setPlayerDeck(List<Card> playerDeck) {
+		this.playerDeck = playerDeck;
+	}
+
+	public CardConverter getHandObject() {
+		return cardConverterObject;
 	}
 
 
-	public void setHandObject(Hand handObject) {
-		this.handObject = handObject;
+	public void setHandObject(CardConverter cardConverterObject) {
+		this.cardConverterObject = cardConverterObject;
 	}
 
-	public ArrayList<Class<? extends Card>> getDiscardPile() {
+	public ArrayList<Card> getDiscardPile() {
 		return discardPile;
 	}
 
-	public void addToDiscardPile(Class<? extends Card> card) {
+	public void addToDiscardPile(Card card) {
 		this.discardPile.add(card);
 	}
 
-	public ArrayList<Class<? extends Card>> getHand() {
+	public ArrayList<Card> getHand() {
 		return hand;
 	}
 
-	public void setHand(ArrayList<Class<? extends Card>> hand) {
+	public void setHand(ArrayList<Card> hand) {
 		this.hand = hand;
 	}
 
-	public void addToHand(Class<? extends Card> card) {
-		this.getHandObject().drawToHand(card);
+	public void drawCard() {
+		if (this.getPlayerDeck().size() > 0 ) {
+			Card cardAtTopOfDeck = this.getPlayerDeck().get(this.getPlayerDeck().size() - 1);
+
+			if (this.getHand().size() < 5) {
+				this.getHand().add(cardAtTopOfDeck);
+			} else {
+				this.getDiscardPile().add(cardAtTopOfDeck);
+			}
+			this.getPlayerDeck().remove(this.getPlayerDeck().size() - 1);
+		} else {
+			System.out.println("deck is empty");
+		}
+
 	}
 
-	private boolean isCardClass(Class<? extends  Card> card) {
-		return Card.class.isAssignableFrom(card);
+	public void printHand() {
+		System.out.println("===HANDPRINT===");
+		for (Card card : this.getHand()) {
+			System.out.println(card);
+		}
+		System.out.println("===HANDPRINT-DONE===");
 	}
 
-	public void removeCard(Class<? extends Card> card) {
+
+
+
+	public void removeCard(Card card) {
 		this.hand.remove(card);
 	}
 
