@@ -26,7 +26,7 @@ public class Player {
     private boolean userOwned;
     private Hand handObject;
 
-	private OrderedCardLoader orderedCardLoader = new OrderedCardLoader();
+	private final OrderedCardLoader orderedCardLoader = new OrderedCardLoader();
 
 	public Player(boolean userOwned) {
 		super();
@@ -36,10 +36,12 @@ public class Player {
         this.handObject = new Hand(this);
 
 		if (userOwned) {
-			this.playerDeck = OrderedCardLoader.getPlayer1Cards(1);
+			this.playerDeck = OrderedCardLoader.getPlayer1Cards(2);
 		} else {
-			this.playerDeck = OrderedCardLoader.getPlayer2Cards(1);
+			this.playerDeck = OrderedCardLoader.getPlayer2Cards(2);
 		}
+
+		this.playerDeck = convertDeck();
 	}
 	public Player(int health, int mana) {
 		super();
@@ -51,9 +53,20 @@ public class Player {
         this.discardPile = discardPile;
     }
 
+	private List<Card> convertDeck() {
+		List<Card> internalList = this.getPlayerDeck();
+
+		for (int i = 0; i < this.getPlayerDeck().size(); i++) {
+//			internalList.set(i, this.getHandObject().cardDifferentiator(internalList.get(i)));
+		}
+
+		return internalList;
+	}
+
 	public void printDeck() {
 		for (Card card : this.getPlayerDeck()) {
-			System.out.println(card.getCardname());
+			System.out.println(card.getClass());
+			System.out.println(card.getManacost());
 		}
 	}
 
