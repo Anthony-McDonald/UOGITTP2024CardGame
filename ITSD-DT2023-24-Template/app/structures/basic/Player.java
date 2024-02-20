@@ -161,10 +161,9 @@ public class Player {
 
 		for (Card card : this.getHand()) {
 			System.out.println(card);
-			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 			BasicCommands.drawCard(GameActor.out, card, this.getHand().size() + 1, 0);
 		}
-		System.out.println(this.getPlayerDeck().size());
+//		System.out.println(this.getPlayerDeck().size());
 	}
 
 	public Card getLastCardClickedCard() {
@@ -182,7 +181,6 @@ public class Player {
 		Card cardSelected = this.getHand().get(handPosition - 2);
 
 		if(this.getLastCardClickedCard() != cardSelected) {
-			System.out.println("wiping");
 			BasicCommands.drawCard(GameActor.out, this.getLastCardClickedCard(), this.getLastCardClickedIndex(), 0);
 		}
 
@@ -191,20 +189,23 @@ public class Player {
 		this.setLastCardClickedIndex(handPosition);
 
 
-//		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-//		BasicCommands.drawCard(GameActor.out, cardSelected, handPosition, 0);
-
 	}
 
 	public void playCard(int handPosition) {
 		Card cardSelected = this.getHand().get(handPosition - 2);
-		BasicCommands.deleteCard(GameActor.out, handPosition);
-		if (cardSelected.isCreature) {
+
+		if (this.getMana() >= cardSelected.getManacost()) {
+			this.setMana(this.getMana() - cardSelected.getManacost(), GameActor.out);
+			BasicCommands.deleteCard(GameActor.out, handPosition);
+			if (cardSelected.isCreature) {
 //			summonCreature(cardSelected);
-		} else {
+			} else {
 //			useSpellEffect(cardSelected);
+			}
+		} else {
+			System.out.println("Player does not have enough mana");
 		}
-//		System.out.println(cardSelected);
+
 
 	}
 

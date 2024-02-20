@@ -33,7 +33,7 @@ public class CardClicked implements EventProcessor{
 			player1.highlightCardInHand(handPosition);
 		}
 
-		player1.playCard(handPosition);
+//		player1.playCard(handPosition);
 		System.out.println(gameState.getLastMessage());
 		
 		
