@@ -9,4 +9,6 @@ public interface Provoke {
  Silverguard Knight
  Ironcliffe Guardian
  */
+	
+	public void provoke();
 }

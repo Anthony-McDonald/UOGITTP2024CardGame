@@ -5,8 +5,10 @@ import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.Board;
 import structures.basic.MoveableUnit;
+import structures.basic.Provoke;
 import structures.basic.Tile;
 import structures.basic.UnitAnimationType;
+import structures.basic.Unit;
 
 public class UnitCommands {
     public static void attackUnit(MoveableUnit attacker, ActorRef out, Tile tile, GameState gameState) {
@@ -174,6 +176,10 @@ public class UnitCommands {
                     //highlighting for moving (white)
                     gameState.setLastUnitClicked(mover);
                     gameState.setLastMessage(GameState.friendlyUnitClicked);
+                    
+                    boolean hasProvokeAdjacent = false;
+                    
+                    //Loop through adjacent squares
                     for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
                         for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
                             if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
@@ -181,6 +187,9 @@ public class UnitCommands {
                                 if (highlightTile.getUnit()==null){//tile has no unit, safe for highlighting
                                     BasicCommands.drawTile(out,highlightTile, 1);
 //									System.out.println(i + " " + j);
+                                } else if (highlightTile.getUnit() instanceof Provoke) {
+                                    BasicCommands.drawTile(out,highlightTile, 2);
+                                    hasProvokeAdjacent = true;
                                 }
                             }
                         }
