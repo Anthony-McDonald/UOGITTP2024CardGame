@@ -57,7 +57,7 @@ public class Player {
 		List<Card> internalList = this.getPlayerDeck();
 
 		for (int i = 0; i < this.getPlayerDeck().size(); i++) {
-//			internalList.set(i, this.getHandObject().cardDifferentiator(internalList.get(i)));
+			internalList.set(i, this.getHandObject().cardDifferentiator(internalList.get(i)));
 		}
 
 		return internalList;
@@ -65,8 +65,11 @@ public class Player {
 
 	public void printDeck() {
 		for (Card card : this.getPlayerDeck()) {
-			System.out.println(card.getClass());
-			System.out.println(card.getManacost());
+			if (card != null) {
+				System.out.println(card.getClass() + " main ");
+			} else {
+				System.out.println("card is null");
+			}
 		}
 	}
 
