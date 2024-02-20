@@ -1,4 +1,9 @@
-package structures.basic;
+package allCards;
+
+import structures.basic.BigCard;
+import structures.basic.Creature;
+import structures.basic.MiniCard;
+import structures.basic.Unit;
 
 public class ShadowWatcher extends Creature{
 
