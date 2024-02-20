@@ -1,5 +1,6 @@
 package events;
 
+import actors.GameActor;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
@@ -26,6 +27,7 @@ public class OtherClicked implements EventProcessor{
 		gameState.setLastMessage(GameState.noEvent);
 		BasicCommands.addPlayer1Notification(out, "No action available. Select a card, unit or tile.", 2);
 		gameState.getBoard().renderBoard(out); //resets board to base highlighting
+		GameActor.gameState.getPlayer1().unhighlightAllCards();
 //		Player player = new Player(true);
 //		player.printDeck();
 //		System.out.println("===handlogic===");

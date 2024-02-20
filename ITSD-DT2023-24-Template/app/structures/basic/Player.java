@@ -175,6 +175,9 @@ public class Player {
 		this.lastCardClickedCard = lastCardClickedCard;
 	}
 
+	public void unhighlightAllCards() {
+		BasicCommands.drawCard(GameActor.out, this.getLastCardClickedCard(), this.getLastCardClickedIndex(), 0);
+	}
 	public void highlightCardInHand(int handPosition) {
 		Card cardSelected = this.getHand().get(handPosition - 2);
 
@@ -195,7 +198,13 @@ public class Player {
 
 	public void playCard(int handPosition) {
 		Card cardSelected = this.getHand().get(handPosition - 2);
-		System.out.println(cardSelected);
+		BasicCommands.deleteCard(GameActor.out, handPosition);
+		if (cardSelected.isCreature) {
+//			summonCreature(cardSelected);
+		} else {
+//			useSpellEffect(cardSelected);
+		}
+//		System.out.println(cardSelected);
 
 	}
 
