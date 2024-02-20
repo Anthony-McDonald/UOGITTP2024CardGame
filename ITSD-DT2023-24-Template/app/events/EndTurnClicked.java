@@ -1,5 +1,6 @@
 package events;
 
+import actors.GameActor;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
@@ -27,6 +28,13 @@ public class EndTurnClicked implements EventProcessor{
 		//remove player 2's unspent mana
 		//insert draw card for each player
 		gameState.setTurnNumber(gameState.getTurnNumber()+1); //increase turnNumber
+		Player player1 = GameActor.gameState.getPlayer1();
+//		System.out.println("---");
+//		System.out.println(player1.getHand());
+		player1.drawCard();
+//		System.out.println(player1.getHand());
+//		System.out.println(GameActor.out);
+
 		//increase both players mana by (turn number+1)
 		String nextTurnMessage = "It's now turn " + gameState.getTurnNumber() + "! Make your moves.";
 		BasicCommands.addPlayer1Notification(out, nextTurnMessage, 2 );

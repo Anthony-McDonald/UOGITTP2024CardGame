@@ -1,5 +1,6 @@
 package structures.basic;
 
+import actors.GameActor;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import utils.OrderedCardLoader;
@@ -41,12 +42,12 @@ public class Player {
 			this.playerDeck = OrderedCardLoader.getPlayer2Cards(2);
 		}
 
-		this.playerDeck = shuffleCards(convertDeck());
+		this.playerDeck = convertDeck();
 
 		int startingHandSize = 3;
-		for (int i = 0; i < startingHandSize; i++) {
-			drawCard();
-		}
+//		for (int i = 0; i < startingHandSize; i++) {
+//			drawCard();
+//		}
 
 	}
 	public Player(int health, int mana) {
@@ -128,6 +129,8 @@ public class Player {
 
 			if (this.getHand().size() < 5) {
 				this.getHand().add(cardAtTopOfDeck);
+				renderHand();
+
 			} else {
 				this.getDiscardPile().add(cardAtTopOfDeck);
 			}
@@ -136,6 +139,13 @@ public class Player {
 			System.out.println("deck is empty");
 		}
 
+	}
+
+	public void renderHand() {
+		for (int i  = 0; i < this.getHand().size(); i++) {
+			System.out.println("attempting to put " + this.getHand().get(i) + " into hand");
+			BasicCommands.drawCard(GameActor.out, this.getHand().get(i), this.getHand().size(), 0);
+		}
 	}
 
 	public void printHand() {

@@ -51,6 +51,9 @@ public class Initalize implements EventProcessor{
 		//code for setting mana and health
 		int manaGained = gameState.getTurnNumber()+1;
 		Player player1 = gameState.getPlayer1();
+		player1.drawCard();
+		player1.drawCard();
+		player1.drawCard();
 		player1.setMana(player1.getMana()+manaGained, out);
 		BasicCommands.setPlayer1Health(out, player1); //only needed here, after this Player.setHealth will handle this
 
