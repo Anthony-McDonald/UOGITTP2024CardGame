@@ -29,6 +29,9 @@ public class Player {
 
 	private final OrderedCardLoader orderedCardLoader = new OrderedCardLoader();
 
+	private int lastCardClickedIndex = -1;
+	private Card lastCardClickedCard = null;
+
 	public Player(boolean userOwned) {
 		super();
 		this.health = 20;
@@ -56,7 +59,15 @@ public class Player {
 		this.mana = mana;
 	}
 
-    public void setDiscardPile(ArrayList<Card> discardPile) {
+	public int getLastCardClickedIndex() {
+		return lastCardClickedIndex;
+	}
+
+	public void setLastCardClickedIndex(int lastCardClickedIndex) {
+		this.lastCardClickedIndex = lastCardClickedIndex;
+	}
+
+	public void setDiscardPile(ArrayList<Card> discardPile) {
         this.discardPile = discardPile;
     }
 
@@ -142,11 +153,50 @@ public class Player {
 	}
 
 	public void renderHand() {
-		for (int i  = 0; i < this.getHand().size(); i++) {
-			System.out.println("attempting to put " + this.getHand().get(i) + " into hand");
-			BasicCommands.drawCard(GameActor.out, this.getHand().get(i), this.getHand().size()  + 1, 0);
-			System.out.println(this.getHand());
+//		for (int i  = 0; i < this.getHand().size(); i++) {
+//			System.out.println("attempting to put " + this.getHand().get(i) + " into hand");
+//			BasicCommands.drawCard(GameActor.out, this.getHand().get(i), this.getHand().size()  + 1, 0);
+//			System.out.println(this.getHand());
+//		}
+
+		for (Card card : this.getHand()) {
+			System.out.println(card);
+			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			BasicCommands.drawCard(GameActor.out, card, this.getHand().size() + 1, 0);
 		}
+		System.out.println(this.getPlayerDeck().size());
+	}
+
+	public Card getLastCardClickedCard() {
+		return lastCardClickedCard;
+	}
+
+	public void setLastCardClickedCard(Card lastCardClickedCard) {
+		this.lastCardClickedCard = lastCardClickedCard;
+	}
+
+	public void highlightCardInHand(int handPosition) {
+		Card cardSelected = this.getHand().get(handPosition - 2);
+
+		if(this.getLastCardClickedCard() != cardSelected) {
+			System.out.println("wiping");
+			BasicCommands.drawCard(GameActor.out, this.getLastCardClickedCard(), this.getLastCardClickedIndex(), 0);
+		}
+
+		BasicCommands.drawCard(GameActor.out, cardSelected, handPosition, 1);
+		this.setLastCardClickedCard(cardSelected);
+		this.setLastCardClickedIndex(handPosition);
+
+
+//		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+//		BasicCommands.drawCard(GameActor.out, cardSelected, handPosition, 0);
+
+	}
+
+	public void playCard(int handPosition) {
+		Card cardSelected = this.getHand().get(handPosition - 2);
+		System.out.println(cardSelected);
+
 	}
 
 	public void printHand() {
