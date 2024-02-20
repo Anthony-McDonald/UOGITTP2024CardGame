@@ -42,8 +42,8 @@ public class Initalize implements EventProcessor{
 
 		gameState.something = true;
 		// User 1 makes a change
-		CommandDemo.executeDemo(out); // this executes the command demo, comment out this when implementing your solution
-//		//Loaders_2024_Check.test(out);
+//		CommandDemo.executeDemo(out); // this executes the command demo, comment out this when implementing your solution
+//		Loaders_2024_Check.test(out);
 		//board rendering below
 		Board board = gameState.getBoard();
 		board.renderBoard(out);
