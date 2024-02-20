@@ -4,8 +4,12 @@ import akka.actor.ActorRef;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import commands.BasicCommands;
 import structures.GameState;
+<<<<<<< HEAD
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+=======
+import utils.UnitCommands;
+>>>>>>> 3294e50edf308eed0b58e7170d0cf89fdf80507a
 
 public class Creature extends Card implements MoveableUnit {
 
@@ -18,7 +22,9 @@ public class Creature extends Card implements MoveableUnit {
 	private boolean userOwned;
 	@JsonIgnore
 	private Tile tile;
-//need to change constructor for creature
+	private int lastTurnAttacked;
+
+	//need to change constructor for creature
 	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig, int maxHealth, int currentHealth, int attack, int turnSummoned, int lastTurnMoved, Unit unit, boolean userOwned) {
 		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
 		this.maxHealth = maxHealth;
@@ -33,26 +39,13 @@ public class Creature extends Card implements MoveableUnit {
 
 	@Override
 	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
-
-		MoveableUnit m = tile.getUnit();
-		//insert logic about if attack is possible.
-		int enemyHealth = m.getCurrentHealth();
-		BasicCommands.playUnitAnimation(out, this.unit, UnitAnimationType.attack); //attack animation
-		enemyHealth = enemyHealth - this.attack;
-		m.setCurrentHealth(enemyHealth, out);
-		if (enemyHealth>0){ //if enemy is alive, counterattack
-			BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.attack);//unit attack animation
-			this.setCurrentHealth((this.currentHealth-m.getAttack()),out);
-		}
+		UnitCommands.attackUnit(this,out,tile,gameState);
 	}
 
 
 	@Override
 	public void moveUnit(ActorRef out, Tile tile, GameState gameState) {
-		//logic about whether they can move will be within TileClicked
-		BasicCommands.moveUnitToTile(out, this.unit, tile); //front end rendering
-		tile.setUnit(this); //sets tiles unit to be this.
-
+		UnitCommands.moveUnit(this, out, tile, gameState);
 
 
 	}
@@ -79,13 +72,8 @@ public class Creature extends Card implements MoveableUnit {
 			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
 			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
-<<<<<<< HEAD
 
-			//logic to delete unit from the tile when dead
-=======
->>>>>>> main
-			
-			//need to incorporate the tile setter to make it null when a creature dies
+			this.tile.setUnit(null);
 		}
 	}
 
@@ -140,6 +128,16 @@ public class Creature extends Card implements MoveableUnit {
 	
 	public void setTile(Tile tile) {
 		this.tile = tile;
+	}
+
+	@Override
+	public int getLastTurnAttacked() {
+		return this.lastTurnAttacked;
+	}
+
+	@Override
+	public void setLastTurnAttacked(int lastTurnAttacked) {
+		this.lastTurnAttacked=lastTurnAttacked;
 	}
 
 
