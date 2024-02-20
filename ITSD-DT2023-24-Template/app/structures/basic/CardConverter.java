@@ -140,8 +140,8 @@ public class CardConverter {
                     return constructor.newInstance(id, cardNameToGet, manacost, miniCard, bigCard, isCreature, unitConfig, health, health, attack, 0, 0, unit, userOwned);
                 } else if (Spell.class.isAssignableFrom(classReturned)) {
                     // Need to add mana cost and all to spell once spell has been written
-                    Constructor<? extends Card> constructor = classReturned.getDeclaredConstructor();
-                    return constructor.newInstance();
+                    Constructor<? extends Card> constructor = classReturned.getDeclaredConstructor(int.class, String.class, int.class, MiniCard.class, BigCard.class, boolean.class, boolean.class);
+                    return constructor.newInstance(id, cardNameToGet, manacost, miniCard, bigCard, isCreature, userOwned);
                 }
             } catch (Exception e) {
                 System.out.println("exception called");

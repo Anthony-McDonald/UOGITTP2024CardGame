@@ -145,6 +145,7 @@ public class Player {
 		for (int i  = 0; i < this.getHand().size(); i++) {
 			System.out.println("attempting to put " + this.getHand().get(i) + " into hand");
 			BasicCommands.drawCard(GameActor.out, this.getHand().get(i), this.getHand().size(), 0);
+			System.out.println(this.getHand());
 		}
 	}
 

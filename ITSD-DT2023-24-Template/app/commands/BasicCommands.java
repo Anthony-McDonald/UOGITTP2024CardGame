@@ -316,7 +316,7 @@ public class BasicCommands {
 	@SuppressWarnings({"deprecation"})
 	public static void drawCard(ActorRef out, Card card, int position, int mode) {
 		try {
-			System.out.println(out);
+//			System.out.println(out);
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "drawCard");
 			returnMessage.put("card", mapper.readTree(mapper.writeValueAsString(card)));
