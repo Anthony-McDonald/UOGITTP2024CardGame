@@ -194,6 +194,13 @@ public class UnitCommands {
                             }
                         }
                     }
+                    
+                    //Provoke logic
+                    if (hasProvokeAdjacent) {
+                    	mover.setLastTurnMoved(gameState.getTurnNumber()); //Unit cannot move
+                    }
+                    
+                    
                     //the below conditions are for highlighting directions +2 in cardinal directions for movement
                     if(xPos-2>=0){
                         if (board.getTile(xPos-1,yPos).getUnit() == null) { //if space - 1 is empty
