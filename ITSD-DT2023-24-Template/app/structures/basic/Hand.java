@@ -87,10 +87,19 @@ public class Hand {
         String cardNameToGet = card.getCardname();
         String cardNameCamelCased = camelCasifier(cardNameToGet);
 //        int health = this.getValueMap().get(cardNameToGet).get(1);
-        int health = 5;
+        int attack = 1;
+        int health = 1;
 //        System.out.println(health);
-//        int attack = this.getValueMap().get(cardNameToGet).get(0);
-        int attack = 3;
+
+
+        try {
+//            System.out.println("--nextiteration---");
+
+            attack = this.getValueMap().get(cardNameToGet).get(0);
+            health = this.getValueMap().get(cardNameToGet).get(1);
+        } catch (Exception e) {
+            System.out.println("Null pointer found " + cardNameToGet);
+        }
 //        System.out.println(attack);
         Unit unit = this.getUnitMap().get(cardNameToGet);
 //        System.out.println(unit);
@@ -108,11 +117,13 @@ public class Hand {
 
 
         Class<? extends  Card> classReturned = this.getConvertMap().get(cardNameToGet);
-        System.out.println(classReturned);
+//        System.out.println(classReturned);
 
         if (classReturned != null) {
             try {
                 if (Creature.class.isAssignableFrom(classReturned)) {
+
+
                     Constructor<? extends Card> constructor = classReturned.getDeclaredConstructor(int.class, String.class, int.class, MiniCard.class, BigCard.class, boolean.class, String.class, int.class, int.class, int.class, int.class, int.class, Unit.class, boolean.class);
                     return constructor.newInstance(id, cardNameToGet, manacost, miniCard, bigCard, isCreature, unitConfig, health, health, attack, 0, 0, unit, userOwned);
                 } else if (Spell.class.isAssignableFrom(classReturned)) {
@@ -130,17 +141,8 @@ public class Hand {
     }
 
 
-    public void drawToHand(Card card) {
-        int maxHandSize = 5;
-
-        if (this.getHand().size() < maxHandSize) {
-            player.addToHand(cardDifferentiator(card));
-        } else {
-            player.addToDiscardPile(card);
-        }
-    }
-
     private void fillHashMaps() {
+        // Player
         String badOmen = "Bad Omen";
         String hornOfTheForsaken = "Horn of the Forsaken";
         String gloomChaser = "Gloom Chaser";
@@ -151,6 +153,7 @@ public class Hand {
         String darkTerminus = "Dark Terminus";
         String bloodmoonPriestess = "Bloodmoon Priestess";
         String shadowdancer = "Shadowdancer";
+        // Ai
         String skyrockGolem = "Skyrock Golem";
         String swampEntangler = "Swamp Entangler";
         String silverguardKnight = "Silverguard Knight";
@@ -162,11 +165,24 @@ public class Hand {
         String sundropElixir = "Sundrop Elixir";
         String truestrike = "Truestrike";
 
+        ArrayList<Integer> spellArray = new ArrayList<>();
+        spellArray.add(-1);
+        spellArray.add(-1);
+        spellArray.add(-1);
+        this.getValueMap().put(hornOfTheForsaken, spellArray);
+        this.getValueMap().put(darkTerminus, spellArray);
+        this.getValueMap().put(beamshock, spellArray);
+        this.getValueMap().put(sundropElixir, spellArray);
+        this.getValueMap().put(truestrike, spellArray);
+        this.getValueMap().put(wraithlingSwarm, spellArray);
+
+//        this.getValueMap().get(cardNameToGet).get(0));
+
         this.getConvertMap().put(badOmen, BadOmen.class);
         this.getUserOwnedMap().put(badOmen, true);
-        System.out.println("attempting to load badOmenUnit");
+//        System.out.println("attempting to load badOmenUnit");
         this.getUnitMap().put(badOmen, BasicObjectBuilders.loadUnit(StaticConfFiles.badOmen, 2000, Unit.class));
-        System.out.println("loaded badomen unit");
+//        System.out.println("loaded badomen unit");
         ArrayList<Integer> badOmenIntegerValues = new ArrayList<>();
         // First value is attack, second value is health
         badOmenIntegerValues.add(0);

@@ -5,7 +5,9 @@ import commands.BasicCommands;
 import org.checkerframework.checker.units.qual.C;
 import utils.OrderedCardLoader;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,7 +43,13 @@ public class Player {
 			this.playerDeck = OrderedCardLoader.getPlayer2Cards(2);
 		}
 
-		this.playerDeck = convertDeck();
+		this.playerDeck = shuffleCards(convertDeck());
+
+		int startingHandSize = 3;
+		for (int i = 0; i < startingHandSize; i++) {
+			drawCard();
+		}
+
 	}
 	public Player(int health, int mana) {
 		super();
@@ -60,6 +68,16 @@ public class Player {
 			internalList.set(i, this.getHandObject().cardDifferentiator(internalList.get(i)));
 		}
 
+		return internalList;
+	}
+
+	private List<Card> shuffleCards(List<Card> cardList) {
+//		System.out.println("BEFORE SHUFFLE");
+//		for (Card card : cardList) {
+//			System.out.println(card);
+//		}
+		List<Card> internalList = cardList;
+		Collections.shuffle(internalList);
 		return internalList;
 	}
 
@@ -106,9 +124,31 @@ public class Player {
 		this.hand = hand;
 	}
 
-	public void addToHand(Card card) {
-		this.getHandObject().drawToHand(card);
+	public void drawCard() {
+		if (this.getPlayerDeck().size() > 0 ) {
+			Card cardAtTopOfDeck = this.getPlayerDeck().get(this.getPlayerDeck().size() - 1);
+
+			if (this.getHand().size() < 5) {
+				this.getHand().add(cardAtTopOfDeck);
+			} else {
+				this.getDiscardPile().add(cardAtTopOfDeck);
+			}
+			this.getPlayerDeck().remove(this.getPlayerDeck().size() - 1);
+		} else {
+			System.out.println("deck is empty");
+		}
+
 	}
+
+	public void printHand() {
+		System.out.println("===HANDPRINT===");
+		for (Card card : this.getHand()) {
+			System.out.println(card);
+		}
+		System.out.println("===HANDPRINT-DONE===");
+	}
+
+
 
 
 	public void removeCard(Card card) {
