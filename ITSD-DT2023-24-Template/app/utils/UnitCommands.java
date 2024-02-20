@@ -157,7 +157,7 @@ public class UnitCommands {
         return false;
     }
 
-    public void actionableTiles(MoveableUnit mover, ActorRef out, GameState gameState){
+    public static void actionableTiles(MoveableUnit mover, ActorRef out, GameState gameState){
         //need to add logic about last turnMoved and lastTurn attacked and turnSummoned
         System.out.println("Actionable tiles is running.");
         int xPos = mover.getTile().getTilex();
