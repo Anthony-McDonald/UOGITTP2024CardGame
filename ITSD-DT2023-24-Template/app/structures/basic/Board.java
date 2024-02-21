@@ -1,11 +1,15 @@
 package structures.basic;
 
+import java.util.ArrayList;
+
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import utils.BasicObjectBuilders;
+import structures.basic.Deathwatch;
 
 public class Board {
-    Tile [][] tiles;
+    private Tile [][] tiles;
+    private ArrayList <MoveableUnit> allUnits;
 
     public Board(){
         this.tiles = new Tile [9][5];
@@ -31,4 +35,15 @@ public class Board {
     public Tile [][] getAllTiles (){
         return this.tiles;
     }
+
+    public void unitDeath() {
+        for (MoveableUnit unit : this.allUnits) {
+            
+            if (unit instanceof Deathwatch) {
+                ((Deathwatch) unit).deathWatch();
+
+            }
+        }
+    }
+
 }
