@@ -28,7 +28,7 @@ public class EndTurnClicked implements EventProcessor{
 		//insert AI method where AI makes moves
 		//AI artificial = (AI) gameState.getPlayer2(); 
 		//artificial.aiMoved(out,gameState.getPlayer2().);
-		System.out.println("end turn clicked");
+//		System.out.println("end turn clicked");
 		//remove player 2's unspent mana
 		gameState.getPlayer2().setMana(0, out);
 		//insert draw card for each player

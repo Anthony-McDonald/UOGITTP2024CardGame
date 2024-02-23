@@ -135,20 +135,38 @@ public class Player {
 	}
 
 	public void drawCard(ActorRef out) {
-		if (this.getPlayerDeck().size() > 0 ) {
-			Card cardAtTopOfDeck = this.getPlayerDeck().get(0);
+		if (isUserOwned()) {
+			if (this.getPlayerDeck().size() > 0 ) {
+				Card cardAtTopOfDeck = this.getPlayerDeck().get(0);
 
-			if (this.getHand().size() < 5) {
-				this.getHand().add(cardAtTopOfDeck);
-				renderHand(out);
+				if (this.getHand().size() < 5) {
+					this.getHand().add(cardAtTopOfDeck);
+					System.out.println("current hand : " + this.getHand());
+					renderHand(out);
 
+				} else {
+					this.getDiscardPile().add(cardAtTopOfDeck);
+				}
+				this.getPlayerDeck().remove(0);
 			} else {
-				this.getDiscardPile().add(cardAtTopOfDeck);
+				System.out.println("deck is empty");
 			}
-			this.getPlayerDeck().remove(0);
 		} else {
-			System.out.println("deck is empty");
+			if (this.getPlayerDeck().size() > 0 ) {
+				Card cardAtTopOfDeck = this.getPlayerDeck().get(0);
+
+				if (this.getHand().size() < 5) {
+					this.getHand().add(cardAtTopOfDeck);
+
+				} else {
+					this.getDiscardPile().add(cardAtTopOfDeck);
+				}
+				this.getPlayerDeck().remove(0);
+			} else {
+				System.out.println("deck is empty");
+			}
 		}
+
 
 	}
 
