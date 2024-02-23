@@ -45,6 +45,9 @@ public class UnitCommands {
             //already attacked this turn
             gameState.setLastMessage(GameState.noEvent);
         }
+        BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.idle);
+        BasicCommands.playUnitAnimation(out, attacker.getUnit(), UnitAnimationType.idle);
+
     }
 
     public static boolean canAttack (MoveableUnit attacker, Tile targetTile, Board board){
