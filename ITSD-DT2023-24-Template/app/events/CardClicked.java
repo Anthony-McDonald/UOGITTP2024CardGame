@@ -30,7 +30,7 @@ public class CardClicked implements EventProcessor{
 		Player player1 = gameState.getPlayer1();
 
 		if (gameState.getLastMessage().equals("NoEvent")) {
-			player1.highlightCardInHand(handPosition);
+			player1.highlightCardInHand(handPosition, out);
 		}
 
 //		player1.playCard(handPosition);

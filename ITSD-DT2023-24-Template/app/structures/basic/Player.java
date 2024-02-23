@@ -134,13 +134,13 @@ public class Player {
 		this.hand = hand;
 	}
 
-	public void drawCard() {
+	public void drawCard(ActorRef out) {
 		if (this.getPlayerDeck().size() > 0 ) {
 			Card cardAtTopOfDeck = this.getPlayerDeck().get(0);
 
 			if (this.getHand().size() < 5) {
 				this.getHand().add(cardAtTopOfDeck);
-				renderHand();
+				renderHand(out);
 
 			} else {
 				this.getDiscardPile().add(cardAtTopOfDeck);
@@ -152,7 +152,7 @@ public class Player {
 
 	}
 
-	public void renderHand() {
+	public void renderHand(ActorRef out) {
 //		for (int i  = 0; i < this.getHand().size(); i++) {
 //			System.out.println("attempting to put " + this.getHand().get(i) + " into hand");
 //			BasicCommands.drawCard(GameActor.out, this.getHand().get(i), this.getHand().size()  + 1, 0);
@@ -161,7 +161,7 @@ public class Player {
 
 		for (Card card : this.getHand()) {
 			System.out.println(card);
-			BasicCommands.drawCard(GameActor.out, card, this.getHand().size() + 1, 0);
+			BasicCommands.drawCard(out, card, this.getHand().size() + 1, 0);
 		}
 //		System.out.println(this.getPlayerDeck().size());
 	}
@@ -174,29 +174,29 @@ public class Player {
 		this.lastCardClickedCard = lastCardClickedCard;
 	}
 
-	public void unhighlightAllCards() {
-		BasicCommands.drawCard(GameActor.out, this.getLastCardClickedCard(), this.getLastCardClickedIndex(), 0);
+	public void unhighlightAllCards(ActorRef out) {
+		BasicCommands.drawCard(out, this.getLastCardClickedCard(), this.getLastCardClickedIndex(), 0);
 	}
-	public void highlightCardInHand(int handPosition) {
+	public void highlightCardInHand(int handPosition, ActorRef out) {
 		Card cardSelected = this.getHand().get(handPosition - 2);
 
 		if(this.getLastCardClickedCard() != cardSelected) {
-			BasicCommands.drawCard(GameActor.out, this.getLastCardClickedCard(), this.getLastCardClickedIndex(), 0);
+			BasicCommands.drawCard(out, this.getLastCardClickedCard(), this.getLastCardClickedIndex(), 0);
 		}
 
-		BasicCommands.drawCard(GameActor.out, cardSelected, handPosition, 1);
+		BasicCommands.drawCard(out, cardSelected, handPosition, 1);
 		this.setLastCardClickedCard(cardSelected);
 		this.setLastCardClickedIndex(handPosition);
 
 
 	}
 
-	public void playCard(int handPosition) {
+	public void playCard(int handPosition, ActorRef out) {
 		Card cardSelected = this.getHand().get(handPosition - 2);
 
 		if (this.getMana() >= cardSelected.getManacost()) {
-			this.setMana(this.getMana() - cardSelected.getManacost(), GameActor.out);
-			BasicCommands.deleteCard(GameActor.out, handPosition);
+			this.setMana(this.getMana() - cardSelected.getManacost(), out);
+			BasicCommands.deleteCard(out, handPosition);
 			if (cardSelected.isCreature) {
 //			summonCreature(cardSelected);
 			} else {
