@@ -136,12 +136,12 @@ public class CardConverter {
                 if (Creature.class.isAssignableFrom(classReturned)) {
 
 
-                    Constructor<? extends Card> constructor = classReturned.getDeclaredConstructor(int.class, String.class, int.class, MiniCard.class, BigCard.class, boolean.class, String.class, int.class, int.class, int.class, int.class, int.class, Unit.class, boolean.class);
-                    return constructor.newInstance(id, cardNameToGet, manacost, miniCard, bigCard, isCreature, unitConfig, health, health, attack, 0, 0, unit, userOwned);
+                    Constructor<? extends Card> constructor = classReturned.getDeclaredConstructor(int.class, String.class, int.class, MiniCard.class, BigCard.class, boolean.class, String.class);
+                    return constructor.newInstance(id, cardNameToGet, manacost, miniCard, bigCard, isCreature, unitConfig);
                 } else if (Spell.class.isAssignableFrom(classReturned)) {
                     // Need to add mana cost and all to spell once spell has been written
-                    Constructor<? extends Card> constructor = classReturned.getDeclaredConstructor(int.class, String.class, int.class, MiniCard.class, BigCard.class, boolean.class, boolean.class);
-                    return constructor.newInstance(id, cardNameToGet, manacost, miniCard, bigCard, isCreature, userOwned);
+                    Constructor<? extends Card> constructor = classReturned.getDeclaredConstructor(int.class, String.class, int.class, MiniCard.class, BigCard.class, boolean.class, String.class);
+                    return constructor.newInstance(id, cardNameToGet, manacost, miniCard, bigCard, isCreature, unitConfig);
                 }
             } catch (Exception e) {
                 System.out.println("exception called");
