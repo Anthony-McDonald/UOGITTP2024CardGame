@@ -50,6 +50,11 @@ public class BasicCommands {
 			else out.tell(returnMessage, out);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+			}
 		}
 	}
 	

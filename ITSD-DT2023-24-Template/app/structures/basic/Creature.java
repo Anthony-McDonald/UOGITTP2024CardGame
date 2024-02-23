@@ -65,6 +65,11 @@ public class Creature extends Card implements MoveableUnit {
 		this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit, currentHealth);
 		
+		/*try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();}
+		*/
 		if (this.currentHealth < 1) {
 			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
@@ -72,6 +77,7 @@ public class Creature extends Card implements MoveableUnit {
 
 			this.tile.setUnit(null);
 		}
+		
 	}
 
 	public int getAttack() {
