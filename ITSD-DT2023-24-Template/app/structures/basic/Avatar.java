@@ -158,5 +158,10 @@ public class Avatar implements MoveableUnit {
 		this.lastTurnAttacked=lastTurnAttacked;
 	}
 
+	@Override
+	public void summon(ActorRef out, Tile tile, GameState gameState) {
+		//not needed for Avatar (actually could call with in initialise for consistency)
+	}
+
 
 }

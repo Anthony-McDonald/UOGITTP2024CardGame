@@ -157,6 +157,10 @@ public class Wraithling implements MoveableUnit{
 		this.lastTurnAttacked=lastTurnAttacked;
 	}
 
+	@Override
+	public void summon(ActorRef out, Tile tile, GameState gameState) {
+
+	}
 
 
 }

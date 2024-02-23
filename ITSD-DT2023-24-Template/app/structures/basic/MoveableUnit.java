@@ -44,4 +44,6 @@ public interface MoveableUnit {
 	public int getLastTurnAttacked ();
 
 	public void setLastTurnAttacked(int lastTurnAttacked);
+
+	public void summon (ActorRef out, Tile tile, GameState gameState);
 }
