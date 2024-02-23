@@ -1,9 +1,6 @@
 package structures;
 
-import structures.basic.MoveableUnit;
-import structures.basic.Player;
-import structures.basic.Board;
-import structures.basic.Tile;
+import structures.basic.*;
 
 /**
  * This class can be used to hold information about the on-going game.
@@ -17,9 +14,10 @@ public class GameState {
 	private Player player2; //convert to AI class when we make it?
 	private Board board;
 	private int turnNumber = 1;
-	private int lastCardClicked; //gives hand position of card
+	private int lastCardClicked; //gives hand index of card
 	private Tile lastTileClicked;
 	private MoveableUnit lastUnitClicked;
+
 	private String lastMessage = "NoEvent";
 	/*
 	Possible messages:

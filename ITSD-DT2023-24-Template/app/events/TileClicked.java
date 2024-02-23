@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
 import structures.GameState;
+import structures.basic.Card;
 import structures.basic.MoveableUnit;
+import structures.basic.Player;
 import structures.basic.Tile;
 
 /**
@@ -52,7 +54,8 @@ public class TileClicked implements EventProcessor{
 
 					}else if(gameState.getLastMessage().equals(GameState.spellCardClicked)||gameState.getLastMessage().equals("CreatureCardClicked")){
 						//insert message to player saying card can't be played here
-						//set last message to NoEvent
+						//set last message to NoEvent#
+						//dehighlight card?
 					}else{
 						//other logic?? think can delete
 					}
@@ -74,6 +77,7 @@ public class TileClicked implements EventProcessor{
 					}else if(gameState.getLastMessage().equals(GameState.creatureCardClicked)){
 						//inform player that not action can be taken
 						//set last message to NoEvent
+						//dehighlight card
 					}
 				}
 
@@ -85,6 +89,11 @@ public class TileClicked implements EventProcessor{
 
 				}else if (gameState.getLastMessage().equals(GameState.creatureCardClicked)){
 					//initiate summon logic
+					Player player1 = gameState.getPlayer1();
+					Card card = player1.getHand().get(gameState.getLastCardClicked()-2);
+					player1.playCard(gameState.getLastCardClicked()-2);
+
+					//
 				}else if (gameState.getLastMessage().equals(GameState.noEvent)){
 					//inform player no action
 				}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)){

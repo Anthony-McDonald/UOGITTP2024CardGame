@@ -196,7 +196,8 @@ public class Player {
 
 		if (this.getMana() >= cardSelected.getManacost()) {
 			this.setMana(this.getMana() - cardSelected.getManacost(), GameActor.out);
-			BasicCommands.deleteCard(GameActor.out, handPosition);
+			BasicCommands.deleteCard(GameActor.out, handPosition);//removes in front end
+			this.hand.remove(cardSelected); //removes in backend
 			if (cardSelected.isCreature) {
 //			summonCreature(cardSelected);
 			} else {
