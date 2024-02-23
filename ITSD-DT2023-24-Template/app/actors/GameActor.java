@@ -37,9 +37,9 @@ import play.libs.Json;
 public class GameActor extends AbstractActor {
 
 	private ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to turn java objects to Strings
-	public static ActorRef out; // The ActorRef can be used to send messages to the front-end UI
+	private ActorRef out; // The ActorRef can be used to send messages to the front-end UI
 	private Map<String,EventProcessor> eventProcessors; // Classes used to process each type of event
-	public static GameState gameState; // A class that can be used to hold game state information
+	private GameState gameState; // A class that can be used to hold game state information
 
 	/**
 	 * Constructor for the GameActor. This is called by the GameController when the websocket
