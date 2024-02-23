@@ -6,8 +6,8 @@ import structures.basic.Spell;
 
 public class WraithlingSwarm extends Spell{
 
-    public WraithlingSwarm(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, boolean isUserOwned) {
-        super(id, cardname, manacost, miniCard, bigCard, isCreature, isUserOwned);
+    public WraithlingSwarm(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
+        super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
 
     public void spellEffect(){
