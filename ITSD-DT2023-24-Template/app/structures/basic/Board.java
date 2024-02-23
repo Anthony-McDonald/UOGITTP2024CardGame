@@ -20,11 +20,11 @@ public class Board {
         }
     }
     public void renderBoard (ActorRef out){
-        for (int i = 0; i<9;i++){
-            for (int j = 0; j<5;j++){
-                BasicCommands.drawTile(out,this.tiles[i][j],0);
+    	for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 5; j++) {
+                    BasicCommands.drawTile(out, this.tiles[i][j], 0);
             }
-        }
+    	}
     }
 
     public Tile getTile (int x, int y){
