@@ -136,7 +136,7 @@ public class Player {
 
 	public void drawCard() {
 		if (this.getPlayerDeck().size() > 0 ) {
-			Card cardAtTopOfDeck = this.getPlayerDeck().get(this.getPlayerDeck().size() - 1);
+			Card cardAtTopOfDeck = this.getPlayerDeck().get(0);
 
 			if (this.getHand().size() < 5) {
 				this.getHand().add(cardAtTopOfDeck);
@@ -145,7 +145,7 @@ public class Player {
 			} else {
 				this.getDiscardPile().add(cardAtTopOfDeck);
 			}
-			this.getPlayerDeck().remove(this.getPlayerDeck().size() - 1);
+			this.getPlayerDeck().remove(0);
 		} else {
 			System.out.println("deck is empty");
 		}
