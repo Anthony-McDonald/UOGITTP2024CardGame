@@ -22,16 +22,9 @@ public class Creature extends Card implements MoveableUnit {
 	private int lastTurnAttacked;
 
 	//need to change constructor for creature
-	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig, int maxHealth, int currentHealth, int attack, int turnSummoned, int lastTurnMoved, Unit unit, boolean userOwned) {
+	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig) {
 		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
-		this.maxHealth = maxHealth;
-		this.currentHealth = currentHealth;
-		this.attack = attack;
-		this.turnSummoned = turnSummoned;
-		this.lastTurnMoved = lastTurnMoved;
-		this.unit = unit; //need to change this with basic object builder
-		//BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 1000, Unit.class)
-		this.userOwned = userOwned;
+		this.unit = BasicObjectBuilders.loadUnit(unitConfig, BasicObjectBuilders.UnitID++,Unit.class);
 	}
 
 	@Override
