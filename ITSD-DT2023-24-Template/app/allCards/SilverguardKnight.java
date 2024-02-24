@@ -10,6 +10,10 @@ public class SilverguardKnight extends Creature implements Provoke{
 
     public SilverguardKnight(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
+        this.userOwned = false;
+        this.attack = 1;
+        this.currentHealth = 5;
+        this.maxHealth = currentHealth;
     }
 
 	@Override
