@@ -10,11 +10,15 @@ public class BadOmen extends Creature implements Deathwatch{
 
     public BadOmen(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
+        this.userOwned = true;
+        this.attack = 0;
+        this.currentHealth = 1;
+        this.maxHealth = currentHealth;
     }
 
     // +1 attack permanently
-	@Override
-	public void deathWatch() {
+    @Override
+    public void deathWatch() {
 		this.setAttack(getAttack()+1, null);
 	}
 }

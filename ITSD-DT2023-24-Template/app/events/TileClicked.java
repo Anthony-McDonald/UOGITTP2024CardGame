@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
 import structures.GameState;
-import structures.basic.Card;
-import structures.basic.MoveableUnit;
-import structures.basic.Player;
-import structures.basic.Tile;
+import structures.basic.*;
 
 /**
  * Indicates that the user has clicked an object on the game canvas, in this case a tile.
@@ -89,9 +86,13 @@ public class TileClicked implements EventProcessor{
 
 				}else if (gameState.getLastMessage().equals(GameState.creatureCardClicked)){
 					//initiate summon logic
+					System.out.println("summon logic");
 					Player player1 = gameState.getPlayer1();
 					Card card = player1.getHand().get(gameState.getLastCardClicked()-2);
-					player1.playCard(gameState.getLastCardClicked()-2,out);
+					System.out.println(card.getCardname());
+					player1.playCard(gameState.getLastCardClicked(),out);
+					MoveableUnit m = (Creature) card;
+					m.summon(out,currentTile, gameState);
 
 					//
 				}else if (gameState.getLastMessage().equals(GameState.noEvent)){

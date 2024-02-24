@@ -293,4 +293,18 @@ public class UnitCommands {
 
         }
     }
+
+    public static void summon (MoveableUnit summon, ActorRef out, Tile tile, GameState gameState){
+        tile.setUnit(summon);
+        summon.getUnit().setPositionByTile(tile);//sets player avatar on tile in front end
+        summon.setTurnSummoned(gameState.getTurnNumber());
+        summon.setLastTurnAttacked(gameState.getTurnNumber());
+        BasicCommands.drawUnit(out, summon.getUnit(), tile); //sets player avatar on tile in front end
+        try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+        BasicCommands.setUnitHealth(out, summon.getUnit(), summon.getCurrentHealth());
+        try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+        BasicCommands.setUnitAttack(out, summon.getUnit(), summon.getAttack());
+        try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+        gameState.getBoard().openingGambit(); //for opening gambit
+    }
 }

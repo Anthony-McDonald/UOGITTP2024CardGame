@@ -36,6 +36,7 @@ public class CardClicked implements EventProcessor{
 		ArrayList<Card> hand = player1.getHand();
 
 		Card card = hand.get(handPosition -2 );
+		System.out.println("Took card at index " + (handPosition-2));
 		System.out.println(card.getCardname() + " clicked");
 		if (player1.getMana()>=card.getManacost()) { //player has enough mana
 			player1.highlightCardInHand(handPosition,out);
