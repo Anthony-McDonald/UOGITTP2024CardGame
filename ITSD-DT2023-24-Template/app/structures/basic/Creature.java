@@ -10,16 +10,16 @@ import utils.UnitCommands;
 
 public class Creature extends Card implements MoveableUnit {
 
-	private int maxHealth;
-	private int currentHealth;
-	private int attack;
-	private int turnSummoned;
-	private int lastTurnMoved;
-	private Unit unit;
-	private boolean userOwned;
+	protected int maxHealth;
+	protected int currentHealth;
+	protected int attack;
+	protected int turnSummoned;
+	protected int lastTurnMoved;
+	protected Unit unit;
+	protected boolean userOwned;
 	@JsonIgnore
-	private Tile tile;
-	private int lastTurnAttacked;
+	protected Tile tile;
+	protected int lastTurnAttacked;
 
 	//need to change constructor for creature
 	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig) {
@@ -139,6 +139,7 @@ public class Creature extends Card implements MoveableUnit {
 	@Override
 	public void summon(ActorRef out, Tile tile, GameState gameState) {
 		this.unit = BasicObjectBuilders.loadUnit(this.unitConfig, gameState.getFrontEndUnitID(), Unit.class);
+		UnitCommands.summon(this,out, tile, gameState);
 
 
 	}
