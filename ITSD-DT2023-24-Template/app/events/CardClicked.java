@@ -38,7 +38,7 @@ public class CardClicked implements EventProcessor{
 		Card card = hand.get(handPosition -2 );
 		System.out.println(card.getCardname() + " clicked");
 		if (player1.getMana()>=card.getManacost()) { //player has enough mana
-			player1.highlightCardInHand(handPosition);
+			player1.highlightCardInHand(handPosition,out);
 			gameState.setLastCardClicked(handPosition); // position in rendering
 			if (card instanceof Creature) {
 				gameState.setLastMessage(GameState.creatureCardClicked);

@@ -91,7 +91,7 @@ public class TileClicked implements EventProcessor{
 					//initiate summon logic
 					Player player1 = gameState.getPlayer1();
 					Card card = player1.getHand().get(gameState.getLastCardClicked()-2);
-					player1.playCard(gameState.getLastCardClicked()-2);
+					player1.playCard(gameState.getLastCardClicked()-2,out);
 
 					//
 				}else if (gameState.getLastMessage().equals(GameState.noEvent)){
