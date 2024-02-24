@@ -10,6 +10,7 @@ import structures.basic.Card;
 import structures.basic.Creature;
 import structures.basic.Player;
 import structures.basic.Spell;
+import utils.UnitCommands;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,7 @@ public class CardClicked implements EventProcessor{
 			gameState.setLastCardClicked(handPosition); // position in rendering
 			if (card instanceof Creature) {
 				gameState.setLastMessage(GameState.creatureCardClicked);
+				UnitCommands.summonableTiles(out,gameState);
 			} else if (card instanceof Spell) {
 				gameState.setLastMessage(GameState.spellCardClicked); //I think we will have to do this per spell type
 			}

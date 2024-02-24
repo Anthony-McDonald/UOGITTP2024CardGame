@@ -10,6 +10,8 @@ import structures.basic.Tile;
 import structures.basic.UnitAnimationType;
 import structures.basic.Unit;
 
+import java.util.ArrayList;
+
 public class UnitCommands {
     public static void attackUnit(MoveableUnit attacker, ActorRef out, Tile tile, GameState gameState) {
         MoveableUnit m = tile.getUnit();
@@ -306,5 +308,28 @@ public class UnitCommands {
         BasicCommands.setUnitAttack(out, summon.getUnit(), summon.getAttack());
         try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
         gameState.getBoard().openingGambit(); //for opening gambit
+    }
+
+    public static void summonableTiles(ActorRef out, GameState gameState){
+        Board board = gameState.getBoard();
+        ArrayList<MoveableUnit> friendlyUnits = board.friendlyUnits(true); //returns all player owned units
+        for (MoveableUnit unit : friendlyUnits){
+            Tile friendlyTile = unit.getTile();
+            int xPos = friendlyTile.getTilex();
+            int yPos = friendlyTile.getTiley();
+            //Loop through adjacent squares
+            for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+                for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+                    if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+                        Tile highlightTile = board.getTile(i,j);
+                        if (highlightTile.getUnit()==null){//tile has no unit, safe for highlighting
+                            BasicCommands.drawTile(out,highlightTile, 1);
+                        }
+                    }
+                }
+            }
+
+
+        }
     }
 }

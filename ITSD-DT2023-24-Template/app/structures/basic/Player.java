@@ -171,10 +171,13 @@ public class Player {
 	}
 
 	public void renderHand(ActorRef out) {
-		for (int i  = 0; i < this.getHand().size(); i++) {
-			System.out.println("attempting to put " + this.getHand().get(i) + " into hand");
-			BasicCommands.drawCard(out, this.getHand().get(i), this.getHand().size()  + 1, 0);
-			System.out.println(this.getHand());
+		for (int i = 1; i<=6; i++){
+			BasicCommands.deleteCard(out, i);
+		}
+		for (int i = 0; i<hand.size(); i++){
+			Card card = hand.get(i);
+			BasicCommands.drawCard(out, card,i+2, 0);
+
 		}
 //		System.out.println(this.getPlayerDeck().size());
 	}
@@ -211,6 +214,7 @@ public class Player {
 			this.setMana(this.getMana() - cardSelected.getManacost(), out);
 			this.hand.remove(cardSelected); //removes card in backEnd
 			BasicCommands.deleteCard(out, handPosition);
+			renderHand(out);
 			if (cardSelected.isCreature) {
 //			summonCreature(cardSelected);
 			} else {
