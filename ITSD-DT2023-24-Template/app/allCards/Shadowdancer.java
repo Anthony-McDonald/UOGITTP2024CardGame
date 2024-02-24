@@ -14,6 +14,10 @@ private Avatar avatar;
 
     public Shadowdancer(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
 		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
+		this.userOwned = true;
+		this.attack = 5;
+		this.currentHealth = 4;
+		this.maxHealth = currentHealth;
     }
 
 	@Override
