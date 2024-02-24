@@ -5,6 +5,8 @@ import commands.BasicCommands;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import structures.GameState;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 import utils.UnitCommands;
 
 public class Wraithling implements MoveableUnit{
@@ -159,7 +161,7 @@ public class Wraithling implements MoveableUnit{
 
 	@Override
 	public void summon(ActorRef out, Tile tile, GameState gameState) {
-
+		this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.wraithling, gameState.getFrontEndUnitID(), Unit.class);
 	}
 
 
