@@ -24,7 +24,7 @@ public class Creature extends Card implements MoveableUnit {
 	//need to change constructor for creature
 	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig) {
 		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
-		this.unit = BasicObjectBuilders.loadUnit(unitConfig, BasicObjectBuilders.UnitID++,Unit.class);
+
 	}
 
 	@Override
@@ -138,6 +138,7 @@ public class Creature extends Card implements MoveableUnit {
 
 	@Override
 	public void summon(ActorRef out, Tile tile, GameState gameState) {
+
 
 	}
 
