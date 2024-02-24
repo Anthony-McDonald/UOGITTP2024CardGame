@@ -1,5 +1,6 @@
 package structures.basic;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import akka.actor.ActorRef;
@@ -48,6 +49,22 @@ public class Board {
 
     public void openingGambit(){
         
+    }
+
+    public ArrayList <MoveableUnit> friendlyUnits (boolean userOwned){
+        ArrayList<MoveableUnit> friendlyUnits = new ArrayList<MoveableUnit>();
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 5; j++) {
+                Tile tile = this.getTile(i,j);
+                if (tile.getUnit()!= null){
+                    MoveableUnit unit = tile.getUnit();
+                    if (unit.isUserOwned()==userOwned){
+                        friendlyUnits.add(unit);
+                    }
+                }
+            }
+        }
+        return friendlyUnits;
     }
 
 }
