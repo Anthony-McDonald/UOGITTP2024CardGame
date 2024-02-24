@@ -297,17 +297,36 @@ public class UnitCommands {
     }
 
     public static void summon (MoveableUnit summon, ActorRef out, Tile tile, GameState gameState){
-        tile.setUnit(summon);
-        summon.getUnit().setPositionByTile(tile);//sets player avatar on tile in front end
-        summon.setTurnSummoned(gameState.getTurnNumber());
-        summon.setLastTurnAttacked(gameState.getTurnNumber());
-        BasicCommands.drawUnit(out, summon.getUnit(), tile); //sets player avatar on tile in front end
-        try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
-        BasicCommands.setUnitHealth(out, summon.getUnit(), summon.getCurrentHealth());
-        try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
-        BasicCommands.setUnitAttack(out, summon.getUnit(), summon.getAttack());
-        try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
-        gameState.getBoard().openingGambit(); //for opening gambit
+        boolean userOwned = summon.isUserOwned();
+        if (canSummon(gameState,userOwned,tile)) {
+            tile.setUnit(summon);
+            summon.getUnit().setPositionByTile(tile);//sets player avatar on tile in front end
+            summon.setTurnSummoned(gameState.getTurnNumber());
+            summon.setLastTurnAttacked(gameState.getTurnNumber());
+            BasicCommands.drawUnit(out, summon.getUnit(), tile); //sets player avatar on tile in front end
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            BasicCommands.setUnitHealth(out, summon.getUnit(), summon.getCurrentHealth());
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            BasicCommands.setUnitAttack(out, summon.getUnit(), summon.getAttack());
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            gameState.getBoard().openingGambit();//for opening gambit
+            gameState.getBoard().renderBoard(out);
+            gameState.setLastMessage(GameState.noEvent);
+        } else{ //inform player unsuitable location
+            BasicCommands.addPlayer1Notification(out,"Can't summon here", 2);
+        }
     }
 
     public static void summonableTiles(ActorRef out, GameState gameState){
@@ -328,8 +347,28 @@ public class UnitCommands {
                     }
                 }
             }
-
-
         }
+    }
+
+    public static boolean canSummon (GameState gameState, boolean userOwned, Tile possibleTile){
+        Board board = gameState.getBoard();
+        ArrayList<MoveableUnit> friendlyUnits = board.friendlyUnits(userOwned); //returns all player owned units
+        for (MoveableUnit unit : friendlyUnits){
+            Tile friendlyTile = unit.getTile();
+            int xPos = friendlyTile.getTilex();
+            int yPos = friendlyTile.getTiley();
+            //Loop through adjacent squares
+            for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+                for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+                    if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+                        Tile highlightTile = board.getTile(i,j);
+                        if (highlightTile.getUnit()==null&& highlightTile.equals(possibleTile)){//tile has no unit, safe for summon
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
