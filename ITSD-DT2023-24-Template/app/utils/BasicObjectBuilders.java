@@ -21,8 +21,7 @@ public class BasicObjectBuilders {
 
 	@JsonIgnore
 	protected static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to read java objects from a file
-	public static int CardID = 1;
-	public static int UnitID = 1;
+
 
 	/**
 	 * This class produces a Card object (or anything that extends Card) given a configuration
