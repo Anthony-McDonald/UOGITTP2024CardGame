@@ -46,4 +46,8 @@ public class Board {
         }
     }
 
+    public void openingGambit(){
+        
+    }
+
 }
