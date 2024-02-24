@@ -67,6 +67,7 @@ public class Creature extends Card implements MoveableUnit {
 			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
 			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
+			BasicCommands.deleteUnit(out,this.unit);
 
 			this.tile.setUnit(null);
 		}
