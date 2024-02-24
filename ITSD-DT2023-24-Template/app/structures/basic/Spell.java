@@ -1,7 +1,7 @@
 package structures.basic;
 
 public class Spell extends Card {
-	private boolean isUserOwned;
+	protected boolean isUserOwned;
 
 
 	public Spell (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
