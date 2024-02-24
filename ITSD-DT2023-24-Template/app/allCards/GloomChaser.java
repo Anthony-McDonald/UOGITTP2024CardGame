@@ -10,6 +10,10 @@ public class GloomChaser extends Creature implements OpeningGambit{
 
     public GloomChaser(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
+        this.userOwned = true;
+        this.attack = 3;
+        this.currentHealth = 1;
+        this.maxHealth = currentHealth;
     }
 
 	@Override
