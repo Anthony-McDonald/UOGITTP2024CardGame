@@ -37,6 +37,8 @@ public class GameState {
 	public static final String spellCardClicked = "SpellCardClicked";
 	public static final String friendlyUnitClicked = "FriendlyUnitClicked";
 	public static final String creatureCardClicked = "CreatureCardClicked";
+	private int frontEndUnitID;
+	private int frontEndCardID;
 
 	public GameState() {
 		this.player1 = new Player(true);
@@ -114,5 +116,15 @@ public class GameState {
 
 	public void setLastTileClicked(Tile lastTileClicked) {
 		this.lastTileClicked = lastTileClicked;
+	}
+
+	public int getFrontEndUnitID() {
+		this.frontEndUnitID++;
+		return frontEndUnitID;
+	}
+
+	public int getFrontEndCardID() {
+		this.frontEndCardID++;
+		return frontEndCardID;
 	}
 }
