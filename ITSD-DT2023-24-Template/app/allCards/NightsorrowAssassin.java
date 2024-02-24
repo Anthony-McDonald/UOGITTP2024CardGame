@@ -10,6 +10,10 @@ public class NightsorrowAssassin extends Creature implements OpeningGambit{
 
     public NightsorrowAssassin(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
+        this.userOwned = true;
+        this.attack = 4;
+        this.currentHealth = 2;
+        this.maxHealth = currentHealth;
     }
 
 	@Override
