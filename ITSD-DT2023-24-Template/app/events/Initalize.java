@@ -52,9 +52,9 @@ public class Initalize implements EventProcessor{
 		int manaGained = gameState.getTurnNumber()+1;
 		Player player1 = gameState.getPlayer1();
 		//draw player1's initial 3 cards
-		player1.drawCard();
-		player1.drawCard();
-		player1.drawCard();
+		player1.drawCard(out);
+		player1.drawCard(out);
+		player1.drawCard(out);
 		player1.setMana(player1.getMana()+manaGained, out);
 		BasicCommands.setPlayer1Health(out, player1); //only needed here, after this Player.setHealth will handle this
 
