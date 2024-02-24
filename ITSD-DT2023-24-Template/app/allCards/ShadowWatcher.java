@@ -10,6 +10,10 @@ public class ShadowWatcher extends Creature implements Deathwatch{
 
     public ShadowWatcher(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
 		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
+		this.userOwned = true;
+		this.attack = 3;
+		this.currentHealth = 2;
+		this.maxHealth = currentHealth;
     }
 
     
