@@ -138,6 +138,7 @@ public class Creature extends Card implements MoveableUnit {
 
 	@Override
 	public void summon(ActorRef out, Tile tile, GameState gameState) {
+		this.unit = BasicObjectBuilders.loadUnit(this.unitConfig, gameState.getFrontEndUnitID(), Unit.class);
 
 
 	}
