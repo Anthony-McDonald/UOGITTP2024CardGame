@@ -1,5 +1,8 @@
 package structures.basic;
 
+import akka.actor.ActorRef;
+import structures.GameState;
+
 public class Spell extends Card {
 	protected boolean isUserOwned;
 
@@ -87,5 +90,9 @@ public class Spell extends Card {
 	
 	public void spellEffect(){
 		
+	}
+
+	public void spellEffect(ActorRef out, GameState gameState) {
+
 	}
 }

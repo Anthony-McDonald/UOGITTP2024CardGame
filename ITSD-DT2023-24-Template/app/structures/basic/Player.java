@@ -3,6 +3,7 @@ package structures.basic;
 import actors.GameActor;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import structures.GameState;
 import utils.OrderedCardLoader;
 
 import java.util.ArrayList;
@@ -149,6 +150,7 @@ public class Player {
 				}
 				this.getPlayerDeck().remove(0);
 			} else {
+				// Change this to end the game once end game logic implemented, same with below
 				System.out.println("deck is empty");
 			}
 		} else {
@@ -163,6 +165,7 @@ public class Player {
 				}
 				this.getPlayerDeck().remove(0);
 			} else {
+				// Also change this to end the game once end game logic implemented
 				System.out.println("deck is empty");
 			}
 		}
@@ -215,17 +218,20 @@ public class Player {
 			this.hand.remove(cardSelected); //removes card in backEnd
 			BasicCommands.deleteCard(out, handPosition);
 			renderHand(out);
-			if (cardSelected.isCreature) {
-//			summonCreature(cardSelected);
-			} else {
-				((Spell) cardSelected).spellEffect();
-			}
 		} else {
-			System.out.println("Player does not have enough mana");
+			BasicCommands.addPlayer1Notification(out, "You don't have enough mana!", 5);
 		}
 
-
 	}
+
+//	public void playCard(ActorRef out, Card cardSelected) {
+//
+//			if (cardSelected.isCreature) {
+////			summonCreature(cardSelected);
+//			} else {
+//				((Spell) cardSelected).spellEffect(out, this);
+//		}
+//	}
 
 	public void printHand() {
 		System.out.println("===HANDPRINT===");

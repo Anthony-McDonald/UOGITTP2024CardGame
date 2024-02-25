@@ -90,7 +90,7 @@ public class TileClicked implements EventProcessor{
 					Player player1 = gameState.getPlayer1();
 					Card card = player1.getHand().get(gameState.getLastCardClicked()-2);
 					System.out.println(card.getCardname());
-					player1.playCard(gameState.getLastCardClicked(),out);
+					player1.playCard(gameState.getLastCardClicked(), out);
 					MoveableUnit m = (Creature) card;
 					m.summon(out,currentTile, gameState);
 
@@ -100,6 +100,12 @@ public class TileClicked implements EventProcessor{
 				}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)){
 					//depends on card, if Dark terminus, won't work
 					//if Wraithling swarm or Horn, might work? we need to decide
+					Player player1 = gameState.getPlayer1();
+					Card card = player1.getHand().get(gameState.getLastCardClicked()-2);
+					System.out.println(card.getCardname());
+					player1.playCard(gameState.getLastCardClicked(), out);
+
+					((Spell) card).spellEffect(out, gameState);
 				}
 
 

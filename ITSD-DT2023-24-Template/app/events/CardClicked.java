@@ -47,6 +47,7 @@ public class CardClicked implements EventProcessor{
 				UnitCommands.summonableTiles(out,gameState);
 			} else if (card instanceof Spell) {
 				gameState.setLastMessage(GameState.spellCardClicked); //I think we will have to do this per spell type
+
 			}
 		}else{
 			//inform player not enough mana for this card
