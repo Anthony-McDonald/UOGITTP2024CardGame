@@ -1,6 +1,7 @@
 import org.junit.Test;
-import structures.basic.Board;
-import structures.basic.Tile;
+import structures.basic.*;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -44,5 +45,30 @@ public class BoardTest {
         int y = 6;
         Tile tile = board.getTile(x, y);
         assertNull(tile);
+    }
+
+    @Test
+    public void test_emptyList_noFriendlyUnits() {
+        Board board = new Board();
+        Wraithling wraithling = new Wraithling();
+        wraithling.setUserOwned(false);
+        Wraithling wraithling2 = new Wraithling();
+        wraithling2.setUserOwned(false);
+        board.getTile(0, 0).setUnit(wraithling2);
+        board.getTile(1, 0).setUnit(wraithling);
+        ArrayList <MoveableUnit> result = board.friendlyUnits(true);
+        assertEquals(0, result.size());
+    }
+
+    public void test_oneFriendlyUnit_matchUserOwned() {
+        Board board = new Board();
+        Wraithling wraithling = new Wraithling();
+        wraithling.setUserOwned(true);
+        Wraithling wraithling2 = new Wraithling();
+        wraithling2.setUserOwned(false);
+        board.getTile(0, 0).setUnit(wraithling2);
+        board.getTile(1, 0).setUnit(wraithling);
+        ArrayList <MoveableUnit> result = board.friendlyUnits(true);
+        assertEquals(1, result.size());
     }
 }
