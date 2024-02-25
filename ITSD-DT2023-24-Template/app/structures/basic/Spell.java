@@ -80,11 +80,11 @@ public class Spell extends Card {
 		isUserOwned = userOwned;
 	}
 
-	public void spellEffect(MoveableUnit unit){
+	public void spellEffect(MoveableUnit unit, ActorRef out, GameState gameState){
 		
 	}
 
-	public void spellEffect(Tile tile) {
+	public void spellEffect(Tile tile, ActorRef out, GameState gameState) {
 
 	}
 	

@@ -129,10 +129,11 @@ public class TileClicked implements EventProcessor{
 						if (card.getCardname().equals("Wraithling Swarm")) {
 							System.out.println("wraithling swarm clicked");
 							((WraithlingSwarm) card).setSatisfied(false);
-							UnitCommands.summonableTiles(out,gameState);
+							UnitCommands.summonableTiles(out, gameState);
 
 							((Spell) card).spellEffect(out, gameState, tilex, tiley);
-
+						} else if (card.getCardname().equals("Dark Terminus")) {
+							((Spell) card).spellEffect(currentTile,out, gameState);
 						} else {
 							((Spell) card).spellEffect(out, gameState);
 						}
