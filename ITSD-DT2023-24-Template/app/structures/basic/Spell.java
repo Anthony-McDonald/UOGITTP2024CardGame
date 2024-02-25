@@ -92,6 +92,10 @@ public class Spell extends Card {
 		
 	}
 
+	public void spellEffect(MoveableUnit unit, ActorRef out){
+
+	}
+
 	public void spellEffect(ActorRef out, GameState gameState) {
 
 	}
