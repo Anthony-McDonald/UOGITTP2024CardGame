@@ -34,13 +34,13 @@ public class TileClicked implements EventProcessor{
 		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		int tilex = message.get("tilex").asInt();
 		int tiley = message.get("tiley").asInt();
-//		// needed for wraithlingSwarm
-//		int wraithlingCounter = 3;
-//
-//		if (wraithlingCounter != 3) {
-//			WraithlingSwarm.summonWraithling(out, gameState, tilex, tiley);
-//			wraithlingCounter++;
-//		}
+		// needed for wraithlingSwarm
+		int wraithlingCounter = 3;
+
+		if (wraithlingCounter != 3) {
+			WraithlingSwarm.summonWraithling(out, gameState, tilex, tiley);
+			wraithlingCounter++;
+		}
 
 		if (gameState.something == true) {
 			// do some logic
@@ -116,7 +116,7 @@ public class TileClicked implements EventProcessor{
 					if (card.getCardname().equals("Wraithling Swarm")) {
 						System.out.println("wraithling swarm clicked");
 						wraithlingCounter = 0;
-						((Spell) card).spellEffect(out, gameState);
+						((Spell) card).spellEffect(out, gameState, tilex, tiley);
 
 					} else {
 						((Spell) card).spellEffect(out, gameState);

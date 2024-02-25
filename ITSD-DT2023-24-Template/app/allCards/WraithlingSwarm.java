@@ -16,18 +16,18 @@ public class WraithlingSwarm extends Spell{
     public void spellEffect(ActorRef out, GameState gameState, int tileX, int tileY){
         System.out.println("attempting to play wraith swarm");
 
-//        for (int i = 0; i < 3; i++) {
-//
-//            summonWraithling(out, gameState, tileX, tileY);
-//
-//
-//        }
+        for (int i = 0; i < 3; i++) {
+
+            summonWraithling(out, gameState, 2, i+1);
+
+
+        }
     }
     public static void summonWraithling(ActorRef out, GameState gameState, int tileX, int tileY) {
         gameState.setLastMessage(GameState.creatureCardClicked);
         UnitCommands.summonableTiles(out,gameState);
         Wraithling wraithling = new Wraithling();
-        Tile currentTile = gameState.getBoard().getTile(0, 0);
+        Tile currentTile = gameState.getBoard().getTile(tileX, tileY);
         if (currentTile.getUnit() != null) {
 
         }
