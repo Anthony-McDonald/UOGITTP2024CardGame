@@ -133,7 +133,10 @@ public class TileClicked implements EventProcessor{
 
 							((Spell) card).spellEffect(out, gameState, tilex, tiley);
 						} else if (card.getCardname().equals("Dark Terminus")) {
-							((Spell) card).spellEffect(currentTile,out, gameState);
+							((Spell) card).spellEffect(currentTile, out, gameState);
+						} else if (card.getCardname().equals("Horn of the Forsaken")) {
+							System.out.println("THE HORN HAS BEEN BLOWN");
+							((Spell) card).spellEffect(gameState);
 						} else {
 							((Spell) card).spellEffect(out, gameState);
 						}

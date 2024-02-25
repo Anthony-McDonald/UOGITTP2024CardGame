@@ -33,6 +33,8 @@ public class Player {
 	private int lastCardClickedIndex = -1;
 	private Card lastCardClickedCard = null;
 
+	private int hornOfTheForsakenHealth = 0;
+
 	public Player(boolean userOwned) {
 		super();
 		this.health = 20;
@@ -58,6 +60,14 @@ public class Player {
 		super();
 		this.health = health;
 		this.mana = mana;
+	}
+
+	public int getHornOfTheForsakenHealth() {
+		return hornOfTheForsakenHealth;
+	}
+
+	public void setHornOfTheForsakenHealth(int hornOfTheForsakenHealth) {
+		this.hornOfTheForsakenHealth = hornOfTheForsakenHealth;
 	}
 
 	public int getLastCardClickedIndex() {
