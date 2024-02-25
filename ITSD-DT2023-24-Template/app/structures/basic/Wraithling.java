@@ -45,13 +45,12 @@ public class Wraithling implements MoveableUnit{
 
 	@Override
 	public void setMaxHealth(int maxHealth) {
-		// TODO Auto-generated method stub
+		this.maxHealth = maxHealth;
 		
 	}
 
 	@Override
 	public int getCurrentHealth() {
-
 		return this.currentHealth;
 
 
@@ -68,8 +67,7 @@ public class Wraithling implements MoveableUnit{
 			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();
 			}
 			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
-
-			//need to incorporate the tile setter to make it null when a creature dies
+			BasicCommands.deleteUnit(out,this.unit);
 			this.tile.setUnit(null);
 
 		}
@@ -77,62 +75,57 @@ public class Wraithling implements MoveableUnit{
 
 	@Override
 	public int getAttack() {
-		// TODO Auto-generated method stub
+
 		return this.attack;
 	}
 
 	@Override
 	public void setAttack(int attack, ActorRef out) {
-		// TODO Auto-generated method stub
-		
+		this.attack = attack;
+		BasicCommands.setUnitAttack(out, this.unit, attack); //renders attack on front end
+
+
 	}
 
 	@Override
 	public int getTurnSummoned() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.turnSummoned;
 	}
 
 	@Override
 	public void setTurnSummoned(int turnSummoned) {
-		// TODO Auto-generated method stub
+		this.turnSummoned = turnSummoned;
 		
 	}
 
 	@Override
 	public int getLastTurnMoved() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.lastTurnMoved
 	}
 
 	@Override
 	public void setLastTurnMoved(int lastTurnMoved) {
-		// TODO Auto-generated method stub
-		
+		this.lastTurnMoved = lastTurnMoved;
 	}
 
 	@Override
 	public Unit getUnit() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.unit;
 	}
 
 	@Override
 	public void setUnit(Unit unit) {
-		// TODO Auto-generated method stub
-		
+		this.unit = unit;
 	}
 
 	@Override
 	public boolean isUserOwned() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.userOwned;
 	}
 
 	@Override
 	public void setUserOwned(boolean userOwned) {
-		// TODO Auto-generated method stub
-		
+		this.userOwned = userOwned;
 	}
 
 	public void actionableTiles(ActorRef out, GameState gameState){
