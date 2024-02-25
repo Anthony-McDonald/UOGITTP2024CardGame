@@ -24,6 +24,7 @@ public class Wraithling implements MoveableUnit{
 	public Wraithling() {
 		this.maxHealth = 1;
 		this.attack = 1;
+		this.currentHealth = this.maxHealth;
 		this.userOwned = true;
 	}
 	
@@ -155,6 +156,7 @@ public class Wraithling implements MoveableUnit{
 	@Override
 	public void summon(ActorRef out, Tile tile, GameState gameState) {
 		this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.wraithling, gameState.getFrontEndUnitID(), Unit.class);
+		UnitCommands.summon(this,out, tile, gameState);
 	}
 
 

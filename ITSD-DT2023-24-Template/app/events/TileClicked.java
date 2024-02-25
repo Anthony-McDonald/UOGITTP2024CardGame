@@ -1,6 +1,7 @@
 package events;
 
 
+import allCards.WraithlingSwarm;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
@@ -33,7 +34,14 @@ public class TileClicked implements EventProcessor{
 		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		int tilex = message.get("tilex").asInt();
 		int tiley = message.get("tiley").asInt();
-		
+//		// needed for wraithlingSwarm
+//		int wraithlingCounter = 3;
+//
+//		if (wraithlingCounter != 3) {
+//			WraithlingSwarm.summonWraithling(out, gameState, tilex, tiley);
+//			wraithlingCounter++;
+//		}
+
 		if (gameState.something == true) {
 			// do some logic
 			Tile currentTile = gameState.getBoard().getTile(tilex, tiley);
@@ -105,7 +113,16 @@ public class TileClicked implements EventProcessor{
 					System.out.println(card.getCardname());
 					player1.playCard(gameState.getLastCardClicked(), out);
 
-					((Spell) card).spellEffect(out, gameState);
+					if (card.getCardname().equals("Wraithling Swarm")) {
+						System.out.println("wraithling swarm clicked");
+						wraithlingCounter = 0;
+						((Spell) card).spellEffect(out, gameState);
+
+					} else {
+						((Spell) card).spellEffect(out, gameState);
+					}
+
+
 				}
 
 

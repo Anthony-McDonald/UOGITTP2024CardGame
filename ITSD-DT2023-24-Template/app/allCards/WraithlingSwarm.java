@@ -13,32 +13,25 @@ public class WraithlingSwarm extends Spell{
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
 
-    public void spellEffect(ActorRef out, GameState gameState){
-        summonWraithling(out, gameState);
+    public void spellEffect(ActorRef out, GameState gameState, int tileX, int tileY){
         System.out.println("attempting to play wraith swarm");
-//    Wraithling wraithling = new Wraithling();
-        Card cardToPlay = gameState.getPlayer1().getPlayerDeck().get(0);
-        for (Card card : gameState.getPlayer1().getPlayerDeck()) {
-            if (card.getIsCreature()) {
-                cardToPlay = card;
-            }
-        }
 
-        for (int i = 0; i < 3; i++) {
-
-
-            gameState.setLastMessage(GameState.creatureCardClicked);
-            UnitCommands.summonableTiles(out,gameState);
-
-            Tile currentTile = gameState.getBoard().getTile(2, i + 1);
-
-            MoveableUnit m = (Creature) cardToPlay;
-
-            m.summon(out,currentTile, gameState);
-        }
+//        for (int i = 0; i < 3; i++) {
+//
+//            summonWraithling(out, gameState, tileX, tileY);
+//
+//
+//        }
     }
-    private void summonWraithling(ActorRef out, GameState gameState) {
+    public static void summonWraithling(ActorRef out, GameState gameState, int tileX, int tileY) {
+        gameState.setLastMessage(GameState.creatureCardClicked);
+        UnitCommands.summonableTiles(out,gameState);
+        Wraithling wraithling = new Wraithling();
+        Tile currentTile = gameState.getBoard().getTile(0, 0);
+        if (currentTile.getUnit() != null) {
 
+        }
+        wraithling.summon(out,currentTile, gameState);
     }
 
 }

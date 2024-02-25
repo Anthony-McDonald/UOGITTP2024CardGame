@@ -95,4 +95,8 @@ public class Spell extends Card {
 	public void spellEffect(ActorRef out, GameState gameState) {
 
 	}
+
+	public void spellEffect(ActorRef out, GameState gameState, int tileX, int tileY) {
+
+	}
 }
