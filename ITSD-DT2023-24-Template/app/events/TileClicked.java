@@ -1,11 +1,13 @@
 package events;
 
 
+import allCards.WraithlingSwarm;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
 import structures.GameState;
 import structures.basic.*;
+import utils.UnitCommands;
 
 /**
  * Indicates that the user has clicked an object on the game canvas, in this case a tile.
@@ -33,7 +35,16 @@ public class TileClicked implements EventProcessor{
 		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		int tilex = message.get("tilex").asInt();
 		int tiley = message.get("tiley").asInt();
-		
+
+		// needed for wraithling summons
+		if (!WraithlingSwarm.isSatisfied) {
+			UnitCommands.summonableTiles(out,gameState);
+			WraithlingSwarm.getxCoords().add(tilex);
+			WraithlingSwarm.getyCoords().add(tiley);
+			WraithlingSwarm.checkSatisfied(out, gameState);
+
+		}
+
 		if (gameState.something == true) {
 			// do some logic
 			Tile currentTile = gameState.getBoard().getTile(tilex, tiley);
@@ -90,7 +101,7 @@ public class TileClicked implements EventProcessor{
 					Player player1 = gameState.getPlayer1();
 					Card card = player1.getHand().get(gameState.getLastCardClicked()-2);
 					System.out.println(card.getCardname());
-					player1.playCard(gameState.getLastCardClicked(),out);
+					player1.playCard(gameState.getLastCardClicked(), out);
 					MoveableUnit m = (Creature) card;
 					m.summon(out,currentTile, gameState);
 
@@ -100,6 +111,31 @@ public class TileClicked implements EventProcessor{
 				}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)){
 					//depends on card, if Dark terminus, won't work
 					//if Wraithling swarm or Horn, might work? we need to decide
+					Player player1 = gameState.getPlayer1();
+					try {
+						Card card = player1.getHand().get(gameState.getLastCardClicked() - 2);
+						System.out.println(card.getCardname());
+						player1.playCard(gameState.getLastCardClicked(), out);
+
+						if (card.getCardname().equals("Wraithling Swarm")) {
+							System.out.println("wraithling swarm clicked");
+							((WraithlingSwarm) card).setSatisfied(false);
+							UnitCommands.summonableTiles(out,gameState);
+
+							((Spell) card).spellEffect(out, gameState, tilex, tiley);
+
+						} else {
+							((Spell) card).spellEffect(out, gameState);
+						}
+						// Use the card variable as needed
+					} catch (IndexOutOfBoundsException e) {
+						// Handle the exception gracefully
+//						System.out.println("Index is out of bounds. Cannot retrieve the card from the hand.");
+//						e.printStackTrace(); // or log the exception
+					}
+
+
+
 				}
 
 
