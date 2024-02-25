@@ -1,6 +1,7 @@
 package events;
 
 import actors.GameActor;
+import allCards.WraithlingSwarm;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
@@ -23,6 +24,10 @@ public class OtherClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
+		if (!WraithlingSwarm.isSatisfied) {
+			BasicCommands.addPlayer1Notification(out, "No action available. Select a card, unit or tile.", 2);
+			return;
+		}
 		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 		gameState.setLastMessage(GameState.noEvent);
 		BasicCommands.addPlayer1Notification(out, "No action available. Select a card, unit or tile.", 2);
