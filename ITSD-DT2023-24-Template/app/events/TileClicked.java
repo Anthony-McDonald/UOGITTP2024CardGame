@@ -5,6 +5,7 @@ import allCards.WraithlingSwarm;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;
 import utils.UnitCommands;
@@ -36,12 +37,20 @@ public class TileClicked implements EventProcessor{
 		int tilex = message.get("tilex").asInt();
 		int tiley = message.get("tiley").asInt();
 
+
 		// needed for wraithling summons
 		if (!WraithlingSwarm.isSatisfied) {
 			UnitCommands.summonableTiles(out,gameState);
-			WraithlingSwarm.getxCoords().add(tilex);
-			WraithlingSwarm.getyCoords().add(tiley);
-			WraithlingSwarm.checkSatisfied(out, gameState);
+			Tile currentTile = gameState.getBoard().getTile(tilex,tiley);
+			System.out.println(currentTile.getUnit());
+			if (UnitCommands.canSummon(gameState, true, currentTile)) {
+				WraithlingSwarm.getxCoords().add(tilex);
+				WraithlingSwarm.getyCoords().add(tiley);
+				WraithlingSwarm.checkSatisfied(out, gameState);
+			} else {
+				BasicCommands.addPlayer1Notification(out,"Can't summon here", 2);
+			}
+
 
 		}
 
