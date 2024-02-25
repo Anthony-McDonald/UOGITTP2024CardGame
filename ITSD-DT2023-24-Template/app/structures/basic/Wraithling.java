@@ -100,7 +100,7 @@ public class Wraithling implements MoveableUnit{
 
 	@Override
 	public int getLastTurnMoved() {
-		return this.lastTurnMoved
+		return this.lastTurnMoved;
 	}
 
 	@Override
