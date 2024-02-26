@@ -1,5 +1,8 @@
 package structures.basic;
 
+import akka.actor.ActorRef;
+import structures.GameState;
+
 public interface OpeningGambit {
 
 /*
@@ -8,5 +11,5 @@ public interface OpeningGambit {
  Nightsorrow Assassin
  Silverguard Squire
  */
-	public void openingGambit();
+	public void openingGambit(ActorRef out, GameState gameState);
 }

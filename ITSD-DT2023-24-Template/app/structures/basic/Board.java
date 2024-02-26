@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import structures.GameState;
 import utils.BasicObjectBuilders;
 import structures.basic.Deathwatch;
 
@@ -51,8 +52,18 @@ public class Board {
         }
     }
 
-    public void openingGambit(){
-        
+    public void openingGambit(ActorRef out, GameState gameState){
+        ArrayList<MoveableUnit> allUnits = friendlyUnits(true);//returns human units
+        allUnits.addAll(friendlyUnits(false)); //adds AI units
+        for (MoveableUnit unit : allUnits){
+            if (unit instanceof OpeningGambit){
+                ((OpeningGambit) unit).openingGambit(out, gameState);
+            }
+        }
+
+
+
+
     }
 
     public ArrayList <MoveableUnit> friendlyUnits (boolean userOwned){

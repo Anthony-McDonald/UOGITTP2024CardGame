@@ -1,5 +1,7 @@
 package allCards;
 
+import akka.actor.ActorRef;
+import structures.GameState;
 import structures.basic.BigCard;
 import structures.basic.Creature;
 import structures.basic.MiniCard;
@@ -17,7 +19,7 @@ public class SilverguardSquire extends Creature implements OpeningGambit{
     }
 
 	@Override
-	public void openingGambit() {
+	public void openingGambit(ActorRef out, GameState gameState) {
 		// TODO Auto-generated method stub
 		
 	}

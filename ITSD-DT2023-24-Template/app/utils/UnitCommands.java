@@ -321,7 +321,7 @@ public class UnitCommands {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            gameState.getBoard().openingGambit();//for opening gambit
+            gameState.getBoard().openingGambit(out, gameState);//for opening gambit
             gameState.getBoard().renderBoard(out);
             gameState.setLastMessage(GameState.noEvent);
         } else{ //inform player unsuitable location
