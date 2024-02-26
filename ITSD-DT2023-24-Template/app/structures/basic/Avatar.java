@@ -78,6 +78,7 @@ public class Avatar implements MoveableUnit{
 			}
 
 
+		} else {
 		}
 	}
 
@@ -105,6 +106,7 @@ public class Avatar implements MoveableUnit{
 		this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
 		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg
+		this.player.setHornOfTheForsakenHealth(this.player.getHornOfTheForsakenHealth() - 1);
 		 /* try {
 	            Thread.sleep(50);
 	        } catch (InterruptedException e) {

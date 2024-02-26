@@ -265,6 +265,7 @@ public class Player {
 		this.health = health;
 		if (this.userOwned){ //if human
 			BasicCommands.setPlayer1Health(out, this);
+
 		}else{
 			BasicCommands.setPlayer2Health(out, this);
 		}
