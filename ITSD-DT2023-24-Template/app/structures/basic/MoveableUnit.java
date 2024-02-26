@@ -7,6 +7,9 @@ public interface MoveableUnit {
 	public void attackUnit(ActorRef out, Tile tile, GameState gameState);
 	public void moveUnit(ActorRef out, Tile tile, GameState gameState);
 
+	public boolean isStunned();
+	public void setStunned(boolean stunned);
+
 	public int getMaxHealth();
 	
 	public void setMaxHealth(int maxHealth);

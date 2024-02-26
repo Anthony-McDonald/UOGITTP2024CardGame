@@ -25,6 +25,8 @@ public class Unit {
 	Position position;
 	UnitAnimationSet animations;
 	ImageCorrection correction;
+
+	boolean isStunned = false;
 	
 	public Unit() {}
 	
@@ -47,11 +49,17 @@ public class Unit {
 		this.correction = correction;
 		this.animations = animations;
 	}
-	
-	
-	
+
+	public boolean isStunned() {
+		return isStunned;
+	}
+
+	public void setStunned(boolean stunned) {
+		isStunned = stunned;
+	}
+
 	public Unit(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations,
-			ImageCorrection correction) {
+				ImageCorrection correction) {
 		super();
 		this.id = id;
 		this.animation = animation;

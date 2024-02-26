@@ -99,6 +99,7 @@ public class Spell extends Card {
 
 	}
 
+
 	public void spellEffect(ActorRef out, GameState gameState) {
 
 	}

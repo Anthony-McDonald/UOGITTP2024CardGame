@@ -59,23 +59,30 @@ public class TileClicked implements EventProcessor{
 			Tile currentTile = gameState.getBoard().getTile(tilex, tiley);
 
 			if (currentTile.getUnit() != null){
+
 				//logic for if current tile has unit
 
 				if(currentTile.getUnit().isUserOwned()){
-					//if unit clicked was friendly.
-					if (gameState.getLastMessage().equals(GameState.noEvent)){
-						//insert logic about highlighting appropriate tiles for move/attack
-						MoveableUnit unit = currentTile.getUnit();
-						System.out.println("Friendly unit clicked, test that it has detected");
-						unit.actionableTiles(out,gameState);
+					if (!currentTile.getUnit().isStunned()) {
+						currentTile.getUnit().setStunned(false);
+						//if unit clicked was friendly.
+						if (gameState.getLastMessage().equals(GameState.noEvent)){
+							//insert logic about highlighting appropriate tiles for move/attack
+							MoveableUnit unit = currentTile.getUnit();
+							System.out.println("Friendly unit clicked, test that it has detected");
+							unit.actionableTiles(out,gameState);
 
-					}else if(gameState.getLastMessage().equals(GameState.spellCardClicked)||gameState.getLastMessage().equals("CreatureCardClicked")){
-						//insert message to player saying card can't be played here
-						//set last message to NoEvent#
-						//dehighlight card?
-					}else{
-						//other logic?? think can delete
+						}else if(gameState.getLastMessage().equals(GameState.spellCardClicked)||gameState.getLastMessage().equals("CreatureCardClicked")){
+							//insert message to player saying card can't be played here
+							//set last message to NoEvent#
+							//dehighlight card?
+						}else{
+							//other logic?? think can delete
+						}
+					} else {
+						BasicCommands.addPlayer1Notification(out,"This unit is stunned this turn", 3);
 					}
+
 				}else{
 					//if unit clicked was enemy
 					if (gameState.getLastMessage().equals(GameState.friendlyUnitClicked)){
@@ -84,10 +91,17 @@ public class TileClicked implements EventProcessor{
 						MoveableUnit attacker = gameState.getLastUnitClicked();
 						attacker.attackUnit(out, currentTile,gameState);
 
-					}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)){
+					}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)) {
 						//maybe we change for specific spell cards since there are only 3?
 						//if Dark Terminus, place logic here
 						//set last message to NoEvent
+					} else 	if (gameState.getLastMessage().equals(GameState.beamshockClicked)) {
+						// next unit ai clicks on use beam shock?
+
+					} else if (gameState.getLastMessage().equals(GameState.sundropElixirClicked)) {
+						//next unit ai clicks on use sundrop elixir?
+
+
 					}else if (gameState.getLastMessage().equals(GameState.noEvent)){
 						//no action, inform player
 
@@ -137,6 +151,12 @@ public class TileClicked implements EventProcessor{
 						} else if (card.getCardname().equals("Horn of the Forsaken")) {
 							System.out.println("THE HORN HAS BEEN BLOWN");
 							((Spell) card).spellEffect(gameState);
+						} else if (card.getCardname().equals("Sundrop Elixir")) {
+							gameState.setLastMessage(GameState.sundropElixirClicked);
+//							((Spell) card).spellEffect(gameState.getLastUnitClicked(), gameState);
+						} else if (card.getCardname().equals("Beamshock")) {
+							gameState.setLastMessage(GameState.beamshockClicked);
+							((Spell) card).spellEffect();
 						} else {
 							((Spell) card).spellEffect(out, gameState);
 						}

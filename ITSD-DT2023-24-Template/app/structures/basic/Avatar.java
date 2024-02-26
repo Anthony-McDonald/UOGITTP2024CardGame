@@ -27,6 +27,8 @@ public class Avatar implements MoveableUnit{
 	private Tile tile;
 	private int lastTurnAttacked;
 
+	private boolean isStunned = false;
+
 	public Avatar(Player player) {
 		this.player = player;
 		this.maxHealth = player.getHealth();
@@ -42,7 +44,13 @@ public class Avatar implements MoveableUnit{
 		}
 	}
 
+	public boolean isStunned() {
+		return isStunned;
+	}
 
+	public void setStunned(boolean stunned) {
+		isStunned = stunned;
+	}
 
 	@Override
 	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
