@@ -19,14 +19,14 @@ import java.util.List;
  */
 public class Player {
 
-	private ArrayList<Card> hand = new ArrayList<>();
-	private ArrayList<Card> discardPile = new ArrayList<>();
+	protected ArrayList<Card> hand = new ArrayList<>();
+	protected ArrayList<Card> discardPile = new ArrayList<>();
 
-	private List<Card> playerDeck = new ArrayList<>();
-	private int health;
-	private int mana;
-    private boolean userOwned;
-    private CardConverter cardConverterObject;
+	protected List<Card> playerDeck = new ArrayList<>();
+	protected int health;
+	protected int mana;
+    protected boolean userOwned;
+    protected CardConverter cardConverterObject;
 
 	private final OrderedCardLoader orderedCardLoader = new OrderedCardLoader();
 
