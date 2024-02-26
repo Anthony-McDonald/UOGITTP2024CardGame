@@ -18,6 +18,7 @@ public class DarkTerminus extends Spell{
         gameState.getBoard().renderBoard(out); //resets board
         Wraithling wraithling = new Wraithling();
         wraithling.summon(out,tile, gameState);
+        gameState.setLastMessage(GameState.noEvent); //ONLY DO THIS IF SPELL GOES CORRECTLY
     }
 
 }

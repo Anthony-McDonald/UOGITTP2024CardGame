@@ -32,6 +32,7 @@ public class CardClicked implements EventProcessor{
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 		
 		int handPosition = message.get("position").asInt();
+		gameState.getBoard().renderBoard(out);
 
 		Player player1 = gameState.getPlayer1();
 		ArrayList<Card> hand = player1.getHand();

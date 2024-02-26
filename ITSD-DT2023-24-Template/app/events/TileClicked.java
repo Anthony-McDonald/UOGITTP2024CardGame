@@ -73,7 +73,6 @@ public class TileClicked implements EventProcessor{
 							unit.actionableTiles(out,gameState);
 
 						}else if(gameState.getLastMessage().equals(GameState.spellCardClicked)||gameState.getLastMessage().equals("CreatureCardClicked")){
-							//insert message to player saying card can't be played here
 							//set last message to NoEvent#
 							//dehighlight card?
 						}else{
@@ -95,14 +94,7 @@ public class TileClicked implements EventProcessor{
 						//maybe we change for specific spell cards since there are only 3?
 						//if Dark Terminus, place logic here
 						//set last message to NoEvent
-					} else 	if (gameState.getLastMessage().equals(GameState.beamshockClicked)) {
-						// next unit ai clicks on use beam shock?
-
-					} else if (gameState.getLastMessage().equals(GameState.sundropElixirClicked)) {
-						//next unit ai clicks on use sundrop elixir?
-
-
-					}else if (gameState.getLastMessage().equals(GameState.noEvent)){
+					} else if (gameState.getLastMessage().equals(GameState.noEvent)){
 						//no action, inform player
 
 					}else if(gameState.getLastMessage().equals(GameState.creatureCardClicked)){
@@ -151,12 +143,6 @@ public class TileClicked implements EventProcessor{
 						} else if (card.getCardname().equals("Horn of the Forsaken")) {
 							System.out.println("THE HORN HAS BEEN BLOWN");
 							((Spell) card).spellEffect(gameState);
-						} else if (card.getCardname().equals("Sundrop Elixir")) {
-							gameState.setLastMessage(GameState.sundropElixirClicked);
-//							((Spell) card).spellEffect(gameState.getLastUnitClicked(), gameState);
-						} else if (card.getCardname().equals("Beamshock")) {
-							gameState.setLastMessage(GameState.beamshockClicked);
-							((Spell) card).spellEffect();
 						} else {
 							((Spell) card).spellEffect(out, gameState);
 						}

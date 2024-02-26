@@ -55,7 +55,7 @@ public class Avatar implements MoveableUnit{
 	@Override
 	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
 		UnitCommands.attackUnit(this, out, tile, gameState);
-		if (gameState.getPlayer1().getHornOfTheForsakenHealth() > 0) {
+		if (gameState.getPlayer1().getHornOfTheForsakenHealth() >= 0) {
 			boolean wraithlingSummoned = false;
 			int tileX = tile.getTilex();
 			int tileY = tile.getTiley();

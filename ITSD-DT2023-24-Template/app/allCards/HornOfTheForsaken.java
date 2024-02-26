@@ -13,6 +13,7 @@ public class HornOfTheForsaken extends Spell{
 
     public void spellEffect(GameState gameState) {
         // set to 4 to facilitate 3 hits, avoids 1 off error, could edit later for clarity
-        gameState.getPlayer1().setHornOfTheForsakenHealth(4);
+        gameState.getPlayer1().setHornOfTheForsakenHealth(3);
+        gameState.setLastMessage(GameState.noEvent);
     }
 }
