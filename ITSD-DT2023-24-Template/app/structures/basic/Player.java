@@ -205,20 +205,26 @@ public class Player {
 
 	public void unhighlightAllCards(ActorRef out) {
 		BasicCommands.drawCard(out, this.getLastCardClickedCard(), this.getLastCardClickedIndex(), 0);
+		for (int i =  0; i <= this.getHand().size() - 1; i++) {
+			Card cardToUnhighlight = this.getHand().get(i);
+			BasicCommands.drawCard(out, cardToUnhighlight, i + 2, 0);
+
+//			BasicCommands.deleteCard(out, i + 2);
+
+		}
 	}
+
+
 	public void highlightCardInHand(int handPosition, ActorRef out) {
 		Card cardSelected = this.getHand().get(handPosition - 2);
 
-		if(this.getLastCardClickedCard() != cardSelected) {
-			BasicCommands.drawCard(out, this.getLastCardClickedCard(), this.getLastCardClickedIndex(), 0);
-		}
-
 		BasicCommands.drawCard(out, cardSelected, handPosition, 1);
-		this.setLastCardClickedCard(cardSelected);
-		this.setLastCardClickedIndex(handPosition);
+
 
 
 	}
+
+
 
 	public void playCard(int handPosition, ActorRef out) {
 		Card cardSelected = this.getHand().get(handPosition - 2);
