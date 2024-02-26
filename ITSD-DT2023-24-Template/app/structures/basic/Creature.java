@@ -21,6 +21,8 @@ public class Creature extends Card implements MoveableUnit {
 	protected Tile tile;
 	protected int lastTurnAttacked;
 
+	protected boolean isStunned;
+
 	//need to change constructor for creature
 	public Creature (int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature, String unitConfig) {
 		super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
@@ -38,6 +40,15 @@ public class Creature extends Card implements MoveableUnit {
 		UnitCommands.moveUnit(this, out, tile, gameState);
 
 
+	}
+	@Override
+	public boolean isStunned() {
+		return isStunned;
+	}
+
+	@Override
+	public void setStunned(boolean stunned) {
+		isStunned = stunned;
 	}
 
 
