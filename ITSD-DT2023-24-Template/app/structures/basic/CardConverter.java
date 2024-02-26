@@ -33,6 +33,8 @@ public class CardConverter {
     private HashMap<String, Unit> unitMap = new HashMap<>();
     private HashMap<String, Boolean> userOwnedMap = new HashMap<>();
     private HashMap<String, ArrayList<Integer>> valueMap = new HashMap<>();
+
+    private int lastCardID = 1;
     Player player;
 
     public CardConverter(Player player) {
@@ -89,7 +91,7 @@ public class CardConverter {
 
     // Makes use of hashmap defined
     public Card cardDifferentiator(Card card) {
-        int id = card.getId();
+        int id = lastCardID++;
         int manacost = card.getManacost();
         MiniCard miniCard = card.getMiniCard();
         BigCard bigCard = card.getBigCard();
