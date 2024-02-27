@@ -1,10 +1,16 @@
 package structures.AI;
 
+import structures.GameState;
+import structures.basic.MoveableUnit;
 import structures.basic.Tile;
 
 public abstract class UnitAction {
-    Tile targetTile;
-    boolean isActionPossible;
+    protected Tile targetTile;
+    protected boolean isActionPossible;
+    protected MoveableUnit actionTaker;
+    protected GameState gameState;
+
+    protected int actionScore;
 
     public Tile getTargetTile() {
         return targetTile;
@@ -21,4 +27,21 @@ public abstract class UnitAction {
     public void setActionPossible(boolean actionPossible) {
         isActionPossible = actionPossible;
     }
+
+    public int getActionScore() {
+        return actionScore;
+    }
+
+    public void setActionScore(int actionScore) {
+        this.actionScore = actionScore;
+    }
+
+    public MoveableUnit getActionTaker() {
+        return actionTaker;
+    }
+
+    public void setActionTaker(MoveableUnit actionTaker) {
+        this.actionTaker = actionTaker;
+    }
 }
+
