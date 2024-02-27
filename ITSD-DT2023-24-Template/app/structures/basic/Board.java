@@ -42,7 +42,7 @@ public class Board {
         return this.tiles;
     }
 
-    public void unitDeath() {
+    public void unitDeath(ActorRef out, GameState gameState) {
         for (MoveableUnit unit : this.allUnits) {
             
             if (unit instanceof Deathwatch) {
