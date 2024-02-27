@@ -111,7 +111,7 @@ public class Avatar implements MoveableUnit, Provoke{
 	}
 
 	@Override
-	public void setCurrentHealth(int currentHealth, ActorRef out) {
+	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState) {
 		this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
 		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg
@@ -213,6 +213,27 @@ public class Avatar implements MoveableUnit, Provoke{
 	@Override
 	public void summon(ActorRef out, Tile tile, GameState gameState) {
 		//not needed for Avatar (actually could call with in initialise for consistency)
+	}
+	@Override
+	public boolean canStillAttack(int currentTurn) {
+		if (this.getLastTurnAttacked()!= currentTurn){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean canStillMove(int currentTurn) {
+		if (this.getLastTurnAttacked()!=currentTurn){
+			if (this.getLastTurnMoved()!= currentTurn){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
 	}
 
 	@Override

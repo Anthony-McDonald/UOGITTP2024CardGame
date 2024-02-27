@@ -16,7 +16,7 @@ public interface MoveableUnit {
 
 	public int getCurrentHealth();
 
-	public void setCurrentHealth(int currentHealth, ActorRef out);
+	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState);
 
 	public int getAttack();
 
@@ -49,8 +49,15 @@ public interface MoveableUnit {
 	public void setLastTurnAttacked(int lastTurnAttacked);
 
 	public void summon (ActorRef out, Tile tile, GameState gameState);
+<<<<<<< HEAD
 	
 	public boolean isProvoke();
 		
 	public void setProvoke(boolean provoke);
+=======
+
+	public boolean canStillAttack(int currentTurn);
+
+	public boolean canStillMove(int currentTurn);
+>>>>>>> 81e737c2f2da6297c41acf391b5564957733ed5f
 }

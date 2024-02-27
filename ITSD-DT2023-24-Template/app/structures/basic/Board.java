@@ -42,12 +42,12 @@ public class Board {
         return this.tiles;
     }
 
-    public void unitDeath() {
-        for (MoveableUnit unit : this.allUnits) {
-            
-            if (unit instanceof Deathwatch) {
-                ((Deathwatch) unit).deathWatch();
-
+    public void unitDeath(ActorRef out, GameState gameState) {
+        ArrayList<MoveableUnit> allUnits = friendlyUnits(true);//returns human units
+        allUnits.addAll(friendlyUnits(false)); //adds AI units
+        for (MoveableUnit unit : allUnits){
+            if (unit instanceof Deathwatch){
+                ((Deathwatch) unit).deathWatch(out, gameState);
             }
         }
     }

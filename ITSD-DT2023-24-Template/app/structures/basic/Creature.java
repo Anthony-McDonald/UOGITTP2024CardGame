@@ -65,7 +65,7 @@ public class Creature extends Card implements MoveableUnit {
 		return currentHealth;
 	}
 
-	public void setCurrentHealth(int currentHealth, ActorRef out) {
+	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState) {
 		this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit, currentHealth);
 		
@@ -75,10 +75,11 @@ public class Creature extends Card implements MoveableUnit {
             e.printStackTrace();}
 		*/
 		if (this.currentHealth < 1) {
-			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
+			BasicCommands.addPlayer1Notification(out, this.getCardname() + " killed", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
-			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 			BasicCommands.deleteUnit(out,this.unit);
+			gameState.getBoard().unitDeath(out,gameState);
 
 			this.tile.setUnit(null);
 		}
@@ -157,6 +158,7 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public boolean isProvoke() {
 		// TODO Auto-generated method stub
 		return false;
@@ -166,6 +168,27 @@ public class Creature extends Card implements MoveableUnit {
 	public void setProvoke(boolean provoke) {
 		// TODO Auto-generated method stub
 		
+=======
+	public boolean canStillAttack(int currentTurn) {
+		if (this.getLastTurnAttacked()!= currentTurn){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean canStillMove(int currentTurn) {
+		if (this.getLastTurnAttacked()!=currentTurn){
+			if (this.getLastTurnMoved()!= currentTurn){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+>>>>>>> 81e737c2f2da6297c41acf391b5564957733ed5f
 	}
 
 

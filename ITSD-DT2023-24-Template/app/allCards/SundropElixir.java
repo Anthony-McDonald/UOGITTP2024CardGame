@@ -13,12 +13,12 @@ public class SundropElixir extends Spell{
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
 
-    public void spellEffect(MoveableUnit unit, ActorRef out){
+    public void spellEffect(MoveableUnit unit, ActorRef out, GameState gameState){
         int amountToHeal = 4;
         while (amountToHeal > 0) {
             int unitMaxHealth = unit.getMaxHealth();
             if (unit.getCurrentHealth() < unit.getMaxHealth()) {
-                unit.setCurrentHealth(unit.getCurrentHealth() + 1, out);
+                unit.setCurrentHealth(unit.getCurrentHealth() + 1, out, gameState);
             }
             amountToHeal--;
         }

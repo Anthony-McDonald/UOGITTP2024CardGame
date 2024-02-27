@@ -60,16 +60,15 @@ public class Wraithling implements MoveableUnit{
 	}
 
 	@Override
-	public void setCurrentHealth(int currentHealth, ActorRef out) {
+	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState) {
 		this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit, currentHealth);
 		
 		if (this.currentHealth < 1) {
 			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
-			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();
-			}
-			try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			gameState.getBoard().unitDeath(out,gameState);
 			BasicCommands.deleteUnit(out,this.unit);
 			this.tile.setUnit(null);
 
@@ -169,6 +168,27 @@ public class Wraithling implements MoveableUnit{
 	@Override
 	public void setStunned(boolean stunned) {
 		isStunned = stunned;
+	}
+	@Override
+	public boolean canStillAttack(int currentTurn) {
+		if (this.getLastTurnAttacked()!= currentTurn){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean canStillMove(int currentTurn) {
+		if (this.getLastTurnAttacked()!=currentTurn){
+			if (this.getLastTurnMoved()!= currentTurn){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
 	}
 
 	@Override
