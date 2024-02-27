@@ -1,19 +1,12 @@
 package events;
 
-import allCards.WraithlingSwarm;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
-import demo.CommandDemo;
-import demo.Loaders_2024_Check;
+import structures.AI.AI;
 import structures.GameState;
 import structures.basic.*;
-import utils.BasicObjectBuilders;
-import utils.OrderedCardLoader;
-import utils.StaticConfFiles;
-
-import java.util.ArrayList;
 
 /**
  * Indicates that both the core game loop in the browser is starting, meaning

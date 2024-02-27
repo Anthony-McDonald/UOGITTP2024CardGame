@@ -1,5 +1,6 @@
 package structures;
 
+import structures.AI.AI;
 import structures.basic.*;
 
 /**
