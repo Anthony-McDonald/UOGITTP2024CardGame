@@ -110,7 +110,7 @@ public class Avatar implements MoveableUnit{
 	}
 
 	@Override
-	public void setCurrentHealth(int currentHealth, ActorRef out) {
+	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState) {
 		this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
 		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg

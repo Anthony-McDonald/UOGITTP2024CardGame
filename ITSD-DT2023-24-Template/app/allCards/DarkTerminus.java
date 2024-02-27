@@ -14,7 +14,7 @@ public class DarkTerminus extends Spell{
         MoveableUnit unit = tile.getUnit();
         int enemyHealth = unit.getCurrentHealth();
         enemyHealth = 0;
-        unit.setCurrentHealth(enemyHealth, out);
+        unit.setCurrentHealth(enemyHealth, out, gameState);
         gameState.getBoard().renderBoard(out); //resets board
         Wraithling wraithling = new Wraithling();
         wraithling.summon(out,tile, gameState);

@@ -16,7 +16,7 @@ public interface MoveableUnit {
 
 	public int getCurrentHealth();
 
-	public void setCurrentHealth(int currentHealth, ActorRef out);
+	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState);
 
 	public int getAttack();
 

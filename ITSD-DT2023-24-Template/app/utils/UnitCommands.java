@@ -22,7 +22,7 @@ public class UnitCommands {
                 int enemyHealth = m.getCurrentHealth();
                 BasicCommands.playUnitAnimation(out, attacker.getUnit(), UnitAnimationType.attack); //attack animation
                 enemyHealth = enemyHealth - attacker.getAttack();
-                m.setCurrentHealth(enemyHealth, out);
+                m.setCurrentHealth(enemyHealth, out, gameState);
                 gameState.getBoard().renderBoard(out); //resets board
                 try {
                     Thread.sleep(2000);
@@ -31,7 +31,7 @@ public class UnitCommands {
                 }
                 if (enemyHealth > 0) { //if enemy is alive, counterattack
                     BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.attack);//unit attack animation
-                    attacker.setCurrentHealth((attacker.getCurrentHealth() - m.getAttack()), out);
+                    attacker.setCurrentHealth((attacker.getCurrentHealth() - m.getAttack()), out, gameState);
                     try {
                         Thread.sleep(2000);
                     } catch (InterruptedException e) {

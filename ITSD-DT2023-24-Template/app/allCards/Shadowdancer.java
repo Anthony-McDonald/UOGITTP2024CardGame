@@ -1,6 +1,8 @@
 package allCards;
 
+import akka.actor.ActorRef;
 import commands.BasicCommands;
+import structures.GameState;
 import structures.basic.Avatar;
 import structures.basic.BigCard;
 import structures.basic.Creature;
@@ -21,10 +23,10 @@ private Avatar avatar;
     }
 
 	@Override
-	public void deathWatch() {
+	public void deathWatch(ActorRef out, GameState gameState) {
 		// TODO Auto-generated method stub
 		int newHealth = avatar.getCurrentHealth()+1;
-		avatar.setCurrentHealth(newHealth, null);
+		avatar.setCurrentHealth(newHealth, null, null); //NEED TO CHANGE NULL REFERENCES
 		
 		//need AI class done so i can -1 health to its avatar
 		
