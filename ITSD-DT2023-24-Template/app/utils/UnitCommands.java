@@ -194,27 +194,29 @@ public class UnitCommands {
                             if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
                                 Tile highlightTile = board.getTile(i,j);
                                 if (highlightTile.getUnit() instanceof Provoke && mover.isUserOwned() != highlightTile.getUnit().isUserOwned()) {
-                                	//BasicCommands.drawTile(out,highlightTile, 2);
+                                	BasicCommands.drawTile(out,highlightTile, 2);
                                     hasProvokeAdjacent = true;
                                     BasicCommands.addPlayer1Notification(out, "This unit is within range of a Provoke ability. Cannot move & can only attack provokers.", 2);
                                     mover.setProvoke(true);
                                     return;
-                                } else if (highlightTile.getUnit()==null){//tile has no unit, safe for highlighting
-                                    BasicCommands.drawTile(out,highlightTile, 1);
-                                
-                               /* if (highlightTile.getUnit()==null){//tile has no unit, safe for highlighting
-                                    BasicCommands.drawTile(out,highlightTile, 1);
-//									System.out.println(i + " " + j);
-                                } else if (highlightTile.getUnit() instanceof Provoke && mover.isUserOwned() != highlightTile.getUnit().isUserOwned()) {
-                                    BasicCommands.drawTile(out,highlightTile, 2);
-                                    hasProvokeAdjacent = true;
-                                    BasicCommands.addPlayer1Notification(out, "This unit is within range of a Provoke ability. Cannot move & can only attack provokers.", 2);
-
-                                }*/
+                                //} else if (highlightTile.getUnit()==null){//tile has no unit, safe for highlighting
+                               //     BasicCommands.drawTile(out,highlightTile, 1);
+                                	}
+                            	}
+                        	}
+                    	}
+                  
+                    for (int i = xPos - 1; i <= xPos + 1; i++) { // i is x
+                        for (int j = yPos - 1; j <= yPos + 1; j++) { // j is y
+                            if (0 <= i && i <= 8 && 0 <= j && j <= 4) { //if coord in board range
+                                Tile highlightTile = board.getTile(i, j);
+                                if (highlightTile.getUnit() == null) {//tile has no unit, safe for highlighting
+                                    BasicCommands.drawTile(out, highlightTile, 1);
+                                }
                             }
                         }
                     }
-                  } 
+                    
                     //Provoke logic
                     if (hasProvokeAdjacent) {
                     	mover.setLastTurnMoved(gameState.getTurnNumber()+ 1); //Unit cannot move
