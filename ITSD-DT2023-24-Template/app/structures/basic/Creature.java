@@ -169,6 +169,7 @@ public class Creature extends Card implements MoveableUnit {
 		// TODO Auto-generated method stub
 	}
 
+
 	public boolean canStillAttack(int currentTurn) {
 		if (this.getLastTurnAttacked()!= currentTurn){
 			return true;
@@ -188,6 +189,7 @@ public class Creature extends Card implements MoveableUnit {
 		}else{
 			return false;
 		}
+
 	}
 
 
