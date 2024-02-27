@@ -10,9 +10,13 @@ public class AI extends Player  {
 	private GameState gameState;
 	private ActorRef actorRef;
 
-	public AI(boolean userOwned, GameState gameState, ActorRef out) {
+	public AI(boolean userOwned, GameState gameState) {
 		super(userOwned);
 		this.gameState = gameState;
+
+	}
+
+	public void setActorRef(ActorRef out){
 		this.actorRef = out;
 	}
 }

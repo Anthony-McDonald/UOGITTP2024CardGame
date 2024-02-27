@@ -43,6 +43,8 @@ public class Initalize implements EventProcessor{
 
 
 		gameState.something = true;
+		AI ai = (AI) gameState.getPlayer2();
+		ai.setActorRef(out);
 		// User 1 makes a change
 //		CommandDemo.executeDemo(out); // this executes the command demo, comment out this when implementing your solution
 //		Loaders_2024_Check.test(out);

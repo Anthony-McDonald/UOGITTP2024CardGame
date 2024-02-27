@@ -11,7 +11,7 @@ import structures.basic.*;
  */
 public class GameState {
 	private Player player1;
-	private Player player2; //convert to AI class when we make it?
+	private AI player2; //convert to AI class when we make it?
 	private Board board;
 	private int turnNumber = 1;
 	private int lastCardClicked; //gives hand index of card
@@ -45,7 +45,7 @@ public class GameState {
 
 	public GameState() {
 		this.player1 = new Player(true);
-		this.player2 = new Player(false);
+		this.player2 = new AI(false,this);
 		this.board = new Board();
 	}
 
