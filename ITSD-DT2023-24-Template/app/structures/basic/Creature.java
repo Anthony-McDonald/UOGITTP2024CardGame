@@ -158,7 +158,7 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	@Override
-<<<<<<< HEAD
+
 	public boolean isProvoke() {
 		// TODO Auto-generated method stub
 		return false;
@@ -167,8 +167,8 @@ public class Creature extends Card implements MoveableUnit {
 	@Override
 	public void setProvoke(boolean provoke) {
 		// TODO Auto-generated method stub
-		
-=======
+	}
+
 	public boolean canStillAttack(int currentTurn) {
 		if (this.getLastTurnAttacked()!= currentTurn){
 			return true;
@@ -188,7 +188,6 @@ public class Creature extends Card implements MoveableUnit {
 		}else{
 			return false;
 		}
->>>>>>> 81e737c2f2da6297c41acf391b5564957733ed5f
 	}
 
 
