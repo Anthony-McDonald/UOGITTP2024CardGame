@@ -169,6 +169,27 @@ public class Wraithling implements MoveableUnit{
 	public void setStunned(boolean stunned) {
 		isStunned = stunned;
 	}
+	@Override
+	public boolean canStillAttack(int currentTurn) {
+		if (this.getLastTurnAttacked()!= currentTurn){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean canStillMove(int currentTurn) {
+		if (this.getLastTurnAttacked()!=currentTurn){
+			if (this.getLastTurnMoved()!= currentTurn){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
 
 
 }

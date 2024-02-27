@@ -75,7 +75,7 @@ public class Creature extends Card implements MoveableUnit {
             e.printStackTrace();}
 		*/
 		if (this.currentHealth < 1) {
-			BasicCommands.addPlayer1Notification(out, "playUnitAnimation [Death]", 3);
+			BasicCommands.addPlayer1Notification(out, this.getCardname() + " killed", 3);
 			BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
 			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 			BasicCommands.deleteUnit(out,this.unit);
@@ -155,6 +155,28 @@ public class Creature extends Card implements MoveableUnit {
 		UnitCommands.summon(this,out, tile, gameState);
 
 
+	}
+
+	@Override
+	public boolean canStillAttack(int currentTurn) {
+		if (this.getLastTurnAttacked()!= currentTurn){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean canStillMove(int currentTurn) {
+		if (this.getLastTurnAttacked()!=currentTurn){
+			if (this.getLastTurnMoved()!= currentTurn){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
 	}
 
 

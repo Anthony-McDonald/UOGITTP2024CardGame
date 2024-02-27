@@ -49,4 +49,8 @@ public interface MoveableUnit {
 	public void setLastTurnAttacked(int lastTurnAttacked);
 
 	public void summon (ActorRef out, Tile tile, GameState gameState);
+
+	public boolean canStillAttack(int currentTurn);
+
+	public boolean canStillMove(int currentTurn);
 }
