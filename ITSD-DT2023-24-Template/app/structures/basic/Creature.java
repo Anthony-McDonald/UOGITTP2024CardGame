@@ -156,5 +156,17 @@ public class Creature extends Card implements MoveableUnit {
 
 	}
 
+	@Override
+	public boolean isProvoke() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setProvoke(boolean provoke) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

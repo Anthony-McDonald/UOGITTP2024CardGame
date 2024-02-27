@@ -171,5 +171,17 @@ public class Wraithling implements MoveableUnit{
 		isStunned = stunned;
 	}
 
+	@Override
+	public boolean isProvoke() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setProvoke(boolean provoke) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

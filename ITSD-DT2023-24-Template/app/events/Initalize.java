@@ -79,7 +79,7 @@ public class Initalize implements EventProcessor{
 		BasicCommands.setUnitAttack(out, playerAvatar.getUnit(), playerAvatar.getAttack());
 		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 
-		Tile aiStartTile = gameState.getBoard().getTile(7,2);
+		Tile aiStartTile = gameState.getBoard().getTile(2,2);
 		aiStartTile.setUnit(aiAvatar); //sets ai avatar on tile in back end
 		aiAvatar.getUnit().setPositionByTile(aiStartTile);//sets ai avatar on tile in front end
 		BasicCommands.drawUnit(out,aiAvatar.getUnit(),aiStartTile); //sets ai avatar on tile in front end

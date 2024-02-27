@@ -14,7 +14,7 @@ import utils.UnitCommands;
 import java.util.List;
 import java.util.Random;
 
-public class Avatar implements MoveableUnit{
+public class Avatar implements MoveableUnit, Provoke{
     private int maxHealth;
     private int currentHealth;
     private int attack;
@@ -26,6 +26,7 @@ public class Avatar implements MoveableUnit{
 	@JsonIgnore
 	private Tile tile;
 	private int lastTurnAttacked;
+	private boolean Provoke;
 
 	private boolean isStunned = false;
 
@@ -212,6 +213,23 @@ public class Avatar implements MoveableUnit{
 	@Override
 	public void summon(ActorRef out, Tile tile, GameState gameState) {
 		//not needed for Avatar (actually could call with in initialise for consistency)
+	}
+
+	@Override
+	public void provoke() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isProvoke() {
+		return this.Provoke;
+	}
+
+	@Override
+	public void setProvoke(boolean provoke) {
+		this.Provoke = provoke;
+		
 	}
 
 
