@@ -6,6 +6,7 @@ import structures.GameState;
 import structures.basic.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AI extends Player {
 	private GameState gameState;
@@ -67,12 +68,17 @@ public class AI extends Player {
 	}
 
 	public void summonUnits(){
+		/*
+		if unit has 0 attack, much higher chance of choosing tiles closer to AI avatar,
+		if unit has 5 attack, much higher chance of choosing tiles closer to player avatar.
+		 */
 		for (Card card : this.hand){
 
 		}
 	}
 
 	public ArrayList<Tile> tilesForAIUnitSummons(){
+		ArrayList<TileSummonWrapper> tileSummonWrappers = new ArrayList<>();
 		ArrayList<Tile> tilesForAIUnits = new ArrayList<>();
 		ArrayList<MoveableUnit>AIUnits = gameState.getBoard().friendlyUnits(false); //returns all AI units
 		for (MoveableUnit unit : AIUnits){
@@ -91,7 +97,25 @@ public class AI extends Player {
 				}
 			}
 		}
-		return tilesForAIUnits;
+		Tile avatarTile = null;
+		//loop for finding Avatar unit tile
+		for (MoveableUnit unit : AIUnits){
+			if (!unit.isUserOwned()&& unit instanceof Avatar){
+				avatarTile = unit.getTile();
+			}
+		}
+		for (Tile tile : tilesForAIUnits){
+			double distanceAIavatar = AI.calculateDistance(avatarTile, tile);
+			TileSummonWrapper tileSummonWrapper = new TileSummonWrapper(tile,distanceAIavatar);
+			tileSummonWrappers.add(tileSummonWrapper);
+		}
+		Collections.sort(tileSummonWrappers); //sort tiles based on distance from ai avatar
+		ArrayList<Tile> sortedTiles = new ArrayList<>();
+		for (TileSummonWrapper tileSummonWrapper : tileSummonWrappers){
+			Tile tile = tileSummonWrapper.getTile();
+			sortedTiles.add(tile);
+		}
+		return sortedTiles;
 	}
 
 
