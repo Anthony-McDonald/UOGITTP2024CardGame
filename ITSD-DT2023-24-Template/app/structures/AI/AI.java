@@ -122,9 +122,28 @@ public class AI extends Player {
 	}
 
 	public ArrayList<Tile> tilesForAIUnitSummons(){
-		ArrayList<TileSummonWrapper> tileSummonWrappers = new ArrayList<>();
+
+
+		ArrayList<TileSummonWrapper> tileSummonWrappers = new ArrayList<>(); //used for sorting tiles based on distance from AI avatar
 		ArrayList<Tile> tilesForAIUnits = new ArrayList<>();
 		ArrayList<MoveableUnit>AIUnits = gameState.getBoard().friendlyUnits(false); //returns all AI units
+
+		Tile avatarAITile = null;
+		//loop for finding AI Avatar unit tile
+		for (MoveableUnit unit : AIUnits){
+			if (!unit.isUserOwned()&& unit instanceof Avatar){
+				avatarAITile = unit.getTile();
+			}
+		}
+
+		Tile avatarhumanTile = null;
+		//loop for finding AI Avatar unit tile
+		for (MoveableUnit unit : gameState.getBoard().friendlyUnits(true)){
+			if (unit.isUserOwned()&& unit instanceof Avatar){
+				avatarhumanTile = unit.getTile();
+			}
+		}
+		double avatarToAvatarDist = AI.calculateDistance(avatarhumanTile, avatarAITile);
 		for (MoveableUnit unit : AIUnits){
 			int tileX = unit.getTile().getTilex();
 			int tileY = unit.getTile().getTiley();
@@ -134,22 +153,21 @@ public class AI extends Player {
 						Tile possibleTile = gameState.getBoard().getTile(i,j);
 						if (possibleTile.getUnit()==null){ //no unit on tile
 							if (!tilesForAIUnits.contains(possibleTile)) { //if it doesn't contain the tile
-								tilesForAIUnits.add(possibleTile);
+								double distanceToHumanAvatar = AI.calculateDistance(possibleTile,avatarhumanTile);
+								if (distanceToHumanAvatar<=avatarToAvatarDist) {
+									//only summons on tiles that are ideally in between AI avatar and human Avatar
+									//prevents units from being summoned "behind" AI avatar
+									tilesForAIUnits.add(possibleTile);
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-		Tile avatarTile = null;
-		//loop for finding Avatar unit tile
-		for (MoveableUnit unit : AIUnits){
-			if (!unit.isUserOwned()&& unit instanceof Avatar){
-				avatarTile = unit.getTile();
-			}
-		}
+
 		for (Tile tile : tilesForAIUnits){
-			double distanceAIavatar = AI.calculateDistance(avatarTile, tile);
+			double distanceAIavatar = AI.calculateDistance(avatarAITile, tile);
 			TileSummonWrapper tileSummonWrapper = new TileSummonWrapper(tile,distanceAIavatar);
 			tileSummonWrappers.add(tileSummonWrapper);
 		}
