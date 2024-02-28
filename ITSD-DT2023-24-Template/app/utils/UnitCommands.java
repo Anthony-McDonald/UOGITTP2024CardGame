@@ -3,12 +3,7 @@ package utils;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
-import structures.basic.Board;
-import structures.basic.MoveableUnit;
-import structures.basic.Provoke;
-import structures.basic.Tile;
-import structures.basic.UnitAnimationType;
-import structures.basic.Unit;
+import structures.basic.*;
 
 import java.util.ArrayList;
 
@@ -316,6 +311,11 @@ public class UnitCommands {
         boolean userOwned = summon.isUserOwned();
         if (canSummon(gameState,userOwned,tile)) {
             tile.setUnit(summon);
+            if (summon instanceof Creature){
+                Creature creature = (Creature) summon;
+                creature.setUnit(BasicObjectBuilders.loadUnit(creature.getUnitConfig(), gameState.getFrontEndUnitID(), Unit.class));
+            }
+            System.out.println("Unit is " + summon.getUnit());
             summon.getUnit().setPositionByTile(tile);//sets player avatar on tile in front end
             summon.setTurnSummoned(gameState.getTurnNumber());
             summon.setLastTurnAttacked(gameState.getTurnNumber());

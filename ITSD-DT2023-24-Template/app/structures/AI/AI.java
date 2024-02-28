@@ -1,12 +1,12 @@
 package structures.AI;
-import actors.GameActor;
 import akka.actor.ActorRef;
-import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;
+import utils.UnitCommands;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class AI extends Player {
 	private GameState gameState;
@@ -45,18 +45,27 @@ public class AI extends Player {
 
 	public void makeActions(){
 		while(this.hasActions()){
-
+			summonUnit();
+			System.out.println("attempting to summon");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public boolean hasActions(){ //expand class as functionality increases
 		for (Card card:this.hand) {
 			if (card instanceof Creature && card.getManacost() <= this.mana) { //has enough mana for summoning
+				System.out.println("AI has actions remaining");
 				return true;
+
 			}
 		}
-
+		System.out.println("AI has no actions remaining");
 		return false;
+
 	}
 
 	public static double calculateDistance(Tile startingTile, Tile targetTile){ //method for calculating distance between two tiles. multipurpose.
@@ -67,14 +76,45 @@ public class AI extends Player {
 
 	}
 
-	public void summonUnits(){
+	public void summonUnit(){
 		/*
-		if unit has 0 attack, much higher chance of choosing tiles closer to AI avatar,
-		if unit has 5 attack, much higher chance of choosing tiles closer to player avatar.
+		if unit has health>attack, much higher chance of choosing tiles closer to AI avatar,
+		if unit has attack<health, much higher chance of choosing tiles closer to player avatar.
+		if unit has attack == health , any tile
 		 */
-		for (Card card : this.hand){
-
+		Creature creature = this.returnBestCreature();
+		if (this.returnBestCreature().getCardname().equals("no creature")){
+			return;
 		}
+
+		ArrayList<Tile> possibleTiles = this.tilesForAIUnitSummons();
+//		int numberOfTiles = possibleTiles.size();
+//		ArrayList<Tile>weightedTiles = new ArrayList<>(); // list for putting weighted array list
+//		if (creature.getMaxHealth()>creature.getAttack()){
+//			for (int i = 0; i<possibleTiles.size();i++){
+//				for (int j = numberOfTiles; j<=1; j--){
+//					weightedTiles.add(possibleTiles.get(i));
+//				} numberOfTiles--;
+//			}
+//		} else if (creature.getAttack()> creature.getMaxHealth()) {
+//			for (int i = possibleTiles.size()-1; i>=0;i--){
+//				for (int j = 1; j<=numberOfTiles; j--){
+//					weightedTiles.add(possibleTiles.get(i));
+//				} numberOfTiles --;
+//			}
+//		} else{ //health is equal to attack
+//			//do nothing since all tiles have an equal chance
+//			weightedTiles.addAll(possibleTiles);
+//		}
+		Random random = new Random();
+		System.out.println(creature);
+		System.out.println(possibleTiles.get(random.nextInt(possibleTiles.size())).getTilex()+ "," + possibleTiles.get(random.nextInt(possibleTiles.size())).getTiley());
+		System.out.println(actorRef);
+		System.out.println(gameState);
+
+		UnitCommands.summon(creature,actorRef,possibleTiles.get(random.nextInt(possibleTiles.size())),gameState);
+
+
 	}
 
 	public ArrayList<Tile> tilesForAIUnitSummons(){
@@ -116,6 +156,27 @@ public class AI extends Player {
 			sortedTiles.add(tile);
 		}
 		return sortedTiles;
+	}
+
+	public Creature returnBestCreature(){
+		Creature creature = new Creature(0, "no creature" ,-1, null, null, true, null);
+		// possible fix to Jackson failing to handle null
+		for (Card card : this.hand){
+			if (card instanceof Creature){
+				Creature possibleCreature = (Creature) card;
+				if (possibleCreature.getManacost()<=this.mana){
+					if (creature==null){
+						creature = possibleCreature;
+					}else{
+						if (possibleCreature.getManacost()>creature.getManacost()){
+							creature = possibleCreature;
+						}
+					}
+				}
+			}
+		}
+		System.out.println("Best creature is " +creature.getCardname());
+		return creature;
 	}
 
 
