@@ -22,7 +22,8 @@ public class ShadowWatcher extends Creature implements Deathwatch{
     //gains +1 attack +1 hp permanently (max health)
 	@Override
 	public void deathWatch(ActorRef out, GameState gameState) {
-		this.setAttack(getAttack()+1, null);
+		this.setAttack(getAttack()+1, out);
 		this.setMaxHealth(getMaxHealth()+1);
+		this.setCurrentHealth(getCurrentHealth()+1, out, gameState);
 	}
 }
