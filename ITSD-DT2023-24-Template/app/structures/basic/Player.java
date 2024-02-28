@@ -291,10 +291,12 @@ public class Player {
 			mana = 9;
 		}
 		this.mana = mana;
-		if (this.userOwned){
-			BasicCommands.setPlayer1Mana(out, this);
-		}else{
-			BasicCommands.setPlayer2Mana(out, this);
+		if(out != null) {
+			if (this.userOwned) {
+				BasicCommands.setPlayer1Mana(out, this);
+			} else {
+				BasicCommands.setPlayer2Mana(out, this);
+			}
 		}
 	}
 
