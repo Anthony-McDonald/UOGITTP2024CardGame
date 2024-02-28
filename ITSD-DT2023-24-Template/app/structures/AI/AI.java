@@ -145,6 +145,8 @@ public class AI extends Player {
 		ArrayList<TileSummonWrapper> tileSummonWrappers = new ArrayList<>(); //used for sorting tiles based on distance from AI avatar
 		ArrayList<Tile> tilesForAIUnits = new ArrayList<>();
 		ArrayList<MoveableUnit>AIUnits = gameState.getBoard().friendlyUnits(false); //returns all AI units
+		ArrayList<Tile> backupPossibleTiles = new ArrayList<>(); //backup in case no other possible tiles using this algorithm
+		//e.g. if Avatars are next to each other, this doesn't work
 
 		Tile avatarAITile = null;
 		//loop for finding AI Avatar unit tile
@@ -170,6 +172,7 @@ public class AI extends Player {
 					if ( 0<=i && i<=8 && 0<=j && j<=4 ) { //if coord in board range
 						Tile possibleTile = gameState.getBoard().getTile(i,j);
 						if (possibleTile.getUnit()==null){ //no unit on tile
+							backupPossibleTiles.add(possibleTile); //adds tiles to backup list
 							if (!tilesForAIUnits.contains(possibleTile)) { //if it doesn't contain the tile
 								double distanceToHumanAvatar = AI.calculateDistance(possibleTile,avatarhumanTile);
 								if (distanceToHumanAvatar<=avatarToAvatarDist) {
@@ -198,7 +201,11 @@ public class AI extends Player {
 			Tile tile = tileSummonWrapper.getTile();
 			sortedTiles.add(tile);
 		}
-		return sortedTiles;
+		if (sortedTiles != null) {
+			return sortedTiles;
+		}else{
+			return backupPossibleTiles;
+		}
 	}
 
 	public Creature returnBestCreature(){
