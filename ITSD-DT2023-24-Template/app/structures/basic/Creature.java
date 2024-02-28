@@ -20,7 +20,7 @@ public class Creature extends Card implements MoveableUnit {
 	@JsonIgnore
 	protected Tile tile;
 	protected int lastTurnAttacked;
-
+	protected boolean provoke;
 	protected boolean isStunned;
 
 	//need to change constructor for creature
@@ -160,13 +160,12 @@ public class Creature extends Card implements MoveableUnit {
 	@Override
 
 	public boolean isProvoke() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.provoke;
 	}
 
 	@Override
 	public void setProvoke(boolean provoke) {
-		// TODO Auto-generated method stub
+		this.provoke = provoke;
 	}
 
 

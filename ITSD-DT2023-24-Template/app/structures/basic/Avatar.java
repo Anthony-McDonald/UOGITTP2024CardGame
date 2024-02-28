@@ -26,7 +26,7 @@ public class Avatar implements MoveableUnit, Provoke{
 	@JsonIgnore
 	private Tile tile;
 	private int lastTurnAttacked;
-	private boolean Provoke;
+	private boolean provoke;
 
 	private boolean isStunned = false;
 
@@ -244,12 +244,12 @@ public class Avatar implements MoveableUnit, Provoke{
 
 	@Override
 	public boolean isProvoke() {
-		return this.Provoke;
+		return this.provoke;
 	}
 
 	@Override
 	public void setProvoke(boolean provoke) {
-		this.Provoke = provoke;
+		this.provoke = provoke;
 		
 	}
 
