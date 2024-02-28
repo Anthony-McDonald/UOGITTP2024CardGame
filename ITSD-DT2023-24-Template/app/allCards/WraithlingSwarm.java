@@ -72,6 +72,7 @@ public class WraithlingSwarm extends Spell{
         getyCoords().clear();
         getxCoords().clear();
         setSatisfied(true);
+        gameState.setLastMessage(GameState.wraithlingSwarmCompleted);
 
     }
 
