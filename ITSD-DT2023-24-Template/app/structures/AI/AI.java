@@ -6,6 +6,7 @@ import utils.UnitCommands;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class AI extends Player {
@@ -20,21 +21,11 @@ public class AI extends Player {
 	}
 
 	public static void main(String[] args) {
-		GameState gameState1 = new GameState();
-		Board board = gameState1.getBoard();
-		Tile tile1 = board.getTile(2, 3);
-		Tile tile2 = board.getTile(7, 3);
-		Wraithling wraithling1 = new Wraithling();
-		wraithling1.setUserOwned(false);
-		tile1.setUnit(wraithling1);
-		Wraithling wraithling2 = new Wraithling();
-		wraithling2.setUserOwned(false);
-		tile2.setUnit(wraithling2);
-		AI newAI = new AI(false, gameState1);
-		ArrayList<Tile> tiles = newAI.tilesForAIUnitSummons();
-		for (Tile tile: tiles){
-			System.out.println(tile.getTilex() + "," + tile.getTiley());
-		}
+
+		int number = 15;
+		System.out.println(number);
+		number = (int) (number *0.8);
+		System.out.println(number);
 
 
 	}
@@ -87,7 +78,7 @@ public class AI extends Player {
 			return;
 		}
 
-		ArrayList<Tile> possibleTiles = this.tilesForAIUnitSummons();
+		List<Tile> possibleTiles = this.tilesForAIUnitSummons();
 //		int numberOfTiles = possibleTiles.size();
 //		ArrayList<Tile>weightedTiles = new ArrayList<>(); // list for putting weighted array list
 //		if (creature.getMaxHealth()>creature.getAttack()){
@@ -106,10 +97,37 @@ public class AI extends Player {
 //			//do nothing since all tiles have an equal chance
 //			weightedTiles.addAll(possibleTiles);
 //		}
+
+		if (creature.getMaxHealth()>creature.getAttack()){
+			System.out.println("defensive placement since unit has more attack than health");
+			int cutoffPoint = (int) (possibleTiles.size()*0.5);
+			System.out.println("Cutoff is " + cutoffPoint);
+			if (cutoffPoint == 0){
+				cutoffPoint =1; //prevents list from being null
+			}
+			System.out.println(possibleTiles.size() + " is list size before cutoff");
+			possibleTiles = possibleTiles.subList(0,cutoffPoint);
+			System.out.println(possibleTiles.size() + " is list size after cutoff");
+			//takes bottom % of possibleTiles that are closer to the AI avatar so defensive units are more likely to be summoned in a defensive position
+		} else if (creature.getAttack()> creature.getMaxHealth()) {
+			System.out.println("offensive placement");
+			int cutoffPoint = (int)(possibleTiles.size()*0.5);
+			System.out.println("Cutoff is " + cutoffPoint);
+			System.out.println(possibleTiles.size() + " is list size before cutoff");
+			possibleTiles =  possibleTiles.subList(cutoffPoint, possibleTiles.size());
+			System.out.println(possibleTiles.size() + " is list size after cutoff");
+			//takes top % of possibleTiles that are further from the AI avatar so offensive units are more likely to be summoned in an offensive position
+		} else{ //health is equal to attack
+			//no changes to possible tiles, equal chance of spawning anywhere
+		}
 		Random random = new Random();
 		System.out.println(creature);
 		System.out.println(actorRef);
 		System.out.println(gameState);
+		if (possibleTiles ==null ){
+			System.out.println("No possible tiles currently.");
+			return;
+		}
 		if (this.getMana() >= creature.getManacost()) {
 			System.out.println("Playing " + creature.getCardname());
 			this.setMana(this.getMana() - creature.getManacost(), actorRef);
@@ -167,8 +185,11 @@ public class AI extends Player {
 		}
 
 		for (Tile tile : tilesForAIUnits){
-			double distanceAIavatar = AI.calculateDistance(avatarAITile, tile);
-			TileSummonWrapper tileSummonWrapper = new TileSummonWrapper(tile,distanceAIavatar);
+			double xdistanceAIavatar = avatarAITile.getTilex()- tile.getTilex(); //sorts tiles based on their distance from ai avatar in terms of x axis
+			if (xdistanceAIavatar<0){
+				xdistanceAIavatar= xdistanceAIavatar*-1;
+			}
+			TileSummonWrapper tileSummonWrapper = new TileSummonWrapper(tile,xdistanceAIavatar);
 			tileSummonWrappers.add(tileSummonWrapper);
 		}
 		Collections.sort(tileSummonWrappers); //sort tiles based on distance from ai avatar
