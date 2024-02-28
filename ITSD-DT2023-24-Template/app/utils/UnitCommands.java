@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class UnitCommands {
     public static void attackUnit(MoveableUnit attacker, ActorRef out, Tile tile, GameState gameState) {
         MoveableUnit m = tile.getUnit();
-        //insert logic about if attack is possible.
+        //insert logic about if attack is possible.        
         if (attacker.getLastTurnAttacked() != gameState.getTurnNumber()) {
             if (canAttack(attacker, tile, gameState.getBoard())) {
                 attacker.setLastTurnAttacked(gameState.getTurnNumber());
@@ -46,11 +46,41 @@ public class UnitCommands {
         BasicCommands.playUnitAnimation(out, attacker.getUnit(), UnitAnimationType.idle);
 
     }
+    
 
     public static boolean canAttack (MoveableUnit attacker, Tile targetTile, Board board){
         Tile currentTile = attacker.getTile();
         int xPos = currentTile.getTilex();
         int yPos = currentTile.getTiley();
+        
+        if (attacker.isProvoke()) {
+        	for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+                for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+                	if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+                        Tile highlightTile = board.getTile(i,j);
+                       /* if (highlightTile.getUnit() instanceof Provoke && attacker.isUserOwned() != highlightTile.getUnit().isUserOwned()) {
+                        	return targetTile.equals(highlightTile);
+                        }
+                    }*/
+                	   if (highlightTile.getUnit() != null && highlightTile.getUnit().isUserOwned() != attacker.isUserOwned()) {
+                           //if tile has unit and unit is enemy
+                           if (targetTile.equals(highlightTile)) {
+                               if (attacker.isProvoke()) { // Check if the attacker is provoked
+                                   if (highlightTile.getUnit() instanceof Provoke) { // Check if the enemy unit has the provoke ability
+                                       return true;
+                                   } else {
+                                       //BasicCommands.addPlayer1Notification(out, "You can only attack units with the provoke ability.", 2);
+                                       return false; // Can't attack non-provoke units when provoked
+                                   }
+                               } else {
+                                   return true; // Can attack any enemy unit if not provoked
+                               }
+                           }
+                	   }           
+                	}
+                }
+        	}
+        }	
         for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
             for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
                 if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
@@ -194,8 +224,7 @@ public class UnitCommands {
                                     BasicCommands.addPlayer1Notification(out, "This unit is within range of a Provoke ability. Cannot move & can only attack provokers.", 2);
                                     mover.setProvoke(true);
                                     return;
-                                //} else if (highlightTile.getUnit()==null){//tile has no unit, safe for highlighting
-                               //     BasicCommands.drawTile(out,highlightTile, 1);
+                                    
                                 	}
                             	}
                         	}

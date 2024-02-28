@@ -20,7 +20,7 @@ public class Wraithling implements MoveableUnit{
 	@JsonIgnore
 	private Tile tile;
 	private int lastTurnAttacked;
-
+	private boolean provoke;
 	private boolean isStunned;
 
 	public Wraithling() {
@@ -193,14 +193,12 @@ public class Wraithling implements MoveableUnit{
 
 	@Override
 	public boolean isProvoke() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.provoke;
 	}
 
 	@Override
 	public void setProvoke(boolean provoke) {
-		// TODO Auto-generated method stub
-		
+		this.provoke = provoke;
 	}
 
 
