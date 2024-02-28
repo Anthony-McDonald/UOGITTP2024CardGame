@@ -27,7 +27,7 @@ public class EndTurnClicked implements EventProcessor{
 		//insert AI method where AI makes moves
 		AI player2 = (AI) gameState.getPlayer2();
 		System.out.println(player2.getHand());;
-//		player2.makeActions();
+		player2.makeActions();
 		//AI artificial = (AI) gameState.getPlayer2(); 
 		//artificial.aiMoved(out,gameState.getPlayer2().);
 //		System.out.println("end turn clicked");
