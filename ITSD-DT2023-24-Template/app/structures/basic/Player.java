@@ -232,8 +232,10 @@ public class Player {
 		if (this.getMana() >= cardSelected.getManacost()) {
 			this.setMana(this.getMana() - cardSelected.getManacost(), out);
 			this.hand.remove(cardSelected); //removes card in backEnd
-			BasicCommands.deleteCard(out, handPosition);
-			renderHand(out);
+			if (this.userOwned) { //only renders if player
+				BasicCommands.deleteCard(out, handPosition);
+				renderHand(out);
+			}
 		} else {
 			BasicCommands.addPlayer1Notification(out, "You don't have enough mana!", 5);
 		}
