@@ -108,11 +108,15 @@ public class AI extends Player {
 //		}
 		Random random = new Random();
 		System.out.println(creature);
-		System.out.println(possibleTiles.get(random.nextInt(possibleTiles.size())).getTilex()+ "," + possibleTiles.get(random.nextInt(possibleTiles.size())).getTiley());
 		System.out.println(actorRef);
 		System.out.println(gameState);
+		if (this.getMana() >= creature.getManacost()) {
+			System.out.println("Playing " + creature.getCardname());
+			this.setMana(this.getMana() - creature.getManacost(), actorRef);
+			this.hand.remove(creature);
 
-		UnitCommands.summon(creature,actorRef,possibleTiles.get(random.nextInt(possibleTiles.size())),gameState);
+			UnitCommands.summon(creature, actorRef, possibleTiles.get(random.nextInt(possibleTiles.size())), gameState);
+		}
 
 
 	}

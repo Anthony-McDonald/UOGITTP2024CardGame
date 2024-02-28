@@ -228,8 +228,12 @@ public class Player {
 
 	public void playCard(int handPosition, ActorRef out) {
 		Card cardSelected = this.getHand().get(handPosition - 2);
+		if (!this.userOwned){ //if AI
+			cardSelected = this.getHand().get(handPosition);
+		}
 
 		if (this.getMana() >= cardSelected.getManacost()) {
+			System.out.println("Playing " + cardSelected.getCardname());
 			this.setMana(this.getMana() - cardSelected.getManacost(), out);
 			this.hand.remove(cardSelected); //removes card in backEnd
 			if (this.userOwned) { //only renders if player
