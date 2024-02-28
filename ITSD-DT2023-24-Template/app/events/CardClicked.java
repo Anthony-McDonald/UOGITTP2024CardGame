@@ -2,9 +2,11 @@ package events;
 
 
 import actors.GameActor;
+import allCards.WraithlingSwarm;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.Card;
 import structures.basic.Creature;
@@ -30,6 +32,11 @@ public class CardClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
+
+		if (!WraithlingSwarm.isSatisfied) {
+			BasicCommands.addPlayer1Notification(out, "Click on a tile!", 2);
+			return;
+		}
 		
 		int handPosition = message.get("position").asInt();
 		gameState.getBoard().renderBoard(out);

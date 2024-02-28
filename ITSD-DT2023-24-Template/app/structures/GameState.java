@@ -38,9 +38,8 @@ public class GameState {
 	public static final String spellCardClicked = "SpellCardClicked";
 	public static final String friendlyUnitClicked = "FriendlyUnitClicked";
 	public static final String creatureCardClicked = "CreatureCardClicked";
+	public static final String wraithlingSwarmCompleted = "WraithlingSwarmCompleted";
 
-	public static final String beamshockClicked = "BeamShockClicked";
-	public static final String sundropElixirClicked = "SundropElixirClicked";
 	private int frontEndUnitID;
 	private int frontEndCardID;
 

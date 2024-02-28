@@ -38,6 +38,7 @@ public class TileClicked implements EventProcessor{
 		int tiley = message.get("tiley").asInt();
 
 
+
 		// needed for wraithling summons
 		if (!WraithlingSwarm.isSatisfied) {
 			UnitCommands.summonableTiles(out,gameState);
@@ -59,15 +60,23 @@ public class TileClicked implements EventProcessor{
 			Tile currentTile = gameState.getBoard().getTile(tilex, tiley);
 
 			if (currentTile.getUnit() != null){
+				System.out.println(currentTile.getUnit().toString());
 
 				//logic for if current tile has unit
 
 				if(currentTile.getUnit().isUserOwned()){
+					if (gameState.getLastMessage().equals(GameState.wraithlingSwarmCompleted)) {
+						System.out.println("attempting to set to noevent ------------------------------------------------");
+						gameState.setLastMessage(GameState.noEvent);
+						return;
+					}
 					if (!currentTile.getUnit().isStunned()) {
 						currentTile.getUnit().setStunned(false);
 						//if unit clicked was friendly.
 						if (gameState.getLastMessage().equals(GameState.noEvent)){
 							//insert logic about highlighting appropriate tiles for move/attack
+
+
 							MoveableUnit unit = currentTile.getUnit();
 							System.out.println("Friendly unit clicked, test that it has detected");
 							unit.actionableTiles(out,gameState);
