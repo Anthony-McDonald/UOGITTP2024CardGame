@@ -82,6 +82,8 @@ public class Avatar implements MoveableUnit, Provoke{
 				if (UnitCommands.canSummon(gameState, true, tileToCheck)) {
 					Wraithling wraithling = new Wraithling();
 					wraithling.summon(out, tileToCheck, gameState);
+					EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_wraithsummon);
+					try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tileToCheck));} catch (InterruptedException e) {e.printStackTrace();}
 					wraithlingSummoned = true;
 				}
 			}
