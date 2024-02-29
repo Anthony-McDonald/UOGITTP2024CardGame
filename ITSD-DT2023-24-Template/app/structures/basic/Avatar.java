@@ -14,7 +14,7 @@ import utils.UnitCommands;
 import java.util.List;
 import java.util.Random;
 
-public class Avatar implements MoveableUnit, Provoke{
+public class Avatar implements MoveableUnit{
     private int maxHealth;
     private int currentHealth;
     private int attack;
@@ -234,12 +234,6 @@ public class Avatar implements MoveableUnit, Provoke{
 		}else{
 			return false;
 		}
-	}
-
-	@Override
-	public void provoke() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

@@ -213,40 +213,37 @@ public class UnitCommands {
                     
                     boolean hasProvokeAdjacent = false;
                     
-                    //Loop through adjacent squares
-                    for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
-                        for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
-                            if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
-                                Tile highlightTile = board.getTile(i,j);
-                                if (highlightTile.getUnit() instanceof Provoke && mover.isUserOwned() != highlightTile.getUnit().isUserOwned()) {
-                                	BasicCommands.drawTile(out,highlightTile, 2);
-                                    hasProvokeAdjacent = true;
-                                    BasicCommands.addPlayer1Notification(out, "This unit is within range of a Provoke ability. Cannot move & can only attack provokers.", 2);
-                                    mover.setProvoke(true);
-                                    return;
-                                    
-                                	}
-                            	}
-                        	}
-                    	}
-                  
+                    // Loop through adjacent squares
                     for (int i = xPos - 1; i <= xPos + 1; i++) { // i is x
                         for (int j = yPos - 1; j <= yPos + 1; j++) { // j is y
                             if (0 <= i && i <= 8 && 0 <= j && j <= 4) { //if coord in board range
                                 Tile highlightTile = board.getTile(i, j);
-                                if (highlightTile.getUnit() == null) {//tile has no unit, safe for highlighting
-                                    BasicCommands.drawTile(out, highlightTile, 1);
+                                if (highlightTile.getUnit() != null && mover.isUserOwned() != highlightTile.getUnit().isUserOwned()) { // tile has unit and is enemy unit
+                                    if (highlightTile.getUnit() instanceof Provoke) {
+                                        BasicCommands.drawTile(out, highlightTile, 2);
+                                        hasProvokeAdjacent = true;
+                                    }
                                 }
                             }
                         }
                     }
-                    
-                    //Provoke logic
-                    if (hasProvokeAdjacent) {
-                    	mover.setLastTurnMoved(gameState.getTurnNumber()+ 1); //Unit cannot move
-                    	return;
+
+                    if (!hasProvokeAdjacent) {
+                        for (int i = xPos - 1; i <= xPos + 1; i++) { // i is x
+                            for (int j = yPos - 1; j <= yPos + 1; j++) { // j is y
+                                if (0 <= i && i <= 8 && 0 <= j && j <= 4) { //if coord in board range
+                                    Tile highlightTile = board.getTile(i, j);
+                                    if (highlightTile.getUnit() == null) {//tile has no unit, safe for highlighting
+                                        BasicCommands.drawTile(out, highlightTile, 1);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        // Provoke units found, unit can't move
+                        mover.setLastTurnMoved(gameState.getTurnNumber() + 1);
+                        return;
                     }
-                    
                     
                     //the below conditions are for highlighting directions +2 in cardinal directions for movement
                     if(xPos-2>=0){
@@ -407,20 +404,13 @@ public class UnitCommands {
                 for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
                     if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
                         Tile highlightTile = board.getTile(i,j);
-                        if (highlightTile.getUnit()==null&& highlightTile.equals(possibleTile)) {//tile has no unit, safe for summon
+                        if (highlightTile.getUnit()==null&& highlightTile.equals(possibleTile)){//tile has no unit, safe for summon
                             return true;
-                        } else if (gameState.getPlayer1().getLastCardClickedCard() != null) {
-                            if (gameState.getPlayer1().getLastCardClickedCard().getCardname().equals("Dark Terminus")) {
-                                System.out.println("DARK TERMINUS FOUND, RETURNING TRUE -------------");
-                                gameState.getPlayer1().setLastCardClickedCard(null);
-                                return true;
-                            }
                         }
                     }
                 }
             }
         }
-        System.out.println(gameState.getPlayer1().getLastCardClickedCard() + "  --              -------------------");
         return false;
     }
 }
