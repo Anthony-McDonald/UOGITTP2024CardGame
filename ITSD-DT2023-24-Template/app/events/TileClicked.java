@@ -100,9 +100,23 @@ public class TileClicked implements EventProcessor{
 						attacker.attackUnit(out, currentTile,gameState);
 
 					}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)) {
-						//maybe we change for specific spell cards since there are only 3?
-						//if Dark Terminus, place logic here
-						//set last message to NoEvent
+						Player player1 = gameState.getPlayer1();
+						try {
+							Card card = player1.getHand().get(gameState.getLastCardClicked() - 2);
+							System.out.println(card.getCardname());
+							player1.playCard(gameState.getLastCardClicked(), out);
+
+							if (card.getCardname().equals("Dark Terminus")) {
+								gameState.getPlayer1().setLastCardClickedCard(card);
+								((Spell) card).spellEffect(currentTile, out, gameState);
+							}
+							// Use the card variable as needed
+						} catch (IndexOutOfBoundsException e) {
+							// Handle the exception gracefully
+//						System.out.println("Index is out of bounds. Cannot retrieve the card from the hand.");
+//						e.printStackTrace(); // or log the exception
+						}
+
 					} else if (gameState.getLastMessage().equals(GameState.noEvent)){
 						//no action, inform player
 
