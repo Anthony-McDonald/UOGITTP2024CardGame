@@ -222,6 +222,7 @@ public class UnitCommands {
                                     if (highlightTile.getUnit() instanceof Provoke) {
                                         BasicCommands.drawTile(out, highlightTile, 2);
                                         hasProvokeAdjacent = true;
+                                        mover.setProvoke(true);
                                     }
                                 }
                             }
