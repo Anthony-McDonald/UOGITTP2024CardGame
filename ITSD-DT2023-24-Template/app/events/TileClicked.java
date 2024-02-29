@@ -71,7 +71,6 @@ public class TileClicked implements EventProcessor{
 						return;
 					}
 					if (!currentTile.getUnit().isStunned()) {
-						currentTile.getUnit().setStunned(false);
 						//if unit clicked was friendly.
 						if (gameState.getLastMessage().equals(GameState.noEvent)){
 							//insert logic about highlighting appropriate tiles for move/attack

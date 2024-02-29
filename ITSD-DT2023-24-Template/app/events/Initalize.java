@@ -68,7 +68,7 @@ public class Initalize implements EventProcessor{
 		player1.setAvatar(playerAvatar);
 		player2.setAvatar(aiAvatar);
 
-		Tile playerStartTile = gameState.getBoard().getTile(1,2);
+		Tile playerStartTile = gameState.getBoard().getTile(5,2);
 		//we could make this neater later
 		playerStartTile.setUnit(playerAvatar); //sets player avatar in back end
 		//need the following two commands Unit.setPositionByTile and BasicCommands.drawUnit for initial summon

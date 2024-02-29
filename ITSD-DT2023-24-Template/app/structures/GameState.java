@@ -39,14 +39,22 @@ public class GameState {
 	public static final String friendlyUnitClicked = "FriendlyUnitClicked";
 	public static final String creatureCardClicked = "CreatureCardClicked";
 	public static final String wraithlingSwarmCompleted = "WraithlingSwarmCompleted";
-
 	private int frontEndUnitID;
 	private int frontEndCardID;
+	private int beamShockCounter = 0;
 
 	public GameState() {
 		this.player1 = new Player(true);
 		this.player2 = new AI(false,this);
 		this.board = new Board();
+	}
+
+	public int getBeamShockCounter() {
+		return beamShockCounter;
+	}
+
+	public void setBeamShockCounter(int beamShockCounter) {
+		this.beamShockCounter = beamShockCounter;
 	}
 
 	public Player getPlayer1() {

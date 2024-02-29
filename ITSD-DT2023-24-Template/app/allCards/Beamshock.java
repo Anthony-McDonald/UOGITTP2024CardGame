@@ -18,5 +18,6 @@ public class Beamshock extends Spell{
         EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_martyrdom);
         try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}
         tile.getUnit().setStunned(true);
+        gameState.setBeamShockCounter(1);
     }
 }

@@ -8,6 +8,7 @@ import structures.AI.AI;
 import structures.GameState;
 import structures.basic.Card;
 import structures.basic.Spell;
+import structures.basic.Tile;
 
 /**
  * Indicates that the user has clicked an object on the game canvas, in this case
@@ -43,6 +44,27 @@ public class EndTurnClicked implements EventProcessor{
 		gameState.getPlayer1().setMana(gameState.getTurnNumber()+1, out);
 		gameState.getPlayer2().setMana(gameState.getTurnNumber()+1, out);
 
+		if (gameState.getBeamShockCounter() > 0) {
+			System.out.println("BEAM SHOCK TRIGGERED AND NOTED, INCREMENTING");
+			gameState.setBeamShockCounter(gameState.getBeamShockCounter() + 1);
+		} if (gameState.getBeamShockCounter() == 3) {
+			gameState.setBeamShockCounter(gameState.getBeamShockCounter() + 1);
+		}
+		if (gameState.getBeamShockCounter() > 3) {
+			System.out.println(gameState.getBeamShockCounter());
+			System.out.println("TURN WITH STUN OVER, BEAMSHOCK IS NOW FULLY FINISHED, RESETTING");
+			gameState.setBeamShockCounter(0);
+
+			Tile[][] tiles = gameState.getBoard().getAllTiles();
+			for (int i = 0; i < tiles.length; i++) {
+				for (int j = 0; j < tiles[i].length; j++) {
+					Tile tile = tiles[i][j];
+					if (tile.getUnit() != null) {
+						tile.getUnit().setStunned(false);
+					}
+				}
+			}
+		}
 		// logic to put AI spells into player hand for testing, comment out when you don't want
 //		for (Card card : gameState.getPlayer2().getPlayerDeck()) {
 //			System.out.println(card.getCardname());
