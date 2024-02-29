@@ -4,6 +4,8 @@ import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;
+import utils.BasicObjectBuilders;
+import utils.UnitCommands;
 
 public class DarkTerminus extends Spell{
     public DarkTerminus(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
@@ -15,10 +17,13 @@ public class DarkTerminus extends Spell{
         int enemyHealth = unit.getCurrentHealth();
         enemyHealth = 0;
         unit.setCurrentHealth(enemyHealth, out, gameState);
-        gameState.getBoard().renderBoard(out); //resets board
         Wraithling wraithling = new Wraithling();
-        wraithling.summon(out,tile, gameState);
-        gameState.setLastMessage(GameState.noEvent); //ONLY DO THIS IF SPELL GOES CORRECTLY
+
+        wraithling.summon(out, tile, gameState);
+        gameState.getBoard().renderBoard(out); //resets board
+        gameState.setLastMessage(GameState.spellCardClicked); //ONLY DO THIS IF SPELL GOES CORRECTLY
+//        gameState.setLastMessage(GameState.noEvent); //ONLY DO THIS IF SPELL GOES CORRECTLY
+//        try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
     }
 
 }

@@ -407,13 +407,20 @@ public class UnitCommands {
                 for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
                     if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
                         Tile highlightTile = board.getTile(i,j);
-                        if (highlightTile.getUnit()==null&& highlightTile.equals(possibleTile)){//tile has no unit, safe for summon
+                        if (highlightTile.getUnit()==null&& highlightTile.equals(possibleTile)) {//tile has no unit, safe for summon
                             return true;
+                        } else if (gameState.getPlayer1().getLastCardClickedCard() != null) {
+                            if (gameState.getPlayer1().getLastCardClickedCard().getCardname().equals("Dark Terminus")) {
+                                System.out.println("DARK TERMINUS FOUND, RETURNING TRUE -------------");
+                                gameState.getPlayer1().setLastCardClickedCard(null);
+                                return true;
+                            }
                         }
                     }
                 }
             }
         }
+        System.out.println(gameState.getPlayer1().getLastCardClickedCard() + "  --              -------------------");
         return false;
     }
 }
