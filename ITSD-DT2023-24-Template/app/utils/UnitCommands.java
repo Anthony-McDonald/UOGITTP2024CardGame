@@ -11,8 +11,17 @@ public class UnitCommands {
     public static void attackUnit(MoveableUnit attacker, ActorRef out, Tile tile, GameState gameState) {
         MoveableUnit m = tile.getUnit();
         //insert logic about if attack is possible.
+        if (isProvokeAdjacent(attacker,gameState)){
+            // if provoke is adjacent
+            if (! (m instanceof Provoke)){
+                BasicCommands.addPlayer1Notification(out, "Unit can only attack Provokers", 3);
+                return; //ends attack logic
+            }
+
+        }
+
         if (attacker.getLastTurnAttacked() != gameState.getTurnNumber()) {
-            if (canAttack(attacker, tile, gameState.getBoard())) {
+            if (canAttack(attacker, tile, gameState)) {
                 attacker.setLastTurnAttacked(gameState.getTurnNumber());
                 int enemyHealth = m.getCurrentHealth();
                 BasicCommands.playUnitAnimation(out, attacker.getUnit(), UnitAnimationType.attack); //attack animation
@@ -23,7 +32,9 @@ public class UnitCommands {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+
                 }
+                BasicCommands.playUnitAnimation(out, attacker.getUnit(), UnitAnimationType.idle);
                 if (enemyHealth > 0) { //if enemy is alive, counterattack
                     BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.attack);//unit attack animation
                     attacker.setCurrentHealth((attacker.getCurrentHealth() - m.getAttack()), out,gameState);
@@ -32,11 +43,14 @@ public class UnitCommands {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.idle);
+
                 }
                 gameState.setLastMessage(GameState.noEvent);
             } else {
                 //attack not possible on this unit, inform user.
                 //
+                BasicCommands.addPlayer1Notification(out, "Unit can't attack there!", 3);
             }
         }else{
             //already attacked this turn
@@ -44,8 +58,18 @@ public class UnitCommands {
         }
     }
 
-    public static boolean canAttack (MoveableUnit attacker, Tile targetTile, Board board){
+    public static boolean canAttack (MoveableUnit attacker, Tile targetTile, GameState gameState){
         Tile currentTile = attacker.getTile();
+        Board board = gameState.getBoard();
+        if (isProvokeAdjacent(attacker, gameState)){
+            if (targetTile.getUnit()!= null){
+                MoveableUnit unit = targetTile.getUnit();
+                if (!(unit instanceof Provoke) && unit.isUserOwned()!= attacker.isUserOwned()){
+                    System.out.println("can't attack, being provoked");
+                    return false;
+                }
+            }
+        }
         int xPos = currentTile.getTilex();
         int yPos = currentTile.getTiley();
         for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
@@ -67,6 +91,10 @@ public class UnitCommands {
     public static void moveUnit(MoveableUnit mover, ActorRef out, Tile tile, GameState gameState) {
         //insert logic about if move can occur
         if (gameState.getTurnNumber()!= mover.getLastTurnMoved()) { //hasn't moved this turn
+            if (isProvokeAdjacent(mover,gameState)){ //is provoked
+                BasicCommands.addPlayer1Notification(out, "Unit can't move, it's provoked.", 3);
+                return;
+            }
             if (canMove(mover, tile, gameState.getBoard())) {
                 mover.setLastTurnMoved(gameState.getTurnNumber());
                 gameState.setLastMessage(GameState.noEvent);
@@ -162,6 +190,46 @@ public class UnitCommands {
         int xPos = mover.getTile().getTilex();
         int yPos = mover.getTile().getTiley();
         Board board = gameState.getBoard();
+
+        if (isProvokeAdjacent(mover,gameState)){
+            //separate logic for provoked units
+            if (mover.getTurnSummoned()!= gameState.getTurnNumber()){
+                //not summoned this turn
+                if (mover.getLastTurnAttacked()!=gameState.getTurnNumber()){
+                //not attacked this turn
+                    System.out.println("Uh oh its mr provoke");
+                    System.out.println("Initiating provoked highlighting");
+                    BasicCommands.addPlayer1Notification(out, "Unit is provoked!", 2);
+                    gameState.setLastUnitClicked(mover);
+                    gameState.setLastMessage(GameState.friendlyUnitClicked);
+                    for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+                        for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+                            if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+                                Tile adjacentTile = board.getTile(i,j);
+                                if (adjacentTile.getUnit()!= null){
+                                    MoveableUnit adjacentUnit = adjacentTile.getUnit();
+                                    if (adjacentUnit instanceof Provoke && adjacentUnit.isUserOwned()!= mover.isUserOwned()){
+                                        BasicCommands.drawTile(out, adjacentTile, 2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return;
+                }else{
+                    gameState.setLastMessage(GameState.noEvent);
+                    BasicCommands.addPlayer1Notification(out, "This unit has already attacked, it can't perform another action", 2);
+                }
+
+            }else{ //summoned this turn, no action
+                //insert code notifying user
+                System.out.println("Summoned this turn");
+                try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+                gameState.setLastMessage(GameState.noEvent);
+                BasicCommands.addPlayer1Notification(out, "This unit was summoned this turn, it can't perform an action.", 2);
+                return;
+            }
+        }
 
         if (mover.getTurnSummoned()!=gameState.getTurnNumber()){//hasn't been summoned this turn, allow action
             System.out.println("Unit hasn't been summoned this turn");
@@ -351,6 +419,32 @@ public class UnitCommands {
                 }
             }
         }
+        return false;
+    }
+
+    public static boolean isProvokeAdjacent (MoveableUnit actionTaker, GameState gameState){
+        Board board = gameState.getBoard();
+        boolean userOwned = actionTaker.isUserOwned();
+        Tile unitTile = actionTaker.getTile();
+        int xPos = unitTile.getTilex();
+        int yPos = unitTile.getTiley();
+
+        //Loop through adjacent squares
+        for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+            for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+                if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+                    Tile adjacentTile = board.getTile(i,j);
+                    if (adjacentTile.getUnit()!= null){
+                        MoveableUnit adjacentTileUnit = adjacentTile.getUnit();
+                        if (adjacentTileUnit instanceof Provoke && adjacentTileUnit.isUserOwned()!= userOwned){
+                            //if adjacent unit has provoke and is enemy
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
         return false;
     }
 }

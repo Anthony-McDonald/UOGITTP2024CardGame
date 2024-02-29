@@ -9,7 +9,7 @@ import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 import utils.UnitCommands;
 
-public class Wraithling implements MoveableUnit{
+public class Wraithling implements MoveableUnit, Provoke{
 	private int maxHealth;
 	private int currentHealth;
 	private int attack;
@@ -204,4 +204,8 @@ public class Wraithling implements MoveableUnit{
 	}
 
 
+	@Override
+	public void provoke() {
+
+	}
 }

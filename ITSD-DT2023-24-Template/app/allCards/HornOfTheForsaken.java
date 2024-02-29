@@ -20,7 +20,7 @@ public class HornOfTheForsaken extends Spell{
         // set to 4 to facilitate 3 hits, avoids 1 off error, could edit later for clarity
         EffectAnimation effect2 = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff);
         try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect2,gameState.getPlayer1().getAvatar().getTile()));} catch (InterruptedException e) {e.printStackTrace();}
-        gameState.getPlayer1().setHornOfTheForsakenHealth(3);
+        gameState.getPlayer1().setHornOfTheForsakenHealth(4);
         gameState.setLastMessage(GameState.noEvent);
     }
 }
