@@ -70,8 +70,6 @@ public class WraithlingSwarm extends Spell{
             Wraithling wraithling = new Wraithling();
             Tile currentTile = gameState.getBoard().getTile(getxCoords().get(i), getyCoords().get(i));
             wraithling.summon(out,currentTile, gameState);
-                EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_wraithsummon);
-                try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, currentTile));} catch (InterruptedException e) {e.printStackTrace();}
         }
         getyCoords().clear();
         getxCoords().clear();
