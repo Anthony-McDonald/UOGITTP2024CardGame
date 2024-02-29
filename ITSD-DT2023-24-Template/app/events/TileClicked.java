@@ -104,11 +104,17 @@ public class TileClicked implements EventProcessor{
 						try {
 							Card card = player1.getHand().get(gameState.getLastCardClicked() - 2);
 							System.out.println(card.getCardname());
-							player1.playCard(gameState.getLastCardClicked(), out);
 
 							if (card.getCardname().equals("Dark Terminus")) {
-								gameState.getPlayer1().setLastCardClickedCard(card);
-								((Spell) card).spellEffect(currentTile, out, gameState);
+								if (currentTile.getUnit().getMaxHealth() != 20) {
+									gameState.getPlayer1().setLastCardClickedCard(card);
+									player1.playCard(gameState.getLastCardClicked(), out);
+									((Spell) card).spellEffect(currentTile, out, gameState);
+
+								} else {
+									BasicCommands.addPlayer1Notification(out, "Choose a non-avatar unit", 2);
+								}
+
 							}
 							// Use the card variable as needed
 						} catch (IndexOutOfBoundsException e) {
@@ -161,8 +167,6 @@ public class TileClicked implements EventProcessor{
 							UnitCommands.summonableTiles(out, gameState);
 
 							((Spell) card).spellEffect(out, gameState, tilex, tiley);
-						} else if (card.getCardname().equals("Dark Terminus")) {
-							((Spell) card).spellEffect(currentTile, out, gameState);
 						} else if (card.getCardname().equals("Horn of the Forsaken")) {
 							System.out.println("THE HORN HAS BEEN BLOWN");
 							((Spell) card).spellEffect(gameState);

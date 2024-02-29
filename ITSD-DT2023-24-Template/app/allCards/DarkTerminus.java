@@ -16,12 +16,13 @@ public class DarkTerminus extends Spell{
         MoveableUnit unit = tile.getUnit();
         int enemyHealth = unit.getCurrentHealth();
         enemyHealth = 0;
+
         unit.setCurrentHealth(enemyHealth, out, gameState);
         Wraithling wraithling = new Wraithling();
 
         wraithling.summon(out, tile, gameState);
         gameState.getBoard().renderBoard(out); //resets board
-        gameState.setLastMessage(GameState.spellCardClicked); //ONLY DO THIS IF SPELL GOES CORRECTLY
+        gameState.setLastMessage(GameState.noEvent); //ONLY DO THIS IF SPELL GOES CORRECTLY
 //        gameState.setLastMessage(GameState.noEvent); //ONLY DO THIS IF SPELL GOES CORRECTLY
 //        try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
     }
