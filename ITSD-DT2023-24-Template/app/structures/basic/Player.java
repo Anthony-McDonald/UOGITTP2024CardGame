@@ -35,6 +35,8 @@ public class Player {
 
 	private int hornOfTheForsakenHealth = 0;
 
+	private Avatar avatar;
+
 	public Player(boolean userOwned) {
 		super();
 		this.health = 20;
@@ -60,6 +62,14 @@ public class Player {
 		super();
 		this.health = health;
 		this.mana = mana;
+	}
+
+	public Avatar getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(Avatar avatar) {
+		this.avatar = avatar;
 	}
 
 	public int getHornOfTheForsakenHealth() {

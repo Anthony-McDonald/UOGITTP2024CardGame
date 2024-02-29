@@ -169,7 +169,7 @@ public class TileClicked implements EventProcessor{
 							((Spell) card).spellEffect(out, gameState, tilex, tiley);
 						} else if (card.getCardname().equals("Horn of the Forsaken")) {
 							System.out.println("THE HORN HAS BEEN BLOWN");
-							((Spell) card).spellEffect(gameState);
+							((Spell) card).spellEffect(out, gameState);
 						} else if (card.isCreature()) {
 							// essentially just a catch to stop creatures being cast to spell
 							System.out.println("CAUGHT THE BUGGIEST OF BUGS");
