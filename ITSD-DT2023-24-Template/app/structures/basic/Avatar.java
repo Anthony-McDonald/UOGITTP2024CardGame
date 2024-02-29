@@ -58,36 +58,37 @@ public class Avatar implements MoveableUnit{
 		UnitCommands.attackUnit(this, out, tile, gameState);
 		if (gameState.getPlayer1().getHornOfTheForsakenHealth() >= 0) {
 			boolean wraithlingSummoned = false;
-			int tileX = tile.getTilex();
-			int tileY = tile.getTiley();
-			// coords around unit
-			int[][] areaAroundUnit = {
-					{-1, -1}, {-1, 0}, {-1, 1}, {0, -1},{0, 1},{1, -1}, {1, 0}, {1, 1}
-			};
+			Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
+			int tileX = avatarTile.getTilex();
+			int tileY = avatarTile.getTiley();
 
-			while (!wraithlingSummoned) {
-				Random random = new Random();
+			if (UnitCommands.canAttack(this,tile, gameState.getBoard())) {
 
-				int randomSelection = random.nextInt(8);
+				int[][] areaAroundUnit = {
+						{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}
+				};
 
-				// Select a random area from above
-				int[] randomArea = areaAroundUnit[randomSelection];
+				while (!wraithlingSummoned) {
+					Random random = new Random();
 
-				// New coords
-				int xToCheck = tileX + randomArea[0];
-				int yToCheck = tileY + randomArea[1];
+					int randomSelection = random.nextInt(8);
 
-				Tile tileToCheck = gameState.getBoard().getTile(xToCheck,yToCheck);
+					// Select a random area from above
+					int[] randomArea = areaAroundUnit[randomSelection];
 
-				if (UnitCommands.canSummon(gameState, true, tileToCheck)) {
-					Wraithling wraithling = new Wraithling();
-					wraithling.summon(out, tileToCheck, gameState);
-					wraithlingSummoned = true;
+					// New coords
+					int xToCheck = tileX + randomArea[0];
+					int yToCheck = tileY + randomArea[1];
+
+					Tile tileToCheck = gameState.getBoard().getTile(xToCheck, yToCheck);
+
+					if (UnitCommands.canSummon(gameState, true, tileToCheck)) {
+						Wraithling wraithling = new Wraithling();
+						wraithling.summon(out, tileToCheck, gameState);
+						wraithlingSummoned = true;
+					}
 				}
 			}
-
-
-		} else {
 		}
 	}
 
