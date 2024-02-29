@@ -190,8 +190,22 @@ public class Player {
 			}
 		}
 
-
 	}
+
+	public void drawSpecificCard(ActorRef out, Card card) {
+		if (isUserOwned()) {
+
+			if (this.getHand().size() < 5) {
+				this.getHand().add(card);
+				System.out.println("current hand : " + this.getHand());
+				this.renderHand(out);
+			}
+
+		}
+
+		}
+
+
 
 	public void renderHand(ActorRef out) {
 		for (int i = 1; i<=6; i++){

@@ -1,11 +1,11 @@
 package allCards;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 import structures.GameState;
-import structures.basic.BigCard;
-import structures.basic.MiniCard;
-import structures.basic.MoveableUnit;
-import structures.basic.Spell;
+import structures.basic.*;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 public class SundropElixir extends Spell{
 
@@ -13,10 +13,13 @@ public class SundropElixir extends Spell{
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
 
-    public void spellEffect(MoveableUnit unit, ActorRef out, GameState gameState){
+    public void spellEffect(Tile tileClicked, ActorRef out, GameState gameState){
+        System.out.println("TRYING TO PLAY SUNDROP");
+        MoveableUnit unit = tileClicked.getUnit();
         int amountToHeal = 4;
+        EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff);
+        try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tileClicked));} catch (InterruptedException e) {e.printStackTrace();}
         while (amountToHeal > 0) {
-            int unitMaxHealth = unit.getMaxHealth();
             if (unit.getCurrentHealth() < unit.getMaxHealth()) {
                 unit.setCurrentHealth(unit.getCurrentHealth() + 1, out, gameState);
             }

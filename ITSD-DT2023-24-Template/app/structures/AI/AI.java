@@ -39,10 +39,11 @@ public class AI extends Player {
 
 	public void makeActions(){
 		while(this.hasActions()){
+			playAnySpell();
 			summonUnit();
 			System.out.println("attempting to summon");
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(0);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -54,12 +55,20 @@ public class AI extends Player {
 			if (card instanceof Creature && card.getManacost() <= this.mana) { //has enough mana for summoning
 				System.out.println("AI has actions remaining");
 				return true;
-
 			}
 		}
 		System.out.println("AI has no actions remaining");
 		return false;
-
+	}
+	public boolean hasManaActions() {
+		for (Card card: this.hand) {
+			if (card instanceof Spell && card.getManacost() <= this.mana) {
+				System.out.println("Ai has mana for spell -> actions remaining");
+				return true;
+			}
+		}
+		System.out.println("AI has no spell actions remaining");
+		return false;
 	}
 
 	public static double calculateDistance(Tile startingTile, Tile targetTile){ //method for calculating distance between two tiles. multipurpose.
@@ -145,6 +154,81 @@ public class AI extends Player {
 		}
 
 
+	}
+
+	private boolean handHasSpell() {
+		for (Card card : this.hand) {
+			if (card instanceof Spell) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void playAnySpell() {
+		Tile[][] tiles = this.gameState.getBoard().getAllTiles();
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles[i].length; j++) {
+				Tile tile = tiles[i][j];
+				if (tile.getUnit() != null) {
+					Spell spellToPlay = spellChooser(tile);
+					if (spellToPlay != null) {
+						playSpell(spellToPlay, tile);
+					} else {
+						System.out.println("spellToPlay returned null");
+					}
+				}
+			}
+		}
+	}
+	public void playSpell(Spell spellCard, Tile tile) {
+		Player player2 = gameState.getPlayer2();
+		this.hand.remove(spellCard);
+		spellCard.spellEffect(tile, this.actorRef, this.gameState);
+	}
+
+
+	private Spell spellChooser(Tile tile) {
+		for (Card card : this.hand) {
+			if (card instanceof Spell) {
+				if (this.getMana() > card.getManacost()) {
+					if (tile.getUnit().isUserOwned()) {
+						if (card.getCardname().equals("Beamshock")) {
+							int distanceFromAvatar = Math.abs(gameState.getPlayer2().getAvatar().getTile().getTilex() - tile.getTilex());
+							if (distanceFromAvatar < 2 ) {
+//								((Spell) card).spellEffect(tile, actorRef, gameState);
+//								this.getHand().remove(card);
+								return (Spell) card;
+							} else {
+								System.out.println("BEAMSHOCK PLAY CONDITIONS NOT MET");
+							}
+						}
+						if (card.getCardname().equals("Truestrike")) {
+							if (tile.getUnit().getCurrentHealth() <= 2) {
+//								((Spell) card).spellEffect(tile, actorRef, gameState);
+//								this.getHand().remove(card);
+								return (Spell) card;
+							}else {
+								System.out.println("TRUESTRIKE PLAY CONDITIONS NOT MET");
+							}
+						}
+					} else {
+						if (card.getCardname().equals("Sundrop Elixir")) {
+							if (tile.getUnit().getCurrentHealth() <= tile.getUnit().getMaxHealth() - 4) {
+//								((Spell) card).spellEffect(tile, actorRef, gameState);
+//								this.getHand().remove(card);
+								return (Spell) card;
+							}else {
+								System.out.println("SUNDROP ELIXIR PLAY CONDITIONS NOT MET");
+							}
+						}
+					}
+				}
+
+			}
+		}
+
+			return null;
 	}
 
 	public ArrayList<Tile> tilesForAIUnitSummons(){
