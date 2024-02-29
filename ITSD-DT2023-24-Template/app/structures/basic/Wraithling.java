@@ -158,6 +158,8 @@ public class Wraithling implements MoveableUnit{
 	public void summon(ActorRef out, Tile tile, GameState gameState) {
 		this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.wraithling, gameState.getFrontEndUnitID(), Unit.class);
 		UnitCommands.summon(this,out, tile, gameState);
+		EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_wraithsummon);
+		try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}
 	}
 
 	@Override

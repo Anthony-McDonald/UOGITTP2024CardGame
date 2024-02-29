@@ -8,8 +8,10 @@ import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 import utils.UnitCommands;
 
+import java.io.File;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class WraithlingSwarm extends Spell{
     private static ArrayList<Integer> xCoords = new ArrayList<>();
@@ -68,6 +70,8 @@ public class WraithlingSwarm extends Spell{
             Wraithling wraithling = new Wraithling();
             Tile currentTile = gameState.getBoard().getTile(getxCoords().get(i), getyCoords().get(i));
             wraithling.summon(out,currentTile, gameState);
+                EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_wraithsummon);
+                try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, currentTile));} catch (InterruptedException e) {e.printStackTrace();}
         }
         getyCoords().clear();
         getxCoords().clear();

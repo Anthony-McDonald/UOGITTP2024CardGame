@@ -1,7 +1,10 @@
 package structures.AI;
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 import utils.UnitCommands;
 
 import java.util.ArrayList;
@@ -133,7 +136,12 @@ public class AI extends Player {
 			this.setMana(this.getMana() - creature.getManacost(), actorRef);
 			this.hand.remove(creature);
 
-			UnitCommands.summon(creature, actorRef, possibleTiles.get(random.nextInt(possibleTiles.size())), gameState);
+			Tile tileToSummonOn = possibleTiles.get(random.nextInt(possibleTiles.size()));
+
+			UnitCommands.summon(creature, actorRef, tileToSummonOn, gameState);
+
+			EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_summon);
+			try {Thread.sleep(BasicCommands.playEffectAnimation(this.actorRef, effect, tileToSummonOn));} catch (InterruptedException e) {e.printStackTrace();}
 		}
 
 
