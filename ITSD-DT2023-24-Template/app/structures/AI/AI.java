@@ -184,6 +184,7 @@ public class AI extends Player {
 	public void playSpell(Spell spellCard, Tile tile) {
 		Player player2 = gameState.getPlayer2();
 		this.hand.remove(spellCard);
+		this.setMana(this.getMana() - spellCard.getManacost(), actorRef);
 		spellCard.spellEffect(tile, this.actorRef, this.gameState);
 	}
 
