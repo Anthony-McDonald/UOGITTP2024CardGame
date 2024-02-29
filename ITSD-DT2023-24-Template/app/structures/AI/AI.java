@@ -147,6 +147,18 @@ public class AI extends Player {
 
 	}
 
+	public void playSpell(Spell spellEffect, Tile tile) {
+		if (spellEffect.getCardname().equals("Beamshock")) {
+
+		}
+		if (spellEffect.getCardname().equals("Sundrop Elixir")) {
+
+			if (spellEffect.getCardname().equals("Truestrike")) {
+
+			}
+		}
+	}
+
 	public ArrayList<Tile> tilesForAIUnitSummons(){
 
 

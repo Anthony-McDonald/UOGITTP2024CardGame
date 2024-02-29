@@ -32,6 +32,13 @@ public class Wraithling implements MoveableUnit{
 	
 	@Override
 	public void attackUnit(ActorRef out, Tile tile, GameState gameState) {
+		if (this.isStunned()) {
+			this.setLastTurnAttacked(gameState.getTurnNumber());
+			this.setLastTurnMoved(gameState.getTurnNumber());
+			this.setStunned(false);
+			BasicCommands.addPlayer1Notification(out, "This avatar is stunned, it cannot move or attack this turn", 3);
+			return;
+		}
 		UnitCommands.attackUnit(this, out, tile,gameState);
 		
 	}

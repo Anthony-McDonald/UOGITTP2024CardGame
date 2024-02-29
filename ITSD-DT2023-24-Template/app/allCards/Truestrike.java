@@ -1,12 +1,12 @@
 package allCards;
 
 import actors.GameActor;
+import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
-import structures.basic.BigCard;
-import structures.basic.MiniCard;
-import structures.basic.Spell;
-import structures.basic.Tile;
+import structures.basic.*;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 public class Truestrike extends Spell{
 
@@ -14,14 +14,16 @@ public class Truestrike extends Spell{
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
 
-/*
-    public void spellEffect(Tile tile){
+
+    public void spellEffect(Tile tile, ActorRef out, GameState gameState){
         if (tile.getUnit() != null) {
-            tile.getUnit().setCurrentHealth(tile.getUnit().getCurrentHealth() - 2, GameActor.out);
+            EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_inmolation);
+            try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}
+            tile.getUnit().setCurrentHealth(tile.getUnit().getCurrentHealth() - 2,out, gameState);
         } else {
-            BasicCommands.addPlayer1Notification(GameActor.out, "Not a valid target", 2);
+            BasicCommands.addPlayer1Notification(out, "Not a valid target", 2);
             this.spellEffect();
         }
 
-    }*/
+    }
 }

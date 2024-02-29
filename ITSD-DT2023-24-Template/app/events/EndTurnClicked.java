@@ -6,6 +6,8 @@ import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.AI.AI;
 import structures.GameState;
+import structures.basic.Card;
+import structures.basic.Spell;
 
 /**
  * Indicates that the user has clicked an object on the game canvas, in this case
@@ -40,6 +42,19 @@ public class EndTurnClicked implements EventProcessor{
 		//increase both players mana by (turn number+1)
 		gameState.getPlayer1().setMana(gameState.getTurnNumber()+1, out);
 		gameState.getPlayer2().setMana(gameState.getTurnNumber()+1, out);
+
+		// logic to put AI spells into player hand for testing, comment out when you don't want
+//		for (Card card : gameState.getPlayer2().getPlayerDeck()) {
+//			System.out.println(card.getCardname());
+//			if (card instanceof Spell) {
+//				System.out.println("SPELL: " + card);
+//				gameState.getPlayer1().drawSpecificCard(out, card);
+//			}
+//		}
+
+
+
+
 		String nextTurnMessage = "It's now turn " + gameState.getTurnNumber() + "! Make your moves.";
 		BasicCommands.addPlayer1Notification(out, nextTurnMessage, 2 );
 		gameState.setLastMessage(GameState.noEvent);

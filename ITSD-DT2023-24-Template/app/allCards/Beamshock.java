@@ -1,9 +1,11 @@
 package allCards;
 
-import structures.basic.BigCard;
-import structures.basic.MiniCard;
-import structures.basic.MoveableUnit;
-import structures.basic.Spell;
+import akka.actor.ActorRef;
+import commands.BasicCommands;
+import structures.GameState;
+import structures.basic.*;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 public class Beamshock extends Spell{
 
@@ -11,8 +13,10 @@ public class Beamshock extends Spell{
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
 
-    public void spellEffect(MoveableUnit unit) {
+    public void spellEffect(Tile tile, ActorRef out, GameState gameState) {
 
-        unit.setStunned(true);
+        EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_martyrdom);
+        try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}
+        tile.getUnit().setStunned(true);
     }
 }
