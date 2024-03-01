@@ -171,7 +171,9 @@ public class Player {
 				this.getPlayerDeck().remove(0);
 			} else {
 				// Change this to end the game once end game logic implemented, same with below
-				System.out.println("deck is empty");
+                do {
+                    BasicCommands.addPlayer1Notification(out, "Deck is empty, game over folks!", 5);
+                } while (this.getPlayerDeck().size() <= 0);
 			}
 		} else {
 			if (this.getPlayerDeck().size() > 0 ) {
@@ -186,7 +188,9 @@ public class Player {
 				this.getPlayerDeck().remove(0);
 			} else {
 				// Also change this to end the game once end game logic implemented
-				System.out.println("deck is empty");
+				do {
+					BasicCommands.addPlayer1Notification(out, "Deck is empty, game over folks!", 5);
+				} while (this.getPlayerDeck().size() <= 0);
 			}
 		}
 
