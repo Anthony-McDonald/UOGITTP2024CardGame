@@ -13,4 +13,6 @@ public class SaberspineTiger extends Creature{
         this.currentHealth = 2;
         this.maxHealth = currentHealth;
     }
+    
+    //This card has rush which can move and attack on the turn it is summoned
 }

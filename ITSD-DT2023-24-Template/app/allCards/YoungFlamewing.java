@@ -13,4 +13,6 @@ public class YoungFlamewing extends Creature{
         this.currentHealth = 4;
         this.maxHealth = currentHealth;
     }
+  
+    //has Fly ability.
 }

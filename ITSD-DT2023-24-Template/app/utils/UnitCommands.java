@@ -1,6 +1,8 @@
 package utils;
 
 import akka.actor.ActorRef;
+import allCards.SaberspineTiger;
+import allCards.YoungFlamewing;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;
@@ -130,7 +132,17 @@ public class UnitCommands {
 
     }
     public static boolean canMove (MoveableUnit mover, Tile targetTile, Board board){ //method for determining if a unit can move to a tile
-        Tile currentTile = mover.getTile();
+        if (mover instanceof YoungFlamewing) {		//Fly ability, can move anywhere on the board
+        	for (int i =0; i< 9; i++) {
+        		for (int j = 0; j <5; j++) {
+        			Tile currentTile = board.getTile(i, j);
+        			if (currentTile.getUnit() == null)
+        				return true;
+        		}
+        	}
+        }
+    	
+    	Tile currentTile = mover.getTile();
         int xPos = currentTile.getTilex();
         int yPos = currentTile.getTiley();
         for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
@@ -374,6 +386,9 @@ public class UnitCommands {
             gameState.getBoard().openingGambit(out, gameState);//for opening gambit
             gameState.getBoard().renderBoard(out);
             gameState.setLastMessage(GameState.noEvent);
+            //if (summon instanceof SaberspineTiger) {
+            	
+            //}
         } else{ //inform player unsuitable location
             BasicCommands.addPlayer1Notification(out,"Can't summon here", 2);
         }
