@@ -24,7 +24,7 @@ public class OtherClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		if (!WraithlingSwarm.isSatisfied) {
+		if (!gameState.isWraithlingSwarmSatisfied()) {
 			BasicCommands.addPlayer1Notification(out, "No action available. Select a card, unit or tile.", 2);
 			return;
 		}
