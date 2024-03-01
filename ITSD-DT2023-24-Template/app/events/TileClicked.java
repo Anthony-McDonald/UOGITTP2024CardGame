@@ -58,6 +58,7 @@ public class TileClicked implements EventProcessor{
 		if (gameState.something == true) {
 			// do some logic
 			Tile currentTile = gameState.getBoard().getTile(tilex, tiley);
+			Player player1 = gameState.getPlayer1();
 
 			if (currentTile.getUnit() != null){
 				System.out.println(currentTile.getUnit().toString());
@@ -65,6 +66,25 @@ public class TileClicked implements EventProcessor{
 				//logic for if current tile has unit
 
 				if(currentTile.getUnit().isUserOwned()){
+					try {
+						Card card = player1.getHand().get(gameState.getLastCardClicked() - 2);
+
+						if (currentTile.getUnit() instanceof Avatar) {
+							if (card.getCardname().equals("Horn of the Forsaken")) {
+								if (currentTile.getUnit().getMaxHealth() == 20) {
+									gameState.getPlayer1().setLastCardClickedCard(card);
+									player1.playCard(gameState.getLastCardClicked(), out);
+									((Spell) card).spellEffect(out, gameState);
+									BasicCommands.drawTile(out, currentTile, 0);
+									gameState.setLastMessage(GameState.wraithlingSwarmCompleted);
+
+								}
+
+							}
+						}
+					} catch (Exception e) {
+					}
+
 					if (gameState.getLastMessage().equals(GameState.wraithlingSwarmCompleted)) {
 						System.out.println("attempting to set to noevent ------------------------------------------------");
 						gameState.setLastMessage(GameState.noEvent);
@@ -74,6 +94,7 @@ public class TileClicked implements EventProcessor{
 						//if unit clicked was friendly.
 						if (gameState.getLastMessage().equals(GameState.noEvent)){
 							//insert logic about highlighting appropriate tiles for move/attack
+							System.out.println("CLICKED ON AVATAR");
 
 
 							MoveableUnit unit = currentTile.getUnit();
@@ -99,7 +120,6 @@ public class TileClicked implements EventProcessor{
 						attacker.attackUnit(out, currentTile,gameState);
 
 					}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)) {
-						Player player1 = gameState.getPlayer1();
 						try {
 							Card card = player1.getHand().get(gameState.getLastCardClicked() - 2);
 							System.out.println(card.getCardname());
@@ -115,6 +135,8 @@ public class TileClicked implements EventProcessor{
 								}
 
 							}
+
+
 							// Use the card variable as needed
 						} catch (IndexOutOfBoundsException e) {
 							// Handle the exception gracefully
@@ -141,7 +163,6 @@ public class TileClicked implements EventProcessor{
 				}else if (gameState.getLastMessage().equals(GameState.creatureCardClicked)){
 					//initiate summon logic
 					System.out.println("summon logic");
-					Player player1 = gameState.getPlayer1();
 
 					try {
 						Card card = player1.getHand().get(gameState.getLastCardClicked()-2);
@@ -159,11 +180,9 @@ public class TileClicked implements EventProcessor{
 				}else if (gameState.getLastMessage().equals(GameState.spellCardClicked)){
 					//depends on card, if Dark terminus, won't work
 					//if Wraithling swarm or Horn, might work? we need to decide
-					Player player1 = gameState.getPlayer1();
 					try {
 						Card card = player1.getHand().get(gameState.getLastCardClicked() - 2);
 						System.out.println(card.getCardname());
-						player1.playCard(gameState.getLastCardClicked(), out);
 
 						if (card.getCardname().equals("Wraithling Swarm")) {
 							System.out.println("wraithling swarm clicked");
@@ -171,14 +190,12 @@ public class TileClicked implements EventProcessor{
 							UnitCommands.summonableTiles(out, gameState);
 
 							((Spell) card).spellEffect(out, gameState, tilex, tiley);
-						} else if (card.getCardname().equals("Horn of the Forsaken")) {
-							System.out.println("THE HORN HAS BEEN BLOWN");
-							((Spell) card).spellEffect(out, gameState);
+							player1.playCard(gameState.getLastCardClicked(), out);
 						} else if (card.isCreature()) {
 							// essentially just a catch to stop creatures being cast to spell
 							System.out.println("CAUGHT THE BUGGIEST OF BUGS");
 						} else {
-							((Spell) card).spellEffect(out, gameState);
+//							((Spell) card).spellEffect(out, gameState);
 						}
 						// Use the card variable as needed
 					} catch (IndexOutOfBoundsException e) {
