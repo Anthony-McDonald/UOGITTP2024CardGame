@@ -8,10 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
-import structures.basic.Card;
-import structures.basic.Creature;
-import structures.basic.Player;
-import structures.basic.Spell;
+import structures.basic.*;
 import utils.UnitCommands;
 
 import java.util.ArrayList;
@@ -58,7 +55,23 @@ public class CardClicked implements EventProcessor{
 			} else if (card instanceof Spell) {
 				gameState.setLastMessage(GameState.spellCardClicked); //I think we will have to do this per spell type
 
-			}
+				if (card.getCardname().equals("Dark Terminus")) {
+					Tile[][] tiles = gameState.getBoard().getAllTiles();
+					for (int i = 0; i < tiles.length; i++) {
+						for (int j = 0; j < tiles[i].length; j++) {
+							Tile tile = tiles[i][j];
+							if (tile.getUnit() != null) {
+								if (!tile.getUnit().isUserOwned()) {
+									BasicCommands.drawTile(out,tile, 2);
+								}
+							}
+						}
+					}
+				}
+				}
+
+
+
 		}else{
 			//inform player not enough mana for this card
 		}
