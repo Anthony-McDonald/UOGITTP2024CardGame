@@ -44,6 +44,7 @@ public class GameState {
 	public static final String friendlyUnitClicked = "FriendlyUnitClicked";
 	public static final String creatureCardClicked = "CreatureCardClicked";
 	public static final String wraithlingSwarmCompleted = "WraithlingSwarmCompleted";
+	public static final String darkTerminusOngoing = "DarkTerminusOngoing";
 	private int frontEndUnitID;
 	private int frontEndCardID;
 	private int beamShockCounter = 0;

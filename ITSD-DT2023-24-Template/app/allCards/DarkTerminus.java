@@ -20,6 +20,7 @@ public class DarkTerminus extends Spell{
 
         unit.setCurrentHealth(enemyHealth, out, gameState);
         EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_soulshatter);
+        gameState.setLastMessage(GameState.darkTerminusOngoing);
         try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}
         Wraithling wraithling = new Wraithling();
 

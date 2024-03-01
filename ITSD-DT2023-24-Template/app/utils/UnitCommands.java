@@ -355,7 +355,7 @@ public class UnitCommands {
 
     public static void summon (MoveableUnit summon, ActorRef out, Tile tile, GameState gameState){
         boolean userOwned = summon.isUserOwned();
-        if (canSummon(gameState,userOwned,tile)) {
+        if (canSummon(gameState,userOwned,tile) || gameState.getLastMessage().equals(GameState.darkTerminusOngoing)) {
             tile.setUnit(summon);
             if (summon instanceof Creature){
                 Creature creature = (Creature) summon;
