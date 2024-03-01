@@ -124,6 +124,9 @@ public class Avatar implements MoveableUnit{
 		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
 		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg
 		this.player.setHornOfTheForsakenHealth(this.player.getHornOfTheForsakenHealth() - 1);
+		if (this.getCurrentHealth() <= 0) {
+			BasicCommands.addPlayer1Notification(out, "Avatar health is 0, game over folks!", 20);
+		}
 		 /* try {
 	            Thread.sleep(50);
 	        } catch (InterruptedException e) {

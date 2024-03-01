@@ -145,12 +145,17 @@ public class AI extends Player {
 			this.setMana(this.getMana() - creature.getManacost(), actorRef);
 			this.hand.remove(creature);
 
-			Tile tileToSummonOn = possibleTiles.get(random.nextInt(possibleTiles.size()));
+			Tile tileToSummonOn = null;
+			EffectAnimation effect = null;
+			try {
+				tileToSummonOn = possibleTiles.get(random.nextInt(possibleTiles.size()));
 
-			UnitCommands.summon(creature, actorRef, tileToSummonOn, gameState);
+				UnitCommands.summon(creature, actorRef, tileToSummonOn, gameState);
 
-			EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_summon);
-			try {Thread.sleep(BasicCommands.playEffectAnimation(this.actorRef, effect, tileToSummonOn));} catch (InterruptedException e) {e.printStackTrace();}
+				effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_summon);
+				try {Thread.sleep(BasicCommands.playEffectAnimation(this.actorRef, effect, tileToSummonOn));} catch (InterruptedException e) {e.printStackTrace();}
+			} catch (Exception e) {
+			}
 		}
 
 

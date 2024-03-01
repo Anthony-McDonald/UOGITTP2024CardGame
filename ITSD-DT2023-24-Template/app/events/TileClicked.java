@@ -142,11 +142,16 @@ public class TileClicked implements EventProcessor{
 					//initiate summon logic
 					System.out.println("summon logic");
 					Player player1 = gameState.getPlayer1();
-					Card card = player1.getHand().get(gameState.getLastCardClicked()-2);
-					System.out.println(card.getCardname());
-					player1.playCard(gameState.getLastCardClicked(), out);
-					MoveableUnit m = (Creature) card;
-					m.summon(out,currentTile, gameState);
+
+					try {
+						Card card = player1.getHand().get(gameState.getLastCardClicked()-2);
+						System.out.println(card.getCardname());
+						player1.playCard(gameState.getLastCardClicked(), out);
+						MoveableUnit m = (Creature) card;
+						m.summon(out,currentTile, gameState);
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
 
 					//
 				}else if (gameState.getLastMessage().equals(GameState.noEvent)){

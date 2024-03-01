@@ -68,6 +68,8 @@ public class Initalize implements EventProcessor{
 		player1.setAvatar(playerAvatar);
 		player2.setAvatar(aiAvatar);
 
+		playerAvatar.setCurrentHealth(1, out, gameState);
+
 		Tile playerStartTile = gameState.getBoard().getTile(1,2);
 		// Wraithling wraithling1 = new Wraithling();
 		// wraithling1.setUserOwned(false);
