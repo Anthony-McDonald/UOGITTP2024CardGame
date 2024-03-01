@@ -69,10 +69,10 @@ public class Initalize implements EventProcessor{
 		player2.setAvatar(aiAvatar);
 
 		Tile playerStartTile = gameState.getBoard().getTile(1,2);
-		Wraithling wraithling1 = new Wraithling();
-		wraithling1.setUserOwned(false);
-		Wraithling wraithling2 = new Wraithling();
-		wraithling2.setUserOwned(false);
+		// Wraithling wraithling1 = new Wraithling();
+		// wraithling1.setUserOwned(false);
+		// Wraithling wraithling2 = new Wraithling();
+		// wraithling2.setUserOwned(false);
 
 		//we could make this neater later
 		playerStartTile.setUnit(playerAvatar); //sets player avatar in back end
@@ -85,7 +85,7 @@ public class Initalize implements EventProcessor{
 		BasicCommands.setUnitAttack(out, playerAvatar.getUnit(), playerAvatar.getAttack());
 		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 
-		Tile aiStartTile = gameState.getBoard().getTile(2,2);
+		Tile aiStartTile = gameState.getBoard().getTile(7,2);
 		aiStartTile.setUnit(aiAvatar); //sets ai avatar on tile in back end
 		aiAvatar.getUnit().setPositionByTile(aiStartTile);//sets ai avatar on tile in front end
 		BasicCommands.drawUnit(out,aiAvatar.getUnit(),aiStartTile); //sets ai avatar on tile in front end
@@ -95,7 +95,7 @@ public class Initalize implements EventProcessor{
 		BasicCommands.setUnitAttack(out, aiAvatar.getUnit(), aiAvatar.getAttack());
 		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 
-		wraithling1.summon(out, gameState.getBoard().getTile(1,3),gameState);
+		// wraithling1.summon(out, gameState.getBoard().getTile(1,3),gameState);
 //		wraithling2.summon(out,gameState.getBoard().getTile(1,1),gameState);
 
 
