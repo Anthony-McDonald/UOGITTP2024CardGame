@@ -10,77 +10,68 @@ import java.util.ArrayList;
 public class UnitCommands {
     public static void attackUnit(MoveableUnit attacker, ActorRef out, Tile tile, GameState gameState) {
         MoveableUnit m = tile.getUnit();
-        //insert logic about if attack is possible.        
+        //insert logic about if attack is possible.
+        if (isProvokeAdjacent(attacker,gameState)){
+            // if provoke is adjacent
+            if (! (m instanceof Provoke)){
+                BasicCommands.addPlayer1Notification(out, "Unit can only attack Provokers", 3);
+                return; //ends attack logic
+            }
+
+        }
+
         if (attacker.getLastTurnAttacked() != gameState.getTurnNumber()) {
-            if (canAttack(attacker, tile, gameState.getBoard())) {
+            if (canAttack(attacker, tile, gameState)) {
                 attacker.setLastTurnAttacked(gameState.getTurnNumber());
                 int enemyHealth = m.getCurrentHealth();
                 BasicCommands.playUnitAnimation(out, attacker.getUnit(), UnitAnimationType.attack); //attack animation
                 enemyHealth = enemyHealth - attacker.getAttack();
-                m.setCurrentHealth(enemyHealth, out, gameState);
+                m.setCurrentHealth(enemyHealth, out,gameState);
                 gameState.getBoard().renderBoard(out); //resets board
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+
                 }
+                BasicCommands.playUnitAnimation(out, attacker.getUnit(), UnitAnimationType.idle);
                 if (enemyHealth > 0) { //if enemy is alive, counterattack
                     BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.attack);//unit attack animation
-                    attacker.setCurrentHealth((attacker.getCurrentHealth() - m.getAttack()), out, gameState);
+                    attacker.setCurrentHealth((attacker.getCurrentHealth() - m.getAttack()), out,gameState);
                     try {
                         Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.idle);
+
                 }
                 gameState.setLastMessage(GameState.noEvent);
             } else {
                 //attack not possible on this unit, inform user.
                 //
+                BasicCommands.addPlayer1Notification(out, "Unit can't attack there!", 3);
             }
         }else{
             //already attacked this turn
             gameState.setLastMessage(GameState.noEvent);
         }
-        BasicCommands.playUnitAnimation(out, m.getUnit(), UnitAnimationType.idle);
-        BasicCommands.playUnitAnimation(out, attacker.getUnit(), UnitAnimationType.idle);
-
     }
-    
 
-    public static boolean canAttack (MoveableUnit attacker, Tile targetTile, Board board){
+    public static boolean canAttack (MoveableUnit attacker, Tile targetTile, GameState gameState){
         Tile currentTile = attacker.getTile();
+        Board board = gameState.getBoard();
+        if (isProvokeAdjacent(attacker, gameState)){
+            if (targetTile.getUnit()!= null){
+                MoveableUnit unit = targetTile.getUnit();
+                if (!(unit instanceof Provoke) && unit.isUserOwned()!= attacker.isUserOwned()){
+                    System.out.println("can't attack, being provoked");
+                    return false;
+                }
+            }
+        }
         int xPos = currentTile.getTilex();
         int yPos = currentTile.getTiley();
-        
-        if (attacker.isProvoke()) {
-        	for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
-                for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
-                	if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
-                        Tile highlightTile = board.getTile(i,j);
-                       /* if (highlightTile.getUnit() instanceof Provoke && attacker.isUserOwned() != highlightTile.getUnit().isUserOwned()) {
-                        	return targetTile.equals(highlightTile);
-                        }
-                    }*/
-                	   if (highlightTile.getUnit() != null && highlightTile.getUnit().isUserOwned() != attacker.isUserOwned()) {
-                           //if tile has unit and unit is enemy
-                           if (targetTile.equals(highlightTile)) {
-                               if (attacker.isProvoke()) { // Check if the attacker is provoked
-                                   if (highlightTile.getUnit() instanceof Provoke) { // Check if the enemy unit has the provoke ability
-                                       return true;
-                                   } else {
-                                       //BasicCommands.addPlayer1Notification(out, "You can only attack units with the provoke ability.", 2);
-                                       return false; // Can't attack non-provoke units when provoked
-                                   }
-                               } else {
-                                   return true; // Can attack any enemy unit if not provoked
-                               }
-                           }
-                	   }           
-                	}
-                }
-        	}
-        }	
         for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
             for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
                 if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
@@ -100,6 +91,10 @@ public class UnitCommands {
     public static void moveUnit(MoveableUnit mover, ActorRef out, Tile tile, GameState gameState) {
         //insert logic about if move can occur
         if (gameState.getTurnNumber()!= mover.getLastTurnMoved()) { //hasn't moved this turn
+            if (isProvokeAdjacent(mover,gameState)){ //is provoked
+                BasicCommands.addPlayer1Notification(out, "Unit can't move, it's provoked.", 3);
+                return;
+            }
             if (canMove(mover, tile, gameState.getBoard())) {
                 mover.setLastTurnMoved(gameState.getTurnNumber());
                 gameState.setLastMessage(GameState.noEvent);
@@ -138,9 +133,6 @@ public class UnitCommands {
         Tile currentTile = mover.getTile();
         int xPos = currentTile.getTilex();
         int yPos = currentTile.getTiley();
-        if (mover.isProvoke()) {
-        	return false;
-        }
         for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
             for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
                 if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
@@ -192,13 +184,52 @@ public class UnitCommands {
         return false;
     }
 
-    
     public static void actionableTiles(MoveableUnit mover, ActorRef out, GameState gameState){
         //need to add logic about last turnMoved and lastTurn attacked and turnSummoned
         System.out.println("Actionable tiles is running.");
         int xPos = mover.getTile().getTilex();
         int yPos = mover.getTile().getTiley();
         Board board = gameState.getBoard();
+
+        if (isProvokeAdjacent(mover,gameState)){
+            //separate logic for provoked units
+            if (mover.getTurnSummoned()!= gameState.getTurnNumber()){
+                //not summoned this turn
+                if (mover.getLastTurnAttacked()!=gameState.getTurnNumber()){
+                //not attacked this turn
+                    System.out.println("Uh oh its mr provoke");
+                    System.out.println("Initiating provoked highlighting");
+                    BasicCommands.addPlayer1Notification(out, "Unit is provoked!", 2);
+                    gameState.setLastUnitClicked(mover);
+                    gameState.setLastMessage(GameState.friendlyUnitClicked);
+                    for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+                        for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+                            if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+                                Tile adjacentTile = board.getTile(i,j);
+                                if (adjacentTile.getUnit()!= null){
+                                    MoveableUnit adjacentUnit = adjacentTile.getUnit();
+                                    if (adjacentUnit instanceof Provoke && adjacentUnit.isUserOwned()!= mover.isUserOwned()){
+                                        BasicCommands.drawTile(out, adjacentTile, 2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return;
+                }else{
+                    gameState.setLastMessage(GameState.noEvent);
+                    BasicCommands.addPlayer1Notification(out, "This unit has already attacked, it can't perform another action", 2);
+                }
+
+            }else{ //summoned this turn, no action
+                //insert code notifying user
+                System.out.println("Summoned this turn");
+                try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+                gameState.setLastMessage(GameState.noEvent);
+                BasicCommands.addPlayer1Notification(out, "This unit was summoned this turn, it can't perform an action.", 2);
+                return;
+            }
+        }
 
         if (mover.getTurnSummoned()!=gameState.getTurnNumber()){//hasn't been summoned this turn, allow action
             System.out.println("Unit hasn't been summoned this turn");
@@ -210,42 +241,17 @@ public class UnitCommands {
                     //highlighting for moving (white)
                     gameState.setLastUnitClicked(mover);
                     gameState.setLastMessage(GameState.friendlyUnitClicked);
-                    
-                    boolean hasProvokeAdjacent = false;
-                    
-                    // Loop through adjacent squares
-                    for (int i = xPos - 1; i <= xPos + 1; i++) { // i is x
-                        for (int j = yPos - 1; j <= yPos + 1; j++) { // j is y
-                            if (0 <= i && i <= 8 && 0 <= j && j <= 4) { //if coord in board range
-                                Tile highlightTile = board.getTile(i, j);
-                                if (highlightTile.getUnit() != null && mover.isUserOwned() != highlightTile.getUnit().isUserOwned()) { // tile has unit and is enemy unit
-                                    if (highlightTile.getUnit() instanceof Provoke) {
-                                        BasicCommands.drawTile(out, highlightTile, 2);
-                                        hasProvokeAdjacent = true;
-                                        mover.setProvoke(true);
-                                    }
+                    for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+                        for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+                            if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+                                Tile highlightTile = board.getTile(i,j);
+                                if (highlightTile.getUnit()==null){//tile has no unit, safe for highlighting
+                                    BasicCommands.drawTile(out,highlightTile, 1);
+//									System.out.println(i + " " + j);
                                 }
                             }
                         }
                     }
-
-                    if (!hasProvokeAdjacent) {
-                        for (int i = xPos - 1; i <= xPos + 1; i++) { // i is x
-                            for (int j = yPos - 1; j <= yPos + 1; j++) { // j is y
-                                if (0 <= i && i <= 8 && 0 <= j && j <= 4) { //if coord in board range
-                                    Tile highlightTile = board.getTile(i, j);
-                                    if (highlightTile.getUnit() == null) {//tile has no unit, safe for highlighting
-                                        BasicCommands.drawTile(out, highlightTile, 1);
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        // Provoke units found, unit can't move
-                        mover.setLastTurnMoved(gameState.getTurnNumber() + 1);
-                        return;
-                    }
-                    
                     //the below conditions are for highlighting directions +2 in cardinal directions for movement
                     if(xPos-2>=0){
                         if (board.getTile(xPos-1,yPos).getUnit() == null) { //if space - 1 is empty
@@ -334,6 +340,7 @@ public class UnitCommands {
         }
     }
 
+
     public static void summon (MoveableUnit summon, ActorRef out, Tile tile, GameState gameState){
         boolean userOwned = summon.isUserOwned();
         if (canSummon(gameState,userOwned,tile)) {
@@ -412,6 +419,32 @@ public class UnitCommands {
                 }
             }
         }
+        return false;
+    }
+
+    public static boolean isProvokeAdjacent (MoveableUnit actionTaker, GameState gameState){
+        Board board = gameState.getBoard();
+        boolean userOwned = actionTaker.isUserOwned();
+        Tile unitTile = actionTaker.getTile();
+        int xPos = unitTile.getTilex();
+        int yPos = unitTile.getTiley();
+
+        //Loop through adjacent squares
+        for (int i = xPos - 1; i<=xPos+1;i++){ // i is x
+            for (int j = yPos -1 ; j<=yPos+1;j++){ // j is y
+                if ( 0<=i && i<=8 && 0<=j && j<=4 ){ //if coord in board range
+                    Tile adjacentTile = board.getTile(i,j);
+                    if (adjacentTile.getUnit()!= null){
+                        MoveableUnit adjacentTileUnit = adjacentTile.getUnit();
+                        if (adjacentTileUnit instanceof Provoke && adjacentTileUnit.isUserOwned()!= userOwned){
+                            //if adjacent unit has provoke and is enemy
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
         return false;
     }
 }

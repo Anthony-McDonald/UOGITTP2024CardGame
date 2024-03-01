@@ -62,13 +62,14 @@ public class Avatar implements MoveableUnit{
 			return;
 		}
 		UnitCommands.attackUnit(this, out, tile, gameState);
-		if (gameState.getPlayer1().getHornOfTheForsakenHealth() >= 0) {
+		System.out.println("Horn health is " + player.getHornOfTheForsakenHealth());
+		if (gameState.getPlayer1().getHornOfTheForsakenHealth() >0) {
 			boolean wraithlingSummoned = false;
 			Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
 			int tileX = avatarTile.getTilex();
 			int tileY = avatarTile.getTiley();
 
-			if (UnitCommands.canAttack(this,tile, gameState.getBoard())) {
+			if (UnitCommands.canAttack(this,tile, gameState)) {
 
 				int[][] areaAroundUnit = {
 						{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}
