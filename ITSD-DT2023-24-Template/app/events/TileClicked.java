@@ -40,13 +40,13 @@ public class TileClicked implements EventProcessor{
 
 
 		// needed for wraithling summons
-		if (!WraithlingSwarm.isSatisfied) {
+		if (!gameState.isWraithlingSwarmSatisfied()) {
 			UnitCommands.summonableTiles(out,gameState);
 			Tile currentTile = gameState.getBoard().getTile(tilex,tiley);
 			System.out.println(currentTile.getUnit());
 			if (UnitCommands.canSummon(gameState, true, currentTile)) {
-				WraithlingSwarm.getxCoords().add(tilex);
-				WraithlingSwarm.getyCoords().add(tiley);
+				gameState.getxCoords().add(tilex);
+				gameState.getyCoords().add(tiley);
 				WraithlingSwarm.checkSatisfied(out, gameState);
 			} else {
 				BasicCommands.addPlayer1Notification(out,"Can't summon here", 2);
@@ -162,7 +162,7 @@ public class TileClicked implements EventProcessor{
 
 						if (card.getCardname().equals("Wraithling Swarm")) {
 							System.out.println("wraithling swarm clicked");
-							((WraithlingSwarm) card).setSatisfied(false);
+							gameState.setWraithlingSwarmSatisfied(false);
 							UnitCommands.summonableTiles(out, gameState);
 
 							((Spell) card).spellEffect(out, gameState, tilex, tiley);

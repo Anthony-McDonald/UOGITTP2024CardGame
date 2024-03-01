@@ -33,7 +33,7 @@ public class CardClicked implements EventProcessor{
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 
-		if (!WraithlingSwarm.isSatisfied) {
+		if (!gameState.isWraithlingSwarmSatisfied()) {
 			BasicCommands.addPlayer1Notification(out, "Click on a tile!", 2);
 			return;
 		}

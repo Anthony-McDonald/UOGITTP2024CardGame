@@ -3,6 +3,8 @@ package structures;
 import structures.AI.AI;
 import structures.basic.*;
 
+import java.util.ArrayList;
+
 /**
  * This class can be used to hold information about the on-going game.
  * Its created with the GameActor.
@@ -18,6 +20,9 @@ public class GameState {
 	private int lastCardClicked; //gives hand index of card
 	private Tile lastTileClicked;
 	private MoveableUnit lastUnitClicked;
+
+	private  ArrayList<Integer> xCoords = new ArrayList<>();
+	private  ArrayList<Integer> yCoords = new ArrayList<>();
 
 	private String lastMessage = "NoEvent";
 	/*
@@ -42,6 +47,7 @@ public class GameState {
 	private int frontEndUnitID;
 	private int frontEndCardID;
 	private int beamShockCounter = 0;
+	private boolean wraithlingSwarmSatisfied = true;
 
 	public GameState() {
 		this.player1 = new Player(true);
@@ -96,6 +102,30 @@ public class GameState {
 
 	public void setGameInitalised(boolean gameInitalised) {
 		this.gameInitalised = gameInitalised;
+	}
+
+	public ArrayList<Integer> getxCoords() {
+		return xCoords;
+	}
+
+	public boolean isWraithlingSwarmSatisfied() {
+		return wraithlingSwarmSatisfied;
+	}
+
+	public void setWraithlingSwarmSatisfied(boolean wraithlingSwarmSatisfied) {
+		this.wraithlingSwarmSatisfied = wraithlingSwarmSatisfied;
+	}
+
+	public void setxCoords(ArrayList<Integer> xCoords) {
+		this.xCoords = xCoords;
+	}
+
+	public  ArrayList<Integer> getyCoords() {
+		return yCoords;
+	}
+
+	public void setyCoords(ArrayList<Integer> yCoords) {
+		this.yCoords = yCoords;
 	}
 
 	public boolean isSomething() {
