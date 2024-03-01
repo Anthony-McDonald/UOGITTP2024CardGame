@@ -211,8 +211,4 @@ public class Wraithling implements MoveableUnit{
 	}
 
 
-	@Override
-	public void provoke() {
-
-	}
 }
