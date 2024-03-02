@@ -25,6 +25,16 @@ public class UnitActionChecker {
 
     public void makeAction(){
         ArrayList<UnitAction> weightedActions = new ArrayList<>();
+        if(UnitCommands.isProvokeAdjacent(actionTaker,gameState)){
+            AIUnitProvoked provokeAction = new AIUnitProvoked(actionTaker,gameState,this.findProvoker());
+            provokeAction.makeAction(actorRef);
+            return; //ends logic here since unit is provoked. we want no other logic toi
+        }
+
+        if(this.isNearestEnemyAttackable()){
+            //create AI attack unit actions#
+
+        }
 
 
     }

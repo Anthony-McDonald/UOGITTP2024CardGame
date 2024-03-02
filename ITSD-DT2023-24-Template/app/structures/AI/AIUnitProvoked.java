@@ -23,6 +23,9 @@ public class AIUnitProvoked extends UnitAction {
     public void makeAction(ActorRef out){
         if (!this.IsAttackDangerous()){
             actionTaker.attackUnit(out, provoker.getTile(),gameState);
+        }else{
+            actionTaker.setLastTurnAttacked(gameState.getTurnNumber());
+            // unit doesn't attack to stay safe also prevents it from showing up on action checking.
         }
     }
 
