@@ -367,19 +367,19 @@ public class UnitCommands {
             summon.setLastTurnAttacked(gameState.getTurnNumber());
             BasicCommands.drawUnit(out, summon.getUnit(), tile); //sets player avatar on tile in front end
             try {
-                Thread.sleep(250);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             BasicCommands.setUnitHealth(out, summon.getUnit(), summon.getCurrentHealth());
             try {
-                Thread.sleep(250);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             BasicCommands.setUnitAttack(out, summon.getUnit(), summon.getAttack());
             try {
-                Thread.sleep(250);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -61,7 +61,7 @@ public class CardClicked implements EventProcessor {
 						Tile tile = tiles[i][j];
 						if (card.getCardname().equals("Dark Terminus")) {
 							if (tile.getUnit() != null) {
-								if (!tile.getUnit().isUserOwned()) {
+								if (!tile.getUnit().isUserOwned() && !(tile.getUnit() instanceof Avatar)) {
 									BasicCommands.drawTile(out, tile, 2);
 								}
 							}

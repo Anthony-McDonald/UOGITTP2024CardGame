@@ -17,11 +17,12 @@ public class DarkTerminus extends Spell{
         MoveableUnit unit = tile.getUnit();
         int enemyHealth = unit.getCurrentHealth();
         enemyHealth = 0;
-
-        unit.setCurrentHealth(enemyHealth, out, gameState);
         EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_soulshatter);
-        gameState.setLastMessage(GameState.darkTerminusOngoing);
         try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}
+        unit.setCurrentHealth(enemyHealth, out, gameState);
+
+        gameState.setLastMessage(GameState.darkTerminusOngoing);
+
         Wraithling wraithling = new Wraithling();
 
         wraithling.summon(out, tile, gameState);

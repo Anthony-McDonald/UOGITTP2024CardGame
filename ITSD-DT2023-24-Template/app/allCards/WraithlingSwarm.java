@@ -20,36 +20,38 @@ public class WraithlingSwarm extends Spell{
     }
 
 
-    public static void checkSatisfied(ActorRef out, GameState gameState) {
-        if (gameState.getxCoords().size() == 3) {
-            System.out.println("WRAITHLING SWARM SATISFIED");
-            System.out.println(gameState.getxCoords());
-            System.out.println(gameState.getyCoords());
-            summonWraithling(out, gameState);
-        }
-    }
+//    public void checkSatisfied(ActorRef out, GameState gameState) {
+//        if (gameState.getxCoords().size() == 3) {
+//            System.out.println("WRAITHLING SWARM SATISFIED");
+//            System.out.println(gameState.getxCoords());
+//            System.out.println(gameState.getyCoords());
+//            summonWraithling(out, gameState);
+//        }
+//    }
 
 
     public void spellEffect(ActorRef out, GameState gameState, int tileX, int tileY){
         System.out.println("attempting to play wraith swarm");
         BasicCommands.addPlayer1Notification(out, "Choose 3 tiles", 5);
+        gameState.setWraithlingSwarmSatisfied(false);
+        gameState.setWraithlingSwarmCounter(0);
     }
-    public static void summonWraithling(ActorRef out, GameState gameState) {
-        gameState.setLastMessage(GameState.creatureCardClicked);
-        UnitCommands.summonableTiles(out,gameState);
-
-//        for (int i = 0; i )
-
-        for (int i  = 0; i < 3; i++) {
-            Wraithling wraithling = new Wraithling();
-            Tile currentTile = gameState.getBoard().getTile(gameState.getxCoords().get(i), gameState.getyCoords().get(i));
-            wraithling.summon(out,currentTile, gameState);
-        }
-        gameState.getyCoords().clear();
-        gameState.getxCoords().clear();
-        gameState.setWraithlingSwarmSatisfied(true);
-        gameState.setLastMessage(GameState.wraithlingSwarmCompleted);
-
-    }
+//    private void summonWraithling(ActorRef out, GameState gameState) {
+//        gameState.setLastMessage(GameState.creatureCardClicked);
+//        UnitCommands.summonableTiles(out,gameState);
+//
+////        for (int i = 0; i )
+//
+//        for (int i  = 0; i < 3; i++) {
+//            Wraithling wraithling = new Wraithling();
+//            Tile currentTile = gameState.getBoard().getTile(gameState.getxCoords().get(i), gameState.getyCoords().get(i));
+//            wraithling.summon(out,currentTile, gameState);
+//        }
+//        gameState.getyCoords().clear();
+//        gameState.getxCoords().clear();
+//        gameState.setWraithlingSwarmSatisfied(true);
+//        gameState.setLastMessage(GameState.wraithlingSwarmCompleted);
+//
+//    }
 
 }

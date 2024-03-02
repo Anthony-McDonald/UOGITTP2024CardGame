@@ -33,27 +33,39 @@ public class TileClicked implements EventProcessor{
 	 */
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+		try {
+			Thread.sleep(250);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		int tilex = message.get("tilex").asInt();
 		int tiley = message.get("tiley").asInt();
 
 
-
 		// needed for wraithling summons
-		if (!gameState.isWraithlingSwarmSatisfied()) {
-			UnitCommands.summonableTiles(out,gameState);
-			Tile currentTile = gameState.getBoard().getTile(tilex,tiley);
-			System.out.println(currentTile.getUnit());
+		if (gameState.getWraithlingSwarmCounter() != 3) {
+			UnitCommands.summonableTiles(out, gameState);
+			Tile currentTile = gameState.getBoard().getTile(tilex, tiley);
 			if (UnitCommands.canSummon(gameState, true, currentTile)) {
-				gameState.getxCoords().add(tilex);
-				gameState.getyCoords().add(tiley);
-				WraithlingSwarm.checkSatisfied(out, gameState);
+				Wraithling wraithling = new Wraithling();
+				wraithling.summon(out, currentTile, gameState);
+				gameState.setWraithlingSwarmCounter(gameState.getWraithlingSwarmCounter() + 1);
+				if (gameState.getWraithlingSwarmCounter() != 3) {
+					UnitCommands.summonableTiles(out, gameState);
+				} else {
+					gameState.setWraithlingSwarmSatisfied(true);
+				}
 			} else {
-				BasicCommands.addPlayer1Notification(out,"Can't summon here", 2);
+				BasicCommands.addPlayer1Notification(out, "Can't summon here", 2);
 			}
-
+			return;
 
 		}
+
+
+
+
+
 
 		if (gameState.something == true) {
 			// do some logic
@@ -76,6 +88,7 @@ public class TileClicked implements EventProcessor{
 									player1.playCard(gameState.getLastCardClicked(), out);
 									((Spell) card).spellEffect(out, gameState);
 									BasicCommands.drawTile(out, currentTile, 0);
+									// Using this as the reset to noevent below allows for horn to function properly
 									gameState.setLastMessage(GameState.wraithlingSwarmCompleted);
 
 								}
@@ -125,6 +138,14 @@ public class TileClicked implements EventProcessor{
 							System.out.println(card.getCardname());
 
 							if (card.getCardname().equals("Dark Terminus")) {
+								Tile[][] tiles = gameState.getBoard().getAllTiles();
+								for (int i = 0; i < tiles.length; i++) {
+									for (int j = 0; j < tiles[i].length; j++) {
+										Tile tile = tiles[i][j];
+										BasicCommands.drawTile(out, tile, 0);
+									}
+								}
+
 								if (currentTile.getUnit().getMaxHealth() != 20) {
 									gameState.getPlayer1().setLastCardClickedCard(card);
 									player1.playCard(gameState.getLastCardClicked(), out);
@@ -186,7 +207,6 @@ public class TileClicked implements EventProcessor{
 
 						if (card.getCardname().equals("Wraithling Swarm")) {
 							System.out.println("wraithling swarm clicked");
-							gameState.setWraithlingSwarmSatisfied(false);
 							UnitCommands.summonableTiles(out, gameState);
 
 							((Spell) card).spellEffect(out, gameState, tilex, tiley);
