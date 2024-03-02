@@ -1,5 +1,6 @@
 package structures.AI;
 
+import akka.actor.ActorRef;
 import structures.GameState;
 import structures.basic.MoveableUnit;
 import structures.basic.Tile;
@@ -11,6 +12,10 @@ public abstract class UnitAction {
     protected GameState gameState;
 
     protected int actionScore;
+
+    public void makeAction(ActorRef out) {
+
+    }
 
     public Tile getTargetTile() {
         return targetTile;
