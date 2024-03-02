@@ -159,6 +159,7 @@ public class UnitActionChecker {
             Random rand = new Random();
             int randomActionIndex = rand.nextInt(weightedActions.size()); //chooses random action from weighted list
             UnitAction randomAction = weightedActions.get(randomActionIndex);
+            randomAction.makeAction(actorRef);
         }
     }
 
