@@ -41,17 +41,14 @@ public class Creature extends Card implements MoveableUnit {
 		int tiley = tile.getTiley();
 		//                   0          1        2       3       4      5          6        7
 		//					TL			TM		TR		ML		MR		BL		  BM		BR
-		int[][] offsets = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1},{0, 1},{1, -1},  {1, 0},  {1, 1}
+		int[][] offsets = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0},{0, 0},{-1, 1},  {0, 1},  {1, 1}
 		};
 
-//				{-1, -1}, {-1, 0}, {-1, 1},
-//				{0, -1},           {0, 1},
-//				{1, -1},  {1, 0},  {1, 1}
-//		};
+
 
 		if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 0) {
 			//ie if the attacker is to the left of the victim
-			int[][] offsetsToUse = {offsets[0], offsets[1], offsets[3], offsets[4]};
+			int[][] offsetsToUse = {offsets[0], offsets[1], offsets[5], offsets[6]};
 			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 0, -1);
 			System.out.println("PROVOKE ATTACK LEFT");
 

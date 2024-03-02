@@ -14,14 +14,14 @@ import utils.UnitCommands;
 import java.util.List;
 import java.util.Random;
 
-public class Avatar implements MoveableUnit{
-    private int maxHealth;
-    private int currentHealth;
-    private int attack;
-    private int turnSummoned;
-    private int lastTurnMoved;
+public class Avatar implements MoveableUnit {
+	private int maxHealth;
+	private int currentHealth;
+	private int attack;
+	private int turnSummoned;
+	private int lastTurnMoved;
 	private Unit unit;
-    private Player player;
+	private Player player;
 	private boolean userOwned;
 	@JsonIgnore
 	private Tile tile;
@@ -38,9 +38,9 @@ public class Avatar implements MoveableUnit{
 		this.turnSummoned = 0;
 		this.lastTurnMoved = 0;
 		this.userOwned = player.isUserOwned();
-		if (this.userOwned){ //if human
+		if (this.userOwned) { //if human
 			this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 1000, Unit.class); //need to update
-		}else { //if AI
+		} else { //if AI
 			this.unit = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, 1001, Unit.class); //need to update
 		}
 	}
@@ -54,22 +54,22 @@ public class Avatar implements MoveableUnit{
 	}
 
 	@Override
-	public void attackUnit( ActorRef out, Tile tile, GameState gameState) {
+	public void attackUnit(ActorRef out, Tile tile, GameState gameState) {
 		if (this.isStunned()) {
 			this.setLastTurnAttacked(gameState.getTurnNumber());
 			this.setLastTurnMoved(gameState.getTurnNumber());
 			BasicCommands.addPlayer1Notification(out, "This avatar is stunned, it cannot move or attack this turn", 3);
 			return;
 		}
-		UnitCommands.attackUnit(this, out, tile, gameState);
+//		UnitCommands.attackUnit(this, out, tile, gameState);
 		System.out.println("Horn health is " + player.getHornOfTheForsakenHealth());
-		if (gameState.getPlayer1().getHornOfTheForsakenHealth() >0) {
+		if (gameState.getPlayer1().getHornOfTheForsakenHealth() > 0) {
 			boolean wraithlingSummoned = false;
 			Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
 			int tileX = avatarTile.getTilex();
 			int tileY = avatarTile.getTiley();
 
-			if (UnitCommands.canAttack(this,tile, gameState)) {
+			if (UnitCommands.canAttack(this, tile, gameState)) {
 
 				int[][] areaAroundUnit = {
 						{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}
@@ -96,7 +96,104 @@ public class Avatar implements MoveableUnit{
 					}
 				}
 			}
+
+
 		}
+
+		int tilex = tile.getTilex();
+		int tiley = tile.getTiley();
+		//                   0          1        2       3       4      5          6        7
+		//					TL			TM		TR		ML		MR		BL		  BM		BR
+		int[][] offsets = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0},{0, 0},{-1, 1},  {0, 1},  {1, 1}
+		};
+
+//				{-1, -1}, {-1, 0}, {-1, 1},
+//				{0, -1},           {0, 1},
+//				{1, -1},  {1, 0},  {1, 1}
+//		};
+
+		if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 0) {
+			//ie if the attacker is to the left of the victim
+			int[][] offsetsToUse = {offsets[0], offsets[1], offsets[5], offsets[6]};
+			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 0, -1);
+			System.out.println("PROVOKE ATTACK LEFT");
+
+		} else if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 1) {
+			//ie if the attacker is to the top of the victim
+			int[][] offsetsToUse = {offsets[0], offsets[2], offsets[3], offsets[4]};
+			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 1, -1);
+			System.out.println("PROVOKE ATTACK TOP");
+
+		} else if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 2) {
+			//ie if the attacker is to the right of the victim
+			int[][] offsetsToUse = {offsets[1], offsets[2], offsets[6], offsets[7]};
+			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 0, 1);
+			System.out.println("PROVOKE ATTACK RIGHT");
+
+		} else if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 3) {
+			//ie if the attacker is to the bottom of the victim
+			int[][] offsetsToUse = {offsets[3], offsets[4], offsets[5], offsets[7]};
+			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 1, 1);
+			System.out.println("PROVOKE ATTACK BOTTOM");
+
+		}
+
+//		UnitCommands.attackUnit(this,out,tile,gameState);
+	}
+
+
+
+
+	private int isToTheLeftRightTopOrBottom(Tile attackerTile, Tile victimTile) {
+		// returns 0 for left, 1 for top, 2 for right, 3 for bottom
+		if (attackerTile.getTilex() < victimTile.getTilex()) {
+			return 0;
+		} else if (attackerTile.getTilex() > victimTile.getTilex()) {
+			return 2;
+		} else if (attackerTile.getTilex() == victimTile.getTilex()) {
+			if (attackerTile.getTiley() < victimTile.getTiley()) {
+				return 1;
+			} else if (attackerTile.getTiley() > victimTile.getTiley()) {
+				return 3;
+			}
+		}
+
+
+		return 0;
+	}
+
+	private void provokeInclusiveAttack(int[][] tileCoordinatesToCheck, ActorRef out, Tile tile, GameState gameState, int horizontalOrVertical, int positionModifier) {
+		System.out.println("checking coordinates around: " + tile.getTilex() + tile.getTiley());
+		for (int[] coordinatePair: tileCoordinatesToCheck) {
+			for (int i = 0; i < coordinatePair.length; i++) {
+				int tilex = coordinatePair[0] + tile.getTilex();
+				int tiley = coordinatePair[1] + tile.getTiley();
+				Tile currentTile = gameState.getBoard().getTile(tilex, tiley);
+				if (currentTile != null) {
+					if (currentTile.getUnit() != null) {
+						if (currentTile.getUnit() instanceof Provoke) {
+//							UnitCommands.attackUnit(this,out,currentTile,gameState);
+							if (horizontalOrVertical == 0) {
+								UnitCommands.moveUnit(this, out,gameState.getBoard().getTile(currentTile.getTilex() + positionModifier, currentTile.getTiley()), gameState);
+							} else if (horizontalOrVertical == 1) {
+								UnitCommands.moveUnit(this, out,gameState.getBoard().getTile(currentTile.getTilex(), currentTile.getTiley() + positionModifier), gameState);
+							}
+							BasicCommands.addPlayer1Notification(out, "Your unit was provoked, attack interrupted", 3);
+							return;
+						} else {
+							System.out.println("No unit found with provoke at " + tilex + tiley);
+						}
+					} else {
+						System.out.println("No unit found at " + tilex + tiley);
+					}
+				} else {
+					System.out.println("Tile is null");
+				}
+
+
+			}
+		}
+		UnitCommands.attackUnit(this,out,tile,gameState);
 	}
 
 
