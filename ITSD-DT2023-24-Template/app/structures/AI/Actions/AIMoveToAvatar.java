@@ -5,6 +5,7 @@ import structures.AI.AI;
 import structures.GameState;
 import structures.basic.MoveableUnit;
 import structures.basic.Tile;
+import utils.UnitCommands;
 
 public class AIMoveToAvatar extends UnitAction{
     private Tile nearestTileToAvatar;
@@ -22,6 +23,8 @@ public class AIMoveToAvatar extends UnitAction{
 
     @Override
     public void makeAction(ActorRef out){
+        UnitCommands.actionableTiles(actionTaker,out, gameState);
+        try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
         actionTaker.moveUnit(out, nearestTileToAvatar,gameState);
     }
 

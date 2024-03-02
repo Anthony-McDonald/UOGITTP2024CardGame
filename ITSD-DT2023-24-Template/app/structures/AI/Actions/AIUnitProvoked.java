@@ -3,6 +3,7 @@ package structures.AI.Actions;
 import akka.actor.ActorRef;
 import structures.GameState;
 import structures.basic.MoveableUnit;
+import utils.UnitCommands;
 
 public class AIUnitProvoked extends UnitAction {
 
@@ -21,6 +22,8 @@ public class AIUnitProvoked extends UnitAction {
 
     @Override
     public void makeAction(ActorRef out){
+        UnitCommands.actionableTiles(actionTaker,out, gameState);
+        try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
         if (!this.isAttackDangerous(provoker)){
             actionTaker.attackUnit(out, provoker.getTile(),gameState);
         }else{

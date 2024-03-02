@@ -3,6 +3,7 @@ package structures.AI.Actions;
 import akka.actor.ActorRef;
 import structures.GameState;
 import structures.basic.MoveableUnit;
+import utils.UnitCommands;
 
 public class AIAttackAvatar extends UnitAction{
 
@@ -21,6 +22,8 @@ public class AIAttackAvatar extends UnitAction{
 
     @Override
     public void makeAction(ActorRef out){
+        UnitCommands.actionableTiles(actionTaker,out, gameState);
+        try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
         actionTaker.attackUnit(out,avatar.getTile(),gameState);
     }
 
