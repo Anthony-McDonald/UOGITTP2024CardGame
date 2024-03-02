@@ -1,10 +1,7 @@
 package structures.AI;
 
 import akka.actor.ActorRef;
-import structures.AI.Actions.AIAttackUnit;
-import structures.AI.Actions.AIMoveUnit;
-import structures.AI.Actions.AIUnitProvoked;
-import structures.AI.Actions.UnitAction;
+import structures.AI.Actions.*;
 import structures.GameState;
 import structures.basic.*;
 import utils.UnitCommands;
@@ -33,11 +30,13 @@ public class UnitActionChecker {
     Moving towards nearest unit (if attack isn't possible)
     Moving towards enemy avatar
     Moving towards enemy unit that is threatening AI avatar
+    Attacking enemy unit that is threatening AI avatar
      */
 
     public void makeAction(){
         ArrayList<UnitAction> weightedActions = new ArrayList<>();
         if(UnitCommands.isProvokeAdjacent(actionTaker,gameState)){
+            System.out.println("unit is provoked, attacking provoker");
             AIUnitProvoked provokeAction = new AIUnitProvoked(actionTaker,gameState,this.findProvoker());
             provokeAction.makeAction(actorRef);
             return; //ends logic here since unit is provoked. we want no other logic to occur
@@ -61,9 +60,37 @@ public class UnitActionChecker {
             }
         }
 
+        if (this.isAIAvatarUnderThreat()!=null){ //there is an enemy unit that can attack the enemy avatar
+            MoveableUnit threatUnit = isAIAvatarUnderThreat();
+            Tile nearestTileToThreat = findNearestTileToUnit(threatUnit);
+            if(UnitCommands.canAttack(actionTaker,threatUnit.getTile(),gameState)){
+                //can attack threat
 
-
-
+                AIAttackAvatarThreat attackAvatarThreat = new AIAttackAvatarThreat(actionTaker, threatUnit, gameState);
+                int weight = attackAvatarThreat.getActionScore();
+                for (int i = 0; i<weight;i++){
+                    weightedActions.add(attackAvatarThreat);
+                }
+            }else{
+                //can't attack so instead move to Avatar Threat
+                AIMoveToAvatarThreat moveToAvatarThreat = new AIMoveToAvatarThreat(actionTaker,gameState, nearestTileToThreat, threatUnit);
+                int weight = moveToAvatarThreat.getActionScore();
+                for (int i = 0; i<weight;i++){
+                    weightedActions.add(moveToAvatarThreat);
+                }
+            }
+        }
+        ArrayList<MoveableUnit> humanUnits = gameState.getBoard().friendlyUnits(true);
+        MoveableUnit humanAvatar = null;
+        for (MoveableUnit unit : humanUnits){
+            if (unit instanceof Avatar){
+                humanAvatar = unit;
+            }
+        }
+        Tile nearestTileToHumanAvatar = findNearestTileToEnemyAvatar();
+        if (this.isEnemyAvatarAttackable()){
+            //unit can attack avatar
+        }
     }
 
     public MoveableUnit findNearestEnemy(){
@@ -144,7 +171,7 @@ public class UnitActionChecker {
         return findNearestTileToUnit(humanAvatar);
     }
 
-    public MoveableUnit isAIUnitUnderThreat(){
+    public MoveableUnit isAIAvatarUnderThreat(){
         MoveableUnit threatUnit = null; //if this method returns null, no immediate threat to AI avatar
         MoveableUnit aiAvatar = null;
         ArrayList<MoveableUnit> AIUnits = gameState.getBoard().friendlyUnits(false);
