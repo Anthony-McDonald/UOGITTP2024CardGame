@@ -4,8 +4,11 @@ import structures.GameState;
 import structures.basic.Board;
 import structures.basic.MoveableUnit;
 import structures.basic.Tile;
+import utils.UnitCommands;
 
 import java.util.ArrayList;
+
+import static utils.UnitCommands.attackableTiles;
 
 /*
 class for checking all actions available to a unit
@@ -38,5 +41,16 @@ public class UnitActionChecker {
 
 
 
-     }
+    }
+
+    public boolean isNearestEnemyAttackable(){
+        ArrayList<Tile> attackableTiles = UnitCommands.attackableTiles(actionTaker, gameState);
+        if (attackableTiles.contains(this.findNearestEnemy().getTile())){
+            return true; //unit can directly attack
+        }else{
+            return false; //unit can't directly attack
+        }
+    }
+
+
 }
