@@ -1,9 +1,8 @@
-package structures.AI;
+package structures.AI.Actions;
 
 import akka.actor.ActorRef;
 import structures.GameState;
 import structures.basic.MoveableUnit;
-import structures.basic.Tile;
 
 public class AIAttackUnit extends UnitAction{
     private MoveableUnit enemyUnit;
@@ -31,6 +30,9 @@ public class AIAttackUnit extends UnitAction{
             //attack will kill attacker so now assess value
             //assess change to enemy health to adjust impact of health
             this.setActionScore(1+actionTaker.getAttack()); //higher score based on damage done
+        }
+        if(actionTaker.getLastTurnAttacked()==gameState.getTurnNumber()){
+            this.actionScore = 0; //no chance of attack
         }
         System.out.println("Action score is now " + this.actionScore);
     }

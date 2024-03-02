@@ -1,4 +1,4 @@
-package structures.AI;
+package structures.AI.Actions;
 
 import akka.actor.ActorRef;
 import structures.GameState;

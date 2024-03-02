@@ -1,4 +1,4 @@
-package structures.AI;
+package structures.AI.Actions;
 
 import akka.actor.ActorRef;
 import structures.GameState;
@@ -56,11 +56,7 @@ public abstract class UnitAction {
     }
 
     public void setActionScore(int actionScore) {
-
         this.actionScore = actionScore;
-        if (this.actionScore<1){
-            actionScore = 1; //prevents action score to dropping too low
-        }
     }
 
     public MoveableUnit getActionTaker() {

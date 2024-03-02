@@ -1,6 +1,10 @@
 package structures.AI;
 
 import akka.actor.ActorRef;
+import structures.AI.Actions.AIAttackUnit;
+import structures.AI.Actions.AIMoveUnit;
+import structures.AI.Actions.AIUnitProvoked;
+import structures.AI.Actions.UnitAction;
 import structures.GameState;
 import structures.basic.*;
 import utils.UnitCommands;
@@ -48,8 +52,16 @@ public class UnitActionChecker {
                 //higher score equals higher weighting
             }
         }else{
-            //nearest enemy isn't attackable
+            //nearest enemy isn't immmediately attackable
+            Tile nearestTileToEnemy = findNearestTileToUnit(nearestEnemy);
+            AIMoveUnit moveUnitAction = new AIMoveUnit(actionTaker,gameState,nearestTileToEnemy,nearestEnemy);
+            int weight = moveUnitAction.getActionScore();
+            for (int i = 0; i<weight;i++){
+                weightedActions.add(moveUnitAction);
+            }
         }
+
+
 
 
     }
