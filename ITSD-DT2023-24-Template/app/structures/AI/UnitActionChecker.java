@@ -1,5 +1,6 @@
 package structures.AI;
 
+import akka.actor.ActorRef;
 import structures.GameState;
 import structures.basic.*;
 import utils.UnitCommands;
@@ -15,12 +16,18 @@ this class is created and assigned to each AI unit prior to a move
 public class UnitActionChecker {
     private MoveableUnit actionTaker;
     private GameState gameState;
-    public UnitActionChecker(MoveableUnit actionTaker, GameState gameState){
+    private ActorRef actorRef;
+    public UnitActionChecker(MoveableUnit actionTaker, GameState gameState, ActorRef out){
         this.actionTaker=actionTaker;
         this.gameState =gameState;
+        this.actorRef = out;
     }
 
+    public void makeAction(){
+        ArrayList<UnitAction> weightedActions = new ArrayList<>();
 
+
+    }
 
     public MoveableUnit findNearestEnemy(){
         Tile startTile = actionTaker.getTile();
