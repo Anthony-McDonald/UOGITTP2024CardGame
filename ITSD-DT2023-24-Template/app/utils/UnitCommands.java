@@ -9,6 +9,7 @@ import structures.basic.*;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UnitCommands {
     public static void attackUnit(MoveableUnit attacker, ActorRef out, Tile tile, GameState gameState) {
@@ -548,6 +549,20 @@ public class UnitCommands {
         }
         return attackableTiles;
 
+    }
+
+    public static List<Tile> getAllSummonableTiles (GameState gameState, boolean userOwned){
+        ArrayList<MoveableUnit>friendlyUnits = gameState.getBoard().friendlyUnits(userOwned);
+        List <Tile> allSummonableTiles = new ArrayList<>();
+        for(MoveableUnit unit : friendlyUnits){
+            ArrayList<Tile>adjacentTiles = UnitCommands.adjacentTiles(unit.getTile(),gameState);
+            for (Tile tile: adjacentTiles){
+                if (tile.getUnit()==null){
+                    allSummonableTiles.add(tile);
+                }
+            }
+        }
+        return allSummonableTiles;
     }
 
 
