@@ -23,17 +23,32 @@ public class UnitActionChecker {
         this.actorRef = out;
     }
 
+    /*
+    the logic of this class is that it assesses the following actions:
+    Attacking nearest unit
+    Moving towards nearest unit (if attack isn't possible)
+    Moving towards enemy avatar
+    Moving towards enemy unit that is threatening AI avatar
+     */
+
     public void makeAction(){
         ArrayList<UnitAction> weightedActions = new ArrayList<>();
         if(UnitCommands.isProvokeAdjacent(actionTaker,gameState)){
             AIUnitProvoked provokeAction = new AIUnitProvoked(actionTaker,gameState,this.findProvoker());
             provokeAction.makeAction(actorRef);
-            return; //ends logic here since unit is provoked. we want no other logic toi
+            return; //ends logic here since unit is provoked. we want no other logic to occur
         }
+        MoveableUnit nearestEnemy = findNearestEnemy();
 
         if(this.isNearestEnemyAttackable()){
-            //create AI attack unit actions#
-
+            AIAttackUnit attackUnitAction = new AIAttackUnit(actionTaker,gameState,nearestEnemy);
+            int weight = attackUnitAction.getActionScore();
+            for (int i = 0; i<weight;i++){
+                weightedActions.add(attackUnitAction); //adds unit according to action score
+                //higher score equals higher weighting
+            }
+        }else{
+            //nearest enemy isn't attackable
         }
 
 

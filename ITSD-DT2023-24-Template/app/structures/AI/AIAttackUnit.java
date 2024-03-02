@@ -32,6 +32,7 @@ public class AIAttackUnit extends UnitAction{
             //assess change to enemy health to adjust impact of health
             this.setActionScore(1+actionTaker.getAttack()); //higher score based on damage done
         }
+        System.out.println("Action score is now " + this.actionScore);
     }
 
 
