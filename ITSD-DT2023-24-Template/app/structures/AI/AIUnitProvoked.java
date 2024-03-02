@@ -12,7 +12,7 @@ public class AIUnitProvoked extends UnitAction {
         this.actionTaker = actionTaker;
         this.gameState = gameState;
         this.provoker = provoker;
-        if (this.IsAttackDangerous()){
+        if (this.isAttackDangerous(provoker)){
             actionScore = 0;
 
         }
@@ -21,7 +21,7 @@ public class AIUnitProvoked extends UnitAction {
 
     @Override
     public void makeAction(ActorRef out){
-        if (!this.IsAttackDangerous()){
+        if (!this.isAttackDangerous(provoker)){
             actionTaker.attackUnit(out, provoker.getTile(),gameState);
         }else{
             actionTaker.setLastTurnAttacked(gameState.getTurnNumber());
@@ -29,21 +29,5 @@ public class AIUnitProvoked extends UnitAction {
         }
     }
 
-    public boolean IsAttackDangerous(){
-        //method for assessing if attack on provoker will kill attacker
-        int provokerHealth = provoker.getCurrentHealth();
-        int actionTakerHealth = actionTaker.getCurrentHealth();
-        int provokerAttack = provoker.getAttack();
-        int actionTakerAttack = actionTaker.getAttack();
-        if((provokerHealth-actionTakerAttack)<=0){
-            //attack will kill provoker
-            return false;
-        }
-        if ((actionTakerHealth - provokerAttack)<=0){
-            return true;
 
-            //counter attack will kill attacker
-        }
-        return false;
-    }
 }

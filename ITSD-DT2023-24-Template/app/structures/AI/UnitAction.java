@@ -17,6 +17,24 @@ public abstract class UnitAction {
 
     }
 
+    public boolean isAttackDangerous(MoveableUnit enemyUnit){
+        //method for assessing if attack on provoker will kill attacker
+        int attackedHealth = enemyUnit.getCurrentHealth();
+        int actionTakerHealth = actionTaker.getCurrentHealth();
+        int enemyUnitAttack = enemyUnit.getAttack();
+        int actionTakerAttack = actionTaker.getAttack();
+        if((attackedHealth-actionTakerAttack)<=0){
+            //attack will kill provoker
+            return false;
+        }
+        if ((actionTakerHealth - enemyUnitAttack)<=0){
+            return true;
+
+            //counter attack will kill attacker
+        }
+        return false;
+    }
+
     public Tile getTargetTile() {
         return targetTile;
     }
@@ -38,7 +56,11 @@ public abstract class UnitAction {
     }
 
     public void setActionScore(int actionScore) {
+
         this.actionScore = actionScore;
+        if (this.actionScore<1){
+            actionScore = 1; //prevents action score to dropping too low
+        }
     }
 
     public MoveableUnit getActionTaker() {
