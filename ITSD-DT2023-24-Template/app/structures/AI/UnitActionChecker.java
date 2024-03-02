@@ -7,6 +7,7 @@ import structures.basic.*;
 import utils.UnitCommands;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static utils.UnitCommands.attackableTiles;
 
@@ -29,11 +30,15 @@ public class UnitActionChecker {
     Attacking nearest unit
     Moving towards nearest unit (if attack isn't possible)
     Moving towards enemy avatar
+    Attacking enemy avatar
     Moving towards enemy unit that is threatening AI avatar
     Attacking enemy unit that is threatening AI avatar
      */
 
     public void makeAction(){
+        if (actionTaker.getLastTurnAttacked() == gameState.getTurnNumber()){
+            return; //no actions available so don't make action
+        }
         ArrayList<UnitAction> weightedActions = new ArrayList<>();
         if(UnitCommands.isProvokeAdjacent(actionTaker,gameState)){
             System.out.println("unit is provoked, attacking provoker");
@@ -42,10 +47,12 @@ public class UnitActionChecker {
             return; //ends logic here since unit is provoked. we want no other logic to occur
         }
         MoveableUnit nearestEnemy = findNearestEnemy();
-
+        int attackUnitWeight = 0;
+        int moveToUnitWeight = 0;
         if(this.isNearestEnemyAttackable()){
             AIAttackUnit attackUnitAction = new AIAttackUnit(actionTaker,gameState,nearestEnemy);
             int weight = attackUnitAction.getActionScore();
+            attackUnitWeight = weight;
             for (int i = 0; i<weight;i++){
                 weightedActions.add(attackUnitAction); //adds unit according to action score
                 //higher score equals higher weighting
@@ -55,11 +62,13 @@ public class UnitActionChecker {
             Tile nearestTileToEnemy = findNearestTileToUnit(nearestEnemy);
             AIMoveUnit moveUnitAction = new AIMoveUnit(actionTaker,gameState,nearestTileToEnemy,nearestEnemy);
             int weight = moveUnitAction.getActionScore();
+            moveToUnitWeight = weight;
             for (int i = 0; i<weight;i++){
                 weightedActions.add(moveUnitAction);
             }
         }
-
+        int attackThreatWeight = 0;
+        int moveToThreatWeight = 0;
         if (this.isAIAvatarUnderThreat()!=null){ //there is an enemy unit that can attack the enemy avatar
             MoveableUnit threatUnit = isAIAvatarUnderThreat();
             Tile nearestTileToThreat = findNearestTileToUnit(threatUnit);
@@ -68,6 +77,7 @@ public class UnitActionChecker {
 
                 AIAttackAvatarThreat attackAvatarThreat = new AIAttackAvatarThreat(actionTaker, threatUnit, gameState);
                 int weight = attackAvatarThreat.getActionScore();
+                attackThreatWeight = weight;
                 for (int i = 0; i<weight;i++){
                     weightedActions.add(attackAvatarThreat);
                 }
@@ -75,11 +85,15 @@ public class UnitActionChecker {
                 //can't attack so instead move to Avatar Threat
                 AIMoveToAvatarThreat moveToAvatarThreat = new AIMoveToAvatarThreat(actionTaker,gameState, nearestTileToThreat, threatUnit);
                 int weight = moveToAvatarThreat.getActionScore();
+                moveToThreatWeight = weight;
                 for (int i = 0; i<weight;i++){
                     weightedActions.add(moveToAvatarThreat);
                 }
             }
+
         }
+        int attackAvatarWeight = 0;
+        int moveToAvatarWeight = 0;
         ArrayList<MoveableUnit> humanUnits = gameState.getBoard().friendlyUnits(true);
         MoveableUnit humanAvatar = null;
         for (MoveableUnit unit : humanUnits){
@@ -89,7 +103,62 @@ public class UnitActionChecker {
         }
         Tile nearestTileToHumanAvatar = findNearestTileToEnemyAvatar();
         if (this.isEnemyAvatarAttackable()){
-            //unit can attack avatar
+            AIAttackAvatar aiAttackAvatar = new AIAttackAvatar(actionTaker,humanAvatar,gameState);
+            int weight = aiAttackAvatar.getActionScore();
+            attackAvatarWeight = weight;
+            for (int i = 0; i<weight;i++){
+                weightedActions.add(aiAttackAvatar);
+            }
+        }else{
+            AIMoveToAvatar aiMoveToAvatar = new AIMoveToAvatar(actionTaker,gameState, nearestTileToHumanAvatar, humanAvatar);
+            int weight = aiMoveToAvatar.getActionScore();
+            moveToAvatarWeight = weight;
+            for (int i = 0; i<weight;i++){
+                weightedActions.add(aiMoveToAvatar);
+            }
+        }
+        int totalWeight = moveToAvatarWeight+ moveToThreatWeight + moveToUnitWeight + attackAvatarWeight + attackThreatWeight + attackUnitWeight;
+        double moveToAvatarChance = 0;
+        if (moveToAvatarWeight>0) {
+            moveToAvatarChance = ((double) moveToAvatarWeight / (double) totalWeight) * 100;
+        }
+        System.out.println("Chance of moving to the avatar is " + moveToAvatarChance + "%");
+        double moveToThreatChance = 0;
+        if (moveToThreatWeight > 0) {
+            moveToThreatChance = ((double) moveToThreatWeight / (double) totalWeight) * 100;
+        }
+        System.out.println("Chance of moving to the threat is " + moveToThreatChance + "%");
+
+        double moveToUnitChance = 0;
+        if (moveToUnitWeight > 0) {
+            moveToUnitChance = ((double) moveToUnitWeight / (double) totalWeight) * 100;
+        }
+        System.out.println("Chance of moving to the unit is " + moveToUnitChance + "%");
+
+        double attackAvatarChance = 0;
+        if (attackAvatarWeight > 0) {
+            attackAvatarChance = ((double) attackAvatarWeight / (double) totalWeight) * 100;
+        }
+        System.out.println("Chance of attacking the avatar is " + attackAvatarChance + "%");
+
+        double attackThreatChance = 0;
+        if (attackThreatWeight > 0) {
+            attackThreatChance = ((double) attackThreatWeight / (double) totalWeight) * 100;
+        }
+        System.out.println("Chance of attacking the threat is " + attackThreatChance + "%");
+
+        double attackUnitChance = 0;
+        if (attackUnitWeight > 0) {
+            attackUnitChance = ((double) attackUnitWeight / (double) totalWeight) * 100;
+        }
+        System.out.println("Chance of attacking the unit is " + attackUnitChance + "%");
+
+
+        if (weightedActions.size()>0){
+            //there is an action available
+            Random rand = new Random();
+            int randomActionIndex = rand.nextInt(weightedActions.size()); //chooses random action from weighted list
+            UnitAction randomAction = weightedActions.get(randomActionIndex);
         }
     }
 
