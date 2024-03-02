@@ -42,8 +42,7 @@ public class UnitActionChecker {
         ArrayList<UnitAction> weightedActions = new ArrayList<>();
         if(UnitCommands.isProvokeAdjacent(actionTaker,gameState)){
             System.out.println("unit is provoked, attacking provoker");
-            AIUnitProvoked provokeAction = new AIUnitProvoked(actionTaker,gameState,this.findProvoker());
-            provokeAction.makeAction(actorRef);
+            actionTaker.attackUnit(actorRef, findProvoker().getTile(),gameState);
             return; //ends logic here since unit is provoked. we want no other logic to occur
         }
         MoveableUnit nearestEnemy = findNearestEnemy();
@@ -117,6 +116,9 @@ public class UnitActionChecker {
                 weightedActions.add(aiMoveToAvatar);
             }
         }
+        if (actionTaker instanceof Creature){
+            System.out.println(((Creature) actionTaker).getCardname() + " is making an action for the AI.");
+        }
         int totalWeight = moveToAvatarWeight+ moveToThreatWeight + moveToUnitWeight + attackAvatarWeight + attackThreatWeight + attackUnitWeight;
         double moveToAvatarChance = 0;
         if (moveToAvatarWeight>0) {
@@ -160,7 +162,9 @@ public class UnitActionChecker {
             int randomActionIndex = rand.nextInt(weightedActions.size()); //chooses random action from weighted list
             UnitAction randomAction = weightedActions.get(randomActionIndex);
             randomAction.makeAction(actorRef);
+
         }
+        actionTaker.setLastTurnAttacked(gameState.getTurnNumber()); //to ensure that unitactionchecker doesn't get stuck on this unit
     }
 
     public MoveableUnit findNearestEnemy(){

@@ -41,25 +41,25 @@ public class AI extends Player {
 		while(this.hasActions()){
 			playAnySpell();
 			summonUnit();
-			System.out.println("attempting to summon");
-			try {
-				Thread.sleep(0);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			unitMakeMoves();
 		}
 	}
 
 	public boolean hasActions(){ //expand class as functionality increases
 		for (Card card:this.hand) {
-			if (card instanceof Creature && card.getManacost() <= this.mana) { //has enough mana for summoning
+			if (card.getManacost() <= this.mana) { //has enough mana for summoning or spellcasting
 				System.out.println("AI has actions remaining");
 				return true;
 			}
 		}
+		if(this.unitCanMakeMoves()){
+			return true;
+		}
 		System.out.println("AI has no actions remaining");
 		return false;
 	}
+
+
 	public boolean hasManaActions() {
 		for (Card card: this.hand) {
 			if (card instanceof Spell && card.getManacost() <= this.mana) {
@@ -91,6 +91,7 @@ public class AI extends Player {
 		}
 
 		List<Tile> possibleTiles = this.tilesForAIUnitSummons();
+		List<Tile> backUpPossibleTiles = UnitCommands.getAllSummonableTiles(gameState,false);
 //		int numberOfTiles = possibleTiles.size();
 //		ArrayList<Tile>weightedTiles = new ArrayList<>(); // list for putting weighted array list
 //		if (creature.getMaxHealth()>creature.getAttack()){
@@ -118,16 +119,24 @@ public class AI extends Player {
 				cutoffPoint =1; //prevents list from being null
 			}
 			System.out.println(possibleTiles.size() + " is list size before cutoff");
-			possibleTiles = possibleTiles.subList(0,cutoffPoint);
-			System.out.println(possibleTiles.size() + " is list size after cutoff");
+			if(possibleTiles.size()>0) {
+				possibleTiles = possibleTiles.subList(0, cutoffPoint);
+				System.out.println(possibleTiles.size() + " is list size after cutoff");
+			}else{
+				possibleTiles = backUpPossibleTiles;
+			}
 			//takes bottom % of possibleTiles that are closer to the AI avatar so defensive units are more likely to be summoned in a defensive position
 		} else if (creature.getAttack()> creature.getMaxHealth()) {
 			System.out.println("offensive placement");
 			int cutoffPoint = (int)(possibleTiles.size()*0.5);
 			System.out.println("Cutoff is " + cutoffPoint);
 			System.out.println(possibleTiles.size() + " is list size before cutoff");
-			possibleTiles =  possibleTiles.subList(cutoffPoint, possibleTiles.size());
-			System.out.println(possibleTiles.size() + " is list size after cutoff");
+			if(possibleTiles.size()>0) {
+				possibleTiles = possibleTiles.subList(0, cutoffPoint);
+				System.out.println(possibleTiles.size() + " is list size after cutoff");
+			}else{
+				possibleTiles = backUpPossibleTiles;
+			}
 			//takes top % of possibleTiles that are further from the AI avatar so offensive units are more likely to be summoned in an offensive position
 		} else{ //health is equal to attack
 			//no changes to possible tiles, equal chance of spawning anywhere
@@ -137,8 +146,7 @@ public class AI extends Player {
 		System.out.println(actorRef);
 		System.out.println(gameState);
 		if (possibleTiles ==null ){
-			System.out.println("No possible tiles currently.");
-			return;
+			possibleTiles = backUpPossibleTiles;
 		}
 		if (this.getMana() >= creature.getManacost()) {
 			System.out.println("Playing " + creature.getCardname());
@@ -325,6 +333,30 @@ public class AI extends Player {
 		}
 		System.out.println("Best creature is " +creature.getCardname());
 		return creature;
+	}
+
+	public boolean unitCanMakeMoves(){
+		ArrayList<MoveableUnit>aiUnits = gameState.getBoard().friendlyUnits(false);
+		for (MoveableUnit unit: aiUnits){
+			if (unit.canStillAttack(gameState.getTurnNumber())&& unit.canStillMove(gameState.getTurnNumber())){
+				System.out.println("AI has unit that can move or attack");
+				return true; //unit can move or attack
+			}
+		}
+		System.out.println("AI Units have no actions remaining");
+		return false;
+	}
+
+	public void unitMakeMoves(){
+		ArrayList<MoveableUnit>aiUnits = gameState.getBoard().friendlyUnits(false);
+		for (MoveableUnit unit: aiUnits){
+			if (unit.canStillAttack(gameState.getTurnNumber())|| unit.canStillMove(gameState.getTurnNumber())){
+				UnitActionChecker unitActionChecker = new UnitActionChecker(unit, gameState, actorRef);
+				unitActionChecker.makeAction();
+				System.out.println("Unit made action, now move on to next unit");
+				try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			}
+		}
 	}
 
 

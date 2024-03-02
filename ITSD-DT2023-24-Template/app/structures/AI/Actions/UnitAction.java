@@ -5,7 +5,7 @@ import structures.GameState;
 import structures.basic.MoveableUnit;
 import structures.basic.Tile;
 
-public abstract class UnitAction {
+public class UnitAction {
     protected Tile targetTile;
     protected boolean isActionPossible;
     protected MoveableUnit actionTaker;
