@@ -25,7 +25,12 @@ public class AIAttackUnit extends UnitAction{
 
     public void assessScore(){
         if (!isAttackDangerous(enemyUnit)){
-            //attack will kill enemy unit so keep actionscore as 7 (high weighting)
+            //attack will damage enemy unit so keep actionscore as 7 (high weighting)
+            if (willAttackKillEnemy(enemyUnit)){
+                this.actionScore = 40; //attack will kill enemy so make weight very high
+            }else{
+                actionScore = actionScore+actionTaker.getAttack();
+            }
         }else{
             //attack will kill attacker so now assess value
             //assess change to enemy health to adjust impact of health

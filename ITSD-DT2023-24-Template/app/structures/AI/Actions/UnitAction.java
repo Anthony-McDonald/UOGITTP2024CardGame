@@ -66,5 +66,13 @@ public abstract class UnitAction {
     public void setActionTaker(MoveableUnit actionTaker) {
         this.actionTaker = actionTaker;
     }
+
+    public boolean willAttackKillEnemy (MoveableUnit enemy){
+        if (enemy.getCurrentHealth()<=actionTaker.getAttack()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 
