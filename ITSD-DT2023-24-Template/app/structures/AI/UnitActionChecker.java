@@ -1,10 +1,7 @@
 package structures.AI;
 
 import structures.GameState;
-import structures.basic.Avatar;
-import structures.basic.Board;
-import structures.basic.MoveableUnit;
-import structures.basic.Tile;
+import structures.basic.*;
 import utils.UnitCommands;
 
 import java.util.ArrayList;
@@ -22,6 +19,8 @@ public class UnitActionChecker {
         this.actionTaker=actionTaker;
         this.gameState =gameState;
     }
+
+
 
     public MoveableUnit findNearestEnemy(){
         Tile startTile = actionTaker.getTile();
@@ -119,6 +118,19 @@ public class UnitActionChecker {
             }
         }
         return threatUnit;
+    }
+
+    public MoveableUnit findProvoker (){
+        MoveableUnit provoker = null;
+        //if return is null then no provoker
+        if(UnitCommands.isProvokeAdjacent(actionTaker,gameState)){
+            for (Tile tile : UnitCommands.adjacentTiles(actionTaker.getTile(),gameState)){ //loop through units adjacent tiles
+                if (tile.getUnit()!=null && tile.getUnit() instanceof Provoke && tile.getUnit().isUserOwned()!= actionTaker.isUserOwned()){
+                    provoker = tile.getUnit();
+                }
+            }
+        }
+        return provoker;
     }
 
 
