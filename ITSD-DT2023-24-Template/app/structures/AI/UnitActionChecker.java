@@ -86,6 +86,21 @@ public class UnitActionChecker {
         }
     }
 
+    public Tile findNearestTiletoNearestEnemy(){
+        return findNearestTileToUnit(findNearestEnemy());
+    }
+
+    public Tile findNearestTileToEnemyAvatar(){
+        ArrayList<MoveableUnit> humanUnits = gameState.getBoard().friendlyUnits(true);
+        MoveableUnit humanAvatar = null;
+        for (MoveableUnit unit : humanUnits){
+            if (unit instanceof Avatar){
+                humanAvatar = unit;
+            }
+        }
+        return findNearestTileToUnit(humanAvatar);
+    }
+
 
 
 
