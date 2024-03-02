@@ -101,6 +101,26 @@ public class UnitActionChecker {
         return findNearestTileToUnit(humanAvatar);
     }
 
+    public MoveableUnit isAIUnitUnderThreat(){
+        MoveableUnit threatUnit = null; //if this method returns null, no immediate threat to AI avatar
+        MoveableUnit aiAvatar = null;
+        ArrayList<MoveableUnit> AIUnits = gameState.getBoard().friendlyUnits(false);
+        for (MoveableUnit unit : AIUnits){
+            if (unit instanceof Avatar){
+                aiAvatar = unit;
+            }
+        }
+
+        ArrayList <Tile> avatarThreatTiles = attackableTiles(actionTaker, gameState);
+        for (Tile tile : avatarThreatTiles){
+            if (tile.getUnit()!= null && tile.getUnit().isUserOwned()){
+                //if tile has unit and unit is human
+                threatUnit = tile.getUnit();
+            }
+        }
+        return threatUnit;
+    }
+
 
 
 
