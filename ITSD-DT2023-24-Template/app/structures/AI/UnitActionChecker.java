@@ -1,6 +1,7 @@
 package structures.AI;
 
 import structures.GameState;
+import structures.basic.Avatar;
 import structures.basic.Board;
 import structures.basic.MoveableUnit;
 import structures.basic.Tile;
@@ -12,6 +13,7 @@ import static utils.UnitCommands.attackableTiles;
 
 /*
 class for checking all actions available to a unit
+this class is created and assigned to each AI unit prior to a move
  */
 public class UnitActionChecker {
     private MoveableUnit actionTaker;
@@ -51,6 +53,40 @@ public class UnitActionChecker {
             return false; //unit can't directly attack
         }
     }
+
+    public Tile findNearestTileToUnit(MoveableUnit enemyUnit){
+        ArrayList<Tile> moveableTiles = UnitCommands.moveableTiles(actionTaker,gameState);
+        MoveableUnit enemy = enemyUnit;
+        Tile nearestEnemyTile = enemy.getTile();
+        double closestDistance = AI.calculateDistance(actionTaker.getTile(),nearestEnemyTile); //distance between unit and enemy unit
+        Tile closestTile = actionTaker.getTile();
+        for (Tile tile : moveableTiles){
+            double distance = AI.calculateDistance(tile,nearestEnemyTile);
+            if (distance<closestDistance){
+                closestDistance = distance;
+                closestTile = tile;
+            }
+        }
+        return closestTile;
+    }
+
+    public boolean isEnemyAvatarAttackable(){
+        ArrayList<Tile> attackableTiles = UnitCommands.attackableTiles(actionTaker, gameState);
+        ArrayList<MoveableUnit> humanUnits = gameState.getBoard().friendlyUnits(true);
+        MoveableUnit humanAvatar = null;
+        for (MoveableUnit unit : humanUnits){
+            if (unit instanceof Avatar){
+                humanAvatar = unit;
+            }
+        }
+        if (attackableTiles.contains(humanAvatar.getTile())){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 
 
 }
