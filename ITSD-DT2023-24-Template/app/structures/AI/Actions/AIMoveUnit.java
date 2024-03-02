@@ -34,7 +34,7 @@ public class AIMoveUnit extends UnitAction{
         double distanceToEnemy = AI.calculateDistance(actionTaker.getTile(), nearestTileToEnemy);
         this.actionScore = this.actionScore - (int) distanceToEnemy;
         if (this.actionScore<1){
-            this.actionScore =1; //ensures that its always happening even if distance is further than 7.
+            this.actionScore =1; //ensures that its always a chance even if distance is further than 7.
         }
 
 
