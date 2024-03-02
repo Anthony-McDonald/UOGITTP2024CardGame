@@ -338,7 +338,7 @@ public class AI extends Player {
 	public boolean unitCanMakeMoves(){
 		ArrayList<MoveableUnit>aiUnits = gameState.getBoard().friendlyUnits(false);
 		for (MoveableUnit unit: aiUnits){
-			if (unit.canStillAttack(gameState.getTurnNumber())&& unit.canStillMove(gameState.getTurnNumber())){
+			if (unit.canStillAttack(gameState.getTurnNumber())&& unit.canStillMove(gameState.getTurnNumber())&&unit.getTurnSummoned()!= gameState.getTurnNumber()){
 				System.out.println("AI has unit that can move or attack");
 				return true; //unit can move or attack
 			}
@@ -350,7 +350,7 @@ public class AI extends Player {
 	public void unitMakeMoves(){
 		ArrayList<MoveableUnit>aiUnits = gameState.getBoard().friendlyUnits(false);
 		for (MoveableUnit unit: aiUnits){
-			if (unit.canStillAttack(gameState.getTurnNumber())|| unit.canStillMove(gameState.getTurnNumber())){
+			if ((unit.canStillAttack(gameState.getTurnNumber())|| unit.canStillMove(gameState.getTurnNumber()))&& unit.getTurnSummoned()!= gameState.getTurnNumber()){
 				UnitActionChecker unitActionChecker = new UnitActionChecker(unit, gameState, actorRef);
 				unitActionChecker.makeAction();
 				System.out.println("Unit made action, now move on to next unit");
