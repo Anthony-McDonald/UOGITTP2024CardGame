@@ -49,6 +49,7 @@ public class GameState {
 	private int frontEndCardID;
 	private int beamShockCounter = 0;
 	private boolean wraithlingSwarmSatisfied = true;
+	private int wraithlingSwarmCounter = 3;
 
 	public GameState() {
 		this.player1 = new Player(true);
@@ -95,6 +96,14 @@ public class GameState {
 	public void setLastMessage(String lastMessage) {
 		this.lastMessage = lastMessage;
 		System.out.println(this.lastMessage);
+	}
+
+	public int getWraithlingSwarmCounter() {
+		return wraithlingSwarmCounter;
+	}
+
+	public void setWraithlingSwarmCounter(int wraithlingSwarmCounter) {
+		this.wraithlingSwarmCounter = wraithlingSwarmCounter;
 	}
 
 	public boolean isGameInitalised() {
