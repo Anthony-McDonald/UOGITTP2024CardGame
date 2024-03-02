@@ -175,11 +175,13 @@ public class UnitCommands {
         	for (int i =0; i< 9; i++) {
         		for (int j = 0; j <5; j++) {
         			Tile currentTile = board.getTile(i, j);
-        			if (currentTile.getUnit() == null)
+        			if (currentTile.getUnit() == null) {
         				return true;
         		}
         	}
         }
+        return false;
+    }
     	
     	Tile currentTile = mover.getTile();
         int xPos = currentTile.getTilex();
@@ -241,6 +243,20 @@ public class UnitCommands {
         int xPos = mover.getTile().getTilex();
         int yPos = mover.getTile().getTiley();
         Board board = gameState.getBoard();
+        
+        if (mover instanceof YoungFlamewing) {
+        	 for (int i = 0; i < 9; i++) {
+                 for (int j = 0; j < 5; j++) {
+                     Tile currentTile = board.getTile(i, j);
+                     // Check if the tile is empty
+                     if (currentTile.getUnit() == null) {
+                         // Highlight the empty tile
+                         BasicCommands.drawTile(out, currentTile, 1);
+                     }
+                 }
+        	 }
+        	 return;
+        }
 
         if (isProvokeAdjacent(mover,gameState)){
             //separate logic for provoked units

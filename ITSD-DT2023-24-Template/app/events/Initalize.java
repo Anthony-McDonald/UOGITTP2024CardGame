@@ -8,6 +8,9 @@ import demo.CommandDemo;
 import structures.AI.AI;
 import structures.GameState;
 import structures.basic.*;
+import utils.UnitCommands;
+import allCards.YoungFlamewing;
+import utils.UnitCommands;
 
 /**
  * Indicates that both the core game loop in the browser is starting, meaning
@@ -74,6 +77,8 @@ public class Initalize implements EventProcessor{
 		// wraithling1.setUserOwned(false);
 		// Wraithling wraithling2 = new Wraithling();
 		// wraithling2.setUserOwned(false);
+		
+	
 
 		//we could make this neater later
 		playerStartTile.setUnit(playerAvatar); //sets player avatar in back end
@@ -98,15 +103,37 @@ public class Initalize implements EventProcessor{
 
 		// wraithling1.summon(out, gameState.getBoard().getTile(1,3),gameState);
 //		wraithling2.summon(out,gameState.getBoard().getTile(1,1),gameState);
+		
+		//Friendly YoungFlameWing for testing purposes
+		/*
+		YoungFlamewing youngFlameWing = new YoungFlamewing(manaGained, null, manaGained, null, null, false, null);
+		youngFlameWing.setUserOwned(true);
+		Tile youngFlameWingTile = gameState.getBoard().getTile(1,3);
+		youngFlameWingTile.setUnit(youngFlameWing);
+		BasicCommands.drawUnit(out, youngFlameWing.getUnit(),youngFlameWingTile); //sets ai avatar on tile in front end
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.setUnitHealth(out, youngFlameWing.getUnit(), youngFlameWing.getCurrentHealth());
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.setUnitAttack(out, youngFlameWing.getUnit(), youngFlameWing.getAttack());
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+		*/
+		
+		
+		
+		//youngFlameWing.getUnit().setPositionByTile(youngFlameWingTile);
+		//try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+	//UnitCommands.summon(youngFlameWing, out, youngFlameWingTile, gameState);
+	//BasicCommands.drawUnit(out,youngFlameWing.getUnit(),youngFlameWingTile); //sets ai avatar on tile in front end
 
+		/*youngFlameWing.summon(out, youngFlameWingTile, gameState);
+		BasicCommands.drawUnit(out, youngFlameWing.getUnit(), youngFlameWingTile); 
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.setUnitHealth(out, youngFlameWing.getUnit(), youngFlameWing.getCurrentHealth());
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.setUnitAttack(out, youngFlameWing.getUnit(), youngFlameWing.getAttack());
+		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 
-
-
-
-
-
-
-
+*/
 
 
 
