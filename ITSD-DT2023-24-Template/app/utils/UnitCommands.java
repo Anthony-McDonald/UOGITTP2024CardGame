@@ -173,15 +173,17 @@ public class UnitCommands {
     }
     public static boolean canMove (MoveableUnit mover, Tile targetTile, Board board){ //method for determining if a unit can move to a tile
         if (mover instanceof YoungFlamewing) {		//Fly ability, can move anywhere on the board
-        	for (int i =0; i< 9; i++) {
+        	return targetTile.getUnit() == null;
+        	/*for (int i =0; i< 9; i++) {
         		for (int j = 0; j <5; j++) {
         			Tile currentTile = board.getTile(i, j);
-        			if (currentTile.getUnit() == null) {
-        				return true;
+        			if (currentTile != targetTile && currentTile.getUnit() != null) {
+        			//if (currentTile.getUnit() == null) {
+        				return false;
         		}
         	}
         }
-        return false;
+        return true;*/
     }
     	
     	Tile currentTile = mover.getTile();
@@ -256,7 +258,7 @@ public class UnitCommands {
                      }
                  }
         	 }
-        	 return;
+        	 
         }
 
         if (isProvokeAdjacent(mover,gameState)){

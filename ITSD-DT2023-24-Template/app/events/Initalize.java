@@ -8,6 +8,7 @@ import demo.CommandDemo;
 import structures.AI.AI;
 import structures.GameState;
 import structures.basic.*;
+import utils.StaticConfFiles;
 import utils.UnitCommands;
 import allCards.YoungFlamewing;
 import utils.UnitCommands;
@@ -105,38 +106,13 @@ public class Initalize implements EventProcessor{
 //		wraithling2.summon(out,gameState.getBoard().getTile(1,1),gameState);
 		
 		//Friendly YoungFlameWing for testing purposes
+		
 		/*
-		YoungFlamewing youngFlameWing = new YoungFlamewing(manaGained, null, manaGained, null, null, false, null);
-		youngFlameWing.setUserOwned(true);
+		YoungFlamewing youngFlamewing = new YoungFlamewing(400, "Young Flamewing", 0, null, null, true, "conf/gameconfs/units/young_flamewing.json");
+		youngFlamewing.setUserOwned(true);	
 		Tile youngFlameWingTile = gameState.getBoard().getTile(1,3);
-		youngFlameWingTile.setUnit(youngFlameWing);
-		BasicCommands.drawUnit(out, youngFlameWing.getUnit(),youngFlameWingTile); //sets ai avatar on tile in front end
-		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.setUnitHealth(out, youngFlameWing.getUnit(), youngFlameWing.getCurrentHealth());
-		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.setUnitAttack(out, youngFlameWing.getUnit(), youngFlameWing.getAttack());
-		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
+		youngFlamewing.summon(out, youngFlameWingTile, gameState);
 		*/
-		
-		
-		
-		//youngFlameWing.getUnit().setPositionByTile(youngFlameWingTile);
-		//try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
-	//UnitCommands.summon(youngFlameWing, out, youngFlameWingTile, gameState);
-	//BasicCommands.drawUnit(out,youngFlameWing.getUnit(),youngFlameWingTile); //sets ai avatar on tile in front end
-
-		/*youngFlameWing.summon(out, youngFlameWingTile, gameState);
-		BasicCommands.drawUnit(out, youngFlameWing.getUnit(), youngFlameWingTile); 
-		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.setUnitHealth(out, youngFlameWing.getUnit(), youngFlameWing.getCurrentHealth());
-		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.setUnitAttack(out, youngFlameWing.getUnit(), youngFlameWing.getAttack());
-		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
-
-*/
-
-
-
 
 	}
 
