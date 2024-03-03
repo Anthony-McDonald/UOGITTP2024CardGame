@@ -382,9 +382,7 @@ public class UnitCommands {
             gameState.getBoard().openingGambit(out, gameState);//for opening gambit
             gameState.getBoard().renderBoard(out);
             gameState.setLastMessage(GameState.noEvent);
-            //if (summon instanceof SaberspineTiger) {
-            	
-            //}
+            
         } else{ //inform player unsuitable location
             BasicCommands.addPlayer1Notification(out,"Can't summon here", 2);
         }
