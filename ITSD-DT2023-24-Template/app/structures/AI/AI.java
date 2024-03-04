@@ -209,7 +209,7 @@ public class AI extends Player {
 					if (tile.getUnit().isUserOwned()) {
 						if (card.getCardname().equals("Beamshock")) {
 							int distanceFromAvatar = Math.abs(gameState.getPlayer2().getAvatar().getTile().getTilex() - tile.getTilex());
-							if (distanceFromAvatar < 2 ) {
+							if (distanceFromAvatar < 2 && tile.getUnit().getAttack() >= 4) {
 //								((Spell) card).spellEffect(tile, actorRef, gameState);
 //								this.getHand().remove(card);
 								return (Spell) card;
