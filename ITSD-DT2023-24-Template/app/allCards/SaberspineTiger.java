@@ -1,8 +1,11 @@
 package allCards;
 
+import akka.actor.ActorRef;
+import structures.GameState;
 import structures.basic.BigCard;
 import structures.basic.Creature;
 import structures.basic.MiniCard;
+import structures.basic.Tile;
 import structures.basic.Unit;
 
 public class SaberspineTiger extends Creature{
@@ -17,4 +20,9 @@ public class SaberspineTiger extends Creature{
     //This card has rush which can move and attack on the turn it is summoned
 
     //easiest way to do this is to override summon method to set turnsummoned to turn number -1.
+    
+    public void summon(ActorRef out, Tile tile, GameState gameState) {
+    	super.summon(out, tile, gameState);
+    	this.setTurnSummoned((turnSummoned)-1);
+    }
 }

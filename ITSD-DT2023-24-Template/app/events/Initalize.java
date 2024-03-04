@@ -93,7 +93,7 @@ public class Initalize implements EventProcessor{
 		BasicCommands.setUnitAttack(out, playerAvatar.getUnit(), playerAvatar.getAttack());
 		try {Thread.sleep(250);} catch (InterruptedException e) {e.printStackTrace();}
 
-		Tile aiStartTile = gameState.getBoard().getTile(7,2);
+		Tile aiStartTile = gameState.getBoard().getTile(2,4);
 		aiStartTile.setUnit(aiAvatar); //sets ai avatar on tile in back end
 		aiAvatar.getUnit().setPositionByTile(aiStartTile);//sets ai avatar on tile in front end
 		BasicCommands.drawUnit(out,aiAvatar.getUnit(),aiStartTile); //sets ai avatar on tile in front end
@@ -108,7 +108,7 @@ public class Initalize implements EventProcessor{
 		
 		//Friendly YoungFlameWing for testing purposes
 		
-		
+		/*
 		YoungFlamewing youngFlamewing = new YoungFlamewing(400, "Young Flamewing", 0, null, null, true, "conf/gameconfs/units/young_flamewing.json");
 		youngFlamewing.setUserOwned(true);	
 		Tile youngFlameWingTile = gameState.getBoard().getTile(1,3);
@@ -119,7 +119,7 @@ public class Initalize implements EventProcessor{
 		SaberspineTiger SaberspineTiger = new SaberspineTiger (500, "SaberspineTiger", 0, null, null, true,  "conf/gameconfs/units/saberspine_tiger.json");
 		SaberspineTiger.setUserOwned(true);
 		Tile saberspineTigerTile = gameState.getBoard().getTile(1,4);
-		SaberspineTiger.summon(out, saberspineTigerTile, gameState);
+		SaberspineTiger.summon(out, saberspineTigerTile, gameState);*/
 	}
 
 }

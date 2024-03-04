@@ -379,6 +379,11 @@ public class UnitCommands {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            
+            if (summon instanceof SaberspineTiger) {
+            	((SaberspineTiger) summon).setTurnSummoned(summon.getTurnSummoned()-1);
+            }
+            
             gameState.getBoard().openingGambit(out, gameState);//for opening gambit
             gameState.getBoard().renderBoard(out);
             gameState.setLastMessage(GameState.noEvent);
@@ -548,7 +553,6 @@ public class UnitCommands {
 
         }
         return attackableTiles;
-
     }
 
     public static List<Tile> getAllSummonableTiles (GameState gameState, boolean userOwned){
@@ -564,6 +568,4 @@ public class UnitCommands {
         }
         return allSummonableTiles;
     }
-
-
 }

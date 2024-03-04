@@ -247,8 +247,6 @@ public class Creature extends Card implements MoveableUnit {
 		UnitCommands.summon(this,out, tile, gameState);
 		EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_summon);
 		try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}
-
-
 	}
 
 	@Override
@@ -261,7 +259,6 @@ public class Creature extends Card implements MoveableUnit {
 	public void setProvoke(boolean provoke) {
 		this.provoke = provoke;
 	}
-
 
 	public boolean canStillAttack(int currentTurn) {
 		if (this.getLastTurnAttacked()!= currentTurn){
@@ -282,8 +279,5 @@ public class Creature extends Card implements MoveableUnit {
 		}else{
 			return false;
 		}
-
 	}
-
-
 }
