@@ -63,7 +63,7 @@ public class Avatar implements MoveableUnit {
 		}
 //		UnitCommands.attackUnit(this, out, tile, gameState);
 		System.out.println("Horn health is " + player.getHornOfTheForsakenHealth());
-		if (gameState.getPlayer1().getHornOfTheForsakenHealth() > 0) {
+		if (gameState.getPlayer1().getHornOfTheForsakenHealth() > 0 && (this == gameState.getPlayer1().getAvatar())) {
 			boolean wraithlingSummoned = false;
 			Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
 			int tileX = avatarTile.getTilex();
