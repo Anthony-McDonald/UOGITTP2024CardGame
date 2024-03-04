@@ -11,6 +11,7 @@ import structures.basic.*;
 import utils.StaticConfFiles;
 import utils.UnitCommands;
 import allCards.SaberspineTiger;
+import allCards.SilverguardSquire;
 import allCards.YoungFlamewing;
 import utils.UnitCommands;
 
@@ -107,19 +108,24 @@ public class Initalize implements EventProcessor{
 //		wraithling2.summon(out,gameState.getBoard().getTile(1,1),gameState);
 		
 		//Friendly YoungFlameWing for testing purposes
-		
-		/*
-		YoungFlamewing youngFlamewing = new YoungFlamewing(400, "Young Flamewing", 0, null, null, true, "conf/gameconfs/units/young_flamewing.json");
+		/*YoungFlamewing youngFlamewing = new YoungFlamewing(400, "Young Flamewing", 0, null, null, true, "conf/gameconfs/units/young_flamewing.json");
 		youngFlamewing.setUserOwned(true);	
-		Tile youngFlameWingTile = gameState.getBoard().getTile(1,3);
+		Tile youngFlameWingTile = gameState.getBoard().getTile(2,2);
 		youngFlamewing.summon(out, youngFlameWingTile, gameState);
 		
 		
 		//Friendly Saberspine Tiger for testing purposes
 		SaberspineTiger SaberspineTiger = new SaberspineTiger (500, "SaberspineTiger", 0, null, null, true,  "conf/gameconfs/units/saberspine_tiger.json");
 		SaberspineTiger.setUserOwned(true);
-		Tile saberspineTigerTile = gameState.getBoard().getTile(1,4);
-		SaberspineTiger.summon(out, saberspineTigerTile, gameState);*/
+		Tile saberspineTigerTile = gameState.getBoard().getTile(0,2);
+		SaberspineTiger.summon(out, saberspineTigerTile, gameState);
+		
+		//Friendly SilverguardSquire for testing purposes
+		SilverguardSquire SilverguardSquire = new SilverguardSquire(600, "Silverguard Squire", 0, null, null, true, "conf/gameconfs/units/silverguard_squire.json");
+		SilverguardSquire.setUserOwned(true);
+		Tile SilverguardSquireTile = gameState.getBoard().getTile(1,1);
+		SilverguardSquire.summon(out, SilverguardSquireTile, gameState);
+		*/
 	}
 
 }
