@@ -498,8 +498,11 @@ public class UnitCommands {
         if(xPos-2>=0){
             if (board.getTile(xPos-1,yPos).getUnit() == null) { //if space - 1 is empty
                 Tile highlightTile = board.getTile(xPos - 2, yPos);
-                if (highlightTile.getUnit() == null){
-                    moveableTiles.add(highlightTile);
+                if (!isTileProvokeAdjacent(board.getTile(xPos-1,yPos), gameState, selectedUnit.isUserOwned())){
+                    //ensures tile before isn't provoke adjacent, preventing move along.
+                    if (highlightTile.getUnit() == null) {
+                        moveableTiles.add(highlightTile);
+                    }
                 }
 
             }
@@ -507,8 +510,10 @@ public class UnitCommands {
         if(xPos+2<=8){
             if (board.getTile(xPos+1,yPos).getUnit() == null) { //if space + 1 is empty
                 Tile highlightTile = board.getTile(xPos+2, yPos);
-                if (highlightTile.getUnit() == null) {
-                    moveableTiles.add(highlightTile);
+                if (!isTileProvokeAdjacent(board.getTile(xPos+1,yPos), gameState, selectedUnit.isUserOwned())) {
+                    if (highlightTile.getUnit() == null) {
+                        moveableTiles.add(highlightTile);
+                    }
                 }
 
             }
@@ -516,17 +521,23 @@ public class UnitCommands {
         if(yPos-2>=0){
             if (board.getTile(xPos,yPos-1).getUnit() == null) { //if space - 1 is empty
                 Tile highlightTile = board.getTile(xPos, yPos-2);
-                if (highlightTile.getUnit() == null) {
-                    moveableTiles.add(highlightTile);
+                if (!isTileProvokeAdjacent(board.getTile(xPos,yPos-1), gameState, selectedUnit.isUserOwned())) {
+                    //ensures tile before isn't provoke adjacent, preventing move along.
+                    if (highlightTile.getUnit() == null) {
+                        moveableTiles.add(highlightTile);
+                    }
                 }
 
             }
         }
         if(yPos+2<=4){
             if (board.getTile(xPos,yPos+1).getUnit() == null) { //if space + 1 is empty
-                Tile highlightTile = board.getTile(xPos, yPos+2);
-                if (highlightTile.getUnit() == null) {
-                    moveableTiles.add(highlightTile);
+                if (!isTileProvokeAdjacent(board.getTile(xPos,yPos+1), gameState, selectedUnit.isUserOwned())) {
+                    //ensures tile before isn't provoke adjacent, preventing move along.
+                    Tile highlightTile = board.getTile(xPos, yPos + 2);
+                    if (highlightTile.getUnit() == null) {
+                        moveableTiles.add(highlightTile);
+                    }
                 }
 
             }
@@ -543,11 +554,27 @@ public class UnitCommands {
         ArrayList<Tile>attackableTiles = new ArrayList<>();
         for (Tile tile: moveableTiles){
             //gets adjacent tiles for each moveable tile
+
+
             ArrayList<Tile>adjacentToMoveableTiles = adjacentTiles(tile, gameState);
-            for(Tile adjacentTile : adjacentToMoveableTiles){
-                if (adjacentTile.getUnit()!=null && adjacentTile.getUnit().isUserOwned()!= userOwned){
-                    //if adjacent tile has unit and unit is enemy
-                    attackableTiles.add(adjacentTile);
+
+            boolean provokeAdjacent = isTileProvokeAdjacent(tile, gameState ,attacker.isUserOwned());
+            if (provokeAdjacent == false) {
+                for (Tile adjacentTile : adjacentToMoveableTiles) {
+                    if (adjacentTile.getUnit() != null && adjacentTile.getUnit().isUserOwned() != userOwned) {
+                        //if adjacent tile has unit and unit is enemy
+                        attackableTiles.add(adjacentTile);
+                    }
+                }
+            }else{ //moveable tile is adjacent to provoked unit which impacts what it can attack
+                for(Tile adjacentTile : adjacentToMoveableTiles){
+                    if (adjacentTile.getUnit()!=null && adjacentTile.getUnit().isUserOwned()!= userOwned){
+                        //if adjacent tile has unit and unit is enemy
+                        if (adjacentTile.getUnit() instanceof Provoke){
+                            //only provokers within range can be attacked
+                            attackableTiles.add(adjacentTile);
+                        }
+                    }
                 }
             }
 
@@ -567,5 +594,18 @@ public class UnitCommands {
             }
         }
         return allSummonableTiles;
+    }
+
+    public static boolean isTileProvokeAdjacent(Tile tile, GameState gameState, boolean userOwned){
+        ArrayList<Tile>adjacentTiles = UnitCommands.adjacentTiles(tile, gameState);
+        for (Tile adjacentTile : adjacentTiles){
+            if (adjacentTile.getUnit()!=null && adjacentTile.getUnit().isUserOwned()!= userOwned){
+                //if adjacent tile has unit and unit is enemy
+                if (adjacentTile.getUnit() instanceof Provoke){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
