@@ -1,10 +1,14 @@
 package allCards;
 
+import java.util.ArrayList;
+
 import akka.actor.ActorRef;
 import structures.GameState;
+import structures.basic.Avatar;
 import structures.basic.BigCard;
 import structures.basic.Creature;
 import structures.basic.MiniCard;
+import structures.basic.MoveableUnit;
 import structures.basic.OpeningGambit;
 import structures.basic.Unit;
 
@@ -20,7 +24,17 @@ public class NightsorrowAssassin extends Creature implements OpeningGambit{
 
 	@Override
 	public void openingGambit(ActorRef out, GameState gameState) {
-		// TODO Auto-generated method stub
+		MoveableUnit enemyUnit = null;
+		ArrayList<MoveableUnit>AiUnits = gameState.getBoard().friendlyUnits(false);
+		for(MoveableUnit unit: AiUnits) {
+			if(unit instanceof Creature) {
+				enemyUnit = unit;
+			}
+		}
+		if(enemyUnit.getCurrentHealth()<enemyUnit.getMaxHealth()) {
+			enemyUnit.setCurrentHealth(0, out, gameState);
+		}
+		
 		
 	}
 }
