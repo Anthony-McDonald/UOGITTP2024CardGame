@@ -38,42 +38,42 @@ public class Wraithling implements MoveableUnit{
 			BasicCommands.addPlayer1Notification(out, "This avatar is stunned, it cannot move or attack this turn", 3);
 			return;
 		}
-		int tilex = tile.getTilex();
-		int tiley = tile.getTiley();
-		//                   0          1        2       3       4      5          6        7
-		//					TL			TM		TR		ML		MR		BL		  BM		BR
-		int[][] offsets = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0},{0, 0},{-1, 1},  {0, 1},  {1, 1}
-		};
+//		int tilex = tile.getTilex();
+//		int tiley = tile.getTiley();
+//		//                   0          1        2       3       4      5          6        7
+//		//					TL			TM		TR		ML		MR		BL		  BM		BR
+//		int[][] offsets = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0},{0, 0},{-1, 1},  {0, 1},  {1, 1}
+//		};
+//
+//
+//
+//		if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 0) {
+//			//ie if the attacker is to the left of the victim
+//			int[][] offsetsToUse = {offsets[0], offsets[1], offsets[5], offsets[6]};
+//			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 0, -1);
+//			System.out.println("PROVOKE ATTACK LEFT");
+//
+//		} else if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 1) {
+//			//ie if the attacker is to the top of the victim
+//			int[][] offsetsToUse = {offsets[0], offsets[2], offsets[3], offsets[4]};
+//			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 1, -1);
+//			System.out.println("PROVOKE ATTACK TOP");
+//
+//		}else if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 2) {
+//			//ie if the attacker is to the right of the victim
+//			int[][] offsetsToUse = {offsets[1], offsets[2], offsets[6], offsets[7]};
+//			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 0, 1);
+//			System.out.println("PROVOKE ATTACK RIGHT");
+//
+//		}else if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 3) {
+//			//ie if the attacker is to the bottom of the victim
+//			int[][] offsetsToUse = {offsets[3], offsets[4], offsets[5], offsets[7]};
+//			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 1, 1);
+//			System.out.println("PROVOKE ATTACK BOTTOM");
+//
+//		}
 
-
-
-		if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 0) {
-			//ie if the attacker is to the left of the victim
-			int[][] offsetsToUse = {offsets[0], offsets[1], offsets[5], offsets[6]};
-			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 0, -1);
-			System.out.println("PROVOKE ATTACK LEFT");
-
-		} else if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 1) {
-			//ie if the attacker is to the top of the victim
-			int[][] offsetsToUse = {offsets[0], offsets[2], offsets[3], offsets[4]};
-			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 1, -1);
-			System.out.println("PROVOKE ATTACK TOP");
-
-		}else if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 2) {
-			//ie if the attacker is to the right of the victim
-			int[][] offsetsToUse = {offsets[1], offsets[2], offsets[6], offsets[7]};
-			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 0, 1);
-			System.out.println("PROVOKE ATTACK RIGHT");
-
-		}else if (isToTheLeftRightTopOrBottom(this.getTile(), tile) == 3) {
-			//ie if the attacker is to the bottom of the victim
-			int[][] offsetsToUse = {offsets[3], offsets[4], offsets[5], offsets[7]};
-			provokeInclusiveAttack(offsetsToUse, out, tile, gameState, 1, 1);
-			System.out.println("PROVOKE ATTACK BOTTOM");
-
-		}
-
-//		UnitCommands.attackUnit(this,out,tile,gameState);
+		UnitCommands.attackUnit(this,out,tile,gameState);
 	}
 
 	private int isToTheLeftRightTopOrBottom(Tile attackerTile, Tile victimTile) {
