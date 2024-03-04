@@ -38,8 +38,9 @@ public class AI extends Player {
 	}
 
 	public void makeActions(){
+		playAnySpell();
 		while(this.hasActions()){
-			playAnySpell();
+
 			summonUnit();
 
 		}
@@ -48,13 +49,13 @@ public class AI extends Player {
 
 	public boolean hasActions(){ //expand class as functionality increases
 		for (Card card:this.hand) {
-			if (card.getManacost() <= this.mana) { //has enough mana for summoning or spellcasting
-				System.out.println("AI has mana actions remaining");
+			if (card.getManacost() <= this.mana && card instanceof Creature) { //has enough mana for summoning
+				System.out.println("AI has summons remaining");
 				return true;
 			}
 		}
 
-		System.out.println("AI has no mana actions remaining");
+		System.out.println("AI has no summons remaining");
 		return false;
 	}
 
@@ -359,7 +360,7 @@ public class AI extends Player {
 
 			for (MoveableUnit humanUnit : gameState.getBoard().friendlyUnits(true)){
 				if (humanUnit instanceof Avatar){
-					if (humanUnit.getLastTurnAttacked()<=0){ //stops AI making moves once game is done
+					if (humanUnit.getCurrentHealth()<=0){ //stops AI making moves once game is done
 						return;
 					}
 				}
