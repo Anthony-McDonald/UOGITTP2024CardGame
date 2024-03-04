@@ -1,6 +1,7 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
+import allCards.SilverguardKnight;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import commands.BasicCommands;
 import scala.Int;
@@ -188,12 +189,12 @@ public class Avatar implements MoveableUnit {
 		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
 		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg
 		this.player.setHornOfTheForsakenHealth(this.player.getHornOfTheForsakenHealth() - 1);
+		Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
 
 		if (this == gameState.getPlayer1().getAvatar()) {
 			System.out.println("Horn health is " + player.getHornOfTheForsakenHealth());
 			if (gameState.getPlayer1().getHornOfTheForsakenHealth() > 0 ) {
 				boolean wraithlingSummoned = false;
-				Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
 				int tileX = avatarTile.getTilex();
 				int tileY = avatarTile.getTiley();
 
@@ -223,7 +224,15 @@ public class Avatar implements MoveableUnit {
 							wraithlingSummoned = true;
 						}
 					}
-
+			}
+		} else if (this == gameState.getPlayer2().getAvatar()) {
+			Tile[][] tileList = gameState.getBoard().getAllTiles();
+			for (Tile[] tileL : tileList) {
+				for (Tile tileI : tileL) {
+					if (tileI.getUnit() instanceof SilverguardKnight) {
+						tileI.getUnit().setAttack(tileI.getUnit().getAttack() + 2,out);
+					}
+				}
 			}
 		}
 

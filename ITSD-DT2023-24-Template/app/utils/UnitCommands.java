@@ -2,6 +2,7 @@ package utils;
 
 import akka.actor.ActorRef;
 import allCards.SaberspineTiger;
+import allCards.SilverguardKnight;
 import allCards.YoungFlamewing;
 import commands.BasicCommands;
 import structures.GameState;
@@ -15,6 +16,7 @@ public class UnitCommands {
     public static void attackUnit(MoveableUnit attacker, ActorRef out, Tile tile, GameState gameState) {
         MoveableUnit m = tile.getUnit();
         //insert logic about if attack is possible.
+
         if (isProvokeAdjacent(attacker,gameState)){
             // if provoke is adjacent
             if (! (m instanceof Provoke)){
