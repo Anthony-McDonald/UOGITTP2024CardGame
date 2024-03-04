@@ -20,7 +20,7 @@ public class SilverguardSquire extends Creature implements OpeningGambit{
 
 	@Override
 	public void openingGambit(ActorRef out, GameState gameState) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
