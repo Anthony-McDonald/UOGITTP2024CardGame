@@ -41,21 +41,20 @@ public class AI extends Player {
 		while(this.hasActions()){
 			playAnySpell();
 			summonUnit();
-			unitMakeMoves();
+
 		}
+		unitMakeMoves();
 	}
 
 	public boolean hasActions(){ //expand class as functionality increases
 		for (Card card:this.hand) {
 			if (card.getManacost() <= this.mana) { //has enough mana for summoning or spellcasting
-				System.out.println("AI has actions remaining");
+				System.out.println("AI has mana actions remaining");
 				return true;
 			}
 		}
-		if(this.unitCanMakeMoves()){
-			return true;
-		}
-		System.out.println("AI has no actions remaining");
+
+		System.out.println("AI has no mana actions remaining");
 		return false;
 	}
 
@@ -348,13 +347,22 @@ public class AI extends Player {
 	}
 
 	public void unitMakeMoves(){
+		System.out.println("AI is making moves with units");
 		ArrayList<MoveableUnit>aiUnits = gameState.getBoard().friendlyUnits(false);
 		for (MoveableUnit unit: aiUnits){
-			if ((unit.canStillAttack(gameState.getTurnNumber())|| unit.canStillMove(gameState.getTurnNumber()))&& unit.getTurnSummoned()!= gameState.getTurnNumber()){
+			if (unit.getTurnSummoned()!= gameState.getTurnNumber()){
 				UnitActionChecker unitActionChecker = new UnitActionChecker(unit, gameState, actorRef);
 				unitActionChecker.makeAction();
 				System.out.println("Unit made action, now move on to next unit");
 				try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			}
+
+			for (MoveableUnit humanUnit : gameState.getBoard().friendlyUnits(true)){
+				if (humanUnit instanceof Avatar){
+					if (humanUnit.getLastTurnAttacked()<=0){ //stops AI making moves once game is done
+						return;
+					}
+				}
 			}
 		}
 	}
