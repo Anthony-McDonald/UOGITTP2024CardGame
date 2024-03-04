@@ -2,11 +2,11 @@ package allCards;
 
 import akka.actor.ActorRef;
 import structures.GameState;
-import structures.basic.BigCard;
-import structures.basic.Creature;
-import structures.basic.Deathwatch;
-import structures.basic.MiniCard;
-import structures.basic.Unit;
+import structures.basic.*;
+import utils.UnitCommands;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class BloodmoonPriestess extends Creature implements Deathwatch{
 
@@ -20,9 +20,26 @@ public class BloodmoonPriestess extends Creature implements Deathwatch{
     }
 
     //Summon a Wraithling on a randomly selected unoccupied adjacent tile
-	@Override
-	public void deathWatch(ActorRef out, GameState gameState) {
-		// need summon command
-		
-	}
+    @Override
+    public void deathWatch(ActorRef out, GameState gameState) {
+        Tile currentTile = this.getTile();
+        ArrayList<Tile>adjacentTiles = UnitCommands.adjacentTiles(currentTile, gameState);
+        ArrayList<Tile>emptyAdjacentTiles = new ArrayList<>();
+        for (Tile adjacentTile: adjacentTiles){
+            if (adjacentTile.getUnit()==null){
+                emptyAdjacentTiles.add(adjacentTile);
+            }
+        }
+        if (emptyAdjacentTiles.size() == 0){
+            return; //no empty adjacent tiles so no effect
+        }else{
+            Random rand = new Random();
+            int size = emptyAdjacentTiles.size();
+            Tile summonTile = emptyAdjacentTiles.get(rand.nextInt(size));
+            Wraithling wraithling = new Wraithling();
+            wraithling.summon(out,summonTile,gameState);
+        }
+
+
+    }
 }
