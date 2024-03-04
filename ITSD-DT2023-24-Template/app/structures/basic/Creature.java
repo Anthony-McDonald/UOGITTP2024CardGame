@@ -244,6 +244,7 @@ public class Creature extends Card implements MoveableUnit {
 	@Override
 	public void summon(ActorRef out, Tile tile, GameState gameState) {
 		this.unit = BasicObjectBuilders.loadUnit(this.unitConfig, gameState.getFrontEndUnitID(), Unit.class);
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		UnitCommands.summon(this,out, tile, gameState);
 		EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_summon);
 		try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}

@@ -62,43 +62,10 @@ public class Avatar implements MoveableUnit {
 			return;
 		}
 //		UnitCommands.attackUnit(this, out, tile, gameState);
-		System.out.println("Horn health is " + player.getHornOfTheForsakenHealth());
-		if (gameState.getPlayer1().getHornOfTheForsakenHealth() > 0 && (this == gameState.getPlayer1().getAvatar())) {
-			boolean wraithlingSummoned = false;
-			Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
-			int tileX = avatarTile.getTilex();
-			int tileY = avatarTile.getTiley();
-
-			if (UnitCommands.canAttack(this, tile, gameState)) {
-
-				int[][] areaAroundUnit = {
-						{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}
-				};
-
-				while (!wraithlingSummoned) {
-					Random random = new Random();
-
-					int randomSelection = random.nextInt(8);
-
-					// Select a random area from above
-					int[] randomArea = areaAroundUnit[randomSelection];
-
-					// New coords
-					int xToCheck = tileX + randomArea[0];
-					int yToCheck = tileY + randomArea[1];
-
-					Tile tileToCheck = gameState.getBoard().getTile(xToCheck, yToCheck);
-
-					if (UnitCommands.canSummon(gameState, true, tileToCheck)) {
-						Wraithling wraithling = new Wraithling();
-						wraithling.summon(out, tileToCheck, gameState);
-						wraithlingSummoned = true;
-					}
-				}
-			}
 
 
-		}
+
+
 
 //		int tilex = tile.getTilex();
 //		int tiley = tile.getTiley();
@@ -221,6 +188,45 @@ public class Avatar implements MoveableUnit {
 		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
 		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg
 		this.player.setHornOfTheForsakenHealth(this.player.getHornOfTheForsakenHealth() - 1);
+
+		if (this == gameState.getPlayer1().getAvatar()) {
+			System.out.println("Horn health is " + player.getHornOfTheForsakenHealth());
+			if (gameState.getPlayer1().getHornOfTheForsakenHealth() > 0 ) {
+				boolean wraithlingSummoned = false;
+				Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
+				int tileX = avatarTile.getTilex();
+				int tileY = avatarTile.getTiley();
+
+					int[][] areaAroundUnit = {
+							{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}
+					};
+
+					while (!wraithlingSummoned) {
+						Random random = new Random();
+
+						int randomSelection = random.nextInt(8);
+
+						// Select a random area from above
+						int[] randomArea = areaAroundUnit[randomSelection];
+
+						// New coords
+						int xToCheck = tileX + randomArea[0];
+						int yToCheck = tileY + randomArea[1];
+
+						Tile tileToCheck = gameState.getBoard().getTile(xToCheck, yToCheck);
+
+						System.out.println("ATTEMPTING TO SUMMON A WRAITHLING ---------------");
+						if (UnitCommands.canSummon(gameState, true, tileToCheck)) {
+							Wraithling wraithling = new Wraithling();
+							wraithling.summon(out, tileToCheck, gameState);
+							try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+							wraithlingSummoned = true;
+						}
+					}
+
+			}
+		}
+
 		if (this.getCurrentHealth() <= 0) {
 			BasicCommands.addPlayer1Notification(out, "Avatar health is 0, game over folks!", 20);
 		}
