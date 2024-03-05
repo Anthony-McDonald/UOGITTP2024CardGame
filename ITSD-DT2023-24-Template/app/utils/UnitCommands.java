@@ -117,10 +117,12 @@ public class UnitCommands {
             }
         }
         if (targetTile.getUnit()==null){ //no unit on tile
+            System.out.println("Failing because of no unit on tile");
             return false;
         }
         if (targetTile.getUnit().isUserOwned()==attacker.isUserOwned()){
             //unit is friendly can't attack
+            System.out.println("Target is friendly");
             return false;
         }
 
@@ -129,6 +131,7 @@ public class UnitCommands {
         if (attackableTiles.contains(targetTile)){
             return true;
         }
+        System.out.println("failed cause targetTile not contained within attackable tiles");
         return false;
     }
 
@@ -553,6 +556,7 @@ public class UnitCommands {
         Board board = gameState.getBoard();
         Tile selectedTile = attacker.getTile();
         ArrayList<Tile>moveableTiles = moveableTiles(attacker,gameState);
+        moveableTiles.add(selectedTile);
         ArrayList<Tile>attackableTiles = new ArrayList<>();
         for (Tile tile: moveableTiles){
             //gets adjacent tiles for each moveable tile
