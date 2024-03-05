@@ -156,11 +156,13 @@ public class UnitCommands {
                     e.printStackTrace();
                 }
             } else {
-                BasicCommands.addPlayer1Notification(out, "Unit can't move here.", 3);
-                try {
-                    Thread.sleep(250);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if(mover.isUserOwned()) {
+                    BasicCommands.addPlayer1Notification(out, "Unit can't move here.", 3);
+                    try {
+                        Thread.sleep(250);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }else{ //has moved this turn
