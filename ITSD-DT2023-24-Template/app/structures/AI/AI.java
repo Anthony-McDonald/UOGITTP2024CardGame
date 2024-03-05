@@ -38,13 +38,14 @@ public class AI extends Player {
 	}
 
 	public void makeActions(){
-		unitMakeMoves();
+
 		playAnySpell();
 		while(this.hasActions()){
 
 			summonUnit();
 
 		}
+		unitMakeMoves();
 
 	}
 
