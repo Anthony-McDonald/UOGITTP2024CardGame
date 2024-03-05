@@ -12,6 +12,7 @@ public abstract class UnitAction {
     protected GameState gameState;
 
     protected int actionScore;
+    protected String actionName;
 
     public void makeAction(ActorRef out) {
 
@@ -73,6 +74,14 @@ public abstract class UnitAction {
         }else{
             return false;
         }
+    }
+
+    public String getActionName() {
+        return actionName;
+    }
+
+    public void setActionName(String actionName) {
+        this.actionName = actionName;
     }
 }
 

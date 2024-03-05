@@ -16,6 +16,7 @@ public class AIAttackAvatarThreat extends UnitAction{
         this.gameState = gameState;
         this.actionScore = 15; //adjust this to modify weight of action
         this.assessScore();
+        this.actionName = "Attack threat to AI avatar";
 
 
     }

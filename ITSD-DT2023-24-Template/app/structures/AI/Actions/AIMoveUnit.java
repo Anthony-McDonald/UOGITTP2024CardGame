@@ -18,6 +18,7 @@ public class AIMoveUnit extends UnitAction{
         this.actionScore = 7; //adjust this to adjust starting weighting
         this.nearestEnemy = enemy;
         this.assessScore();
+        this.actionName = "Move towards human unit";
 
     }
 

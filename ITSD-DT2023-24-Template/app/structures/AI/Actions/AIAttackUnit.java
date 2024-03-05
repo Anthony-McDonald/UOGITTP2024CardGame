@@ -15,6 +15,7 @@ public class AIAttackUnit extends UnitAction{
         this.enemyUnit = enemyUnit;
         this.actionScore = 7; //adjust this to adjust starting weighting
         this.assessScore();
+        this.actionName = "Attack human unit";
 
 
     }

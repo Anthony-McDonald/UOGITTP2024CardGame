@@ -18,6 +18,7 @@ public class AIMoveToAvatarThreat extends UnitAction{
         this.actionScore = 15; //adjust this to adjust starting weighting
         this.threat = threat;
         this.assessScore();
+        this.actionName = "Move towards threat to AI avatar";
 
     }
 
