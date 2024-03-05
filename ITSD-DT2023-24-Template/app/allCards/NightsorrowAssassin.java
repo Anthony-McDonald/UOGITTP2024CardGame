@@ -10,7 +10,9 @@ import structures.basic.Creature;
 import structures.basic.MiniCard;
 import structures.basic.MoveableUnit;
 import structures.basic.OpeningGambit;
+import structures.basic.Tile;
 import structures.basic.Unit;
+import utils.UnitCommands;
 
 public class NightsorrowAssassin extends Creature implements OpeningGambit{
 
@@ -25,16 +27,19 @@ public class NightsorrowAssassin extends Creature implements OpeningGambit{
 	@Override
 	public void openingGambit(ActorRef out, GameState gameState) {
 		MoveableUnit enemyUnit = null;
-		ArrayList<MoveableUnit>AiUnits = gameState.getBoard().friendlyUnits(false);
-		for(MoveableUnit unit: AiUnits) {
-			if(unit instanceof Creature) {
-				enemyUnit = unit;
+		Tile unitTile = this.getTile();
+		ArrayList<Tile> adjacentTiles = UnitCommands.adjacentTiles(unitTile, gameState);
+		//ArrayList<MoveableUnit> AiUnits = gameState.getBoard().friendlyUnits(false);
+		for (Tile Tile :adjacentTiles) {
+			if(Tile != null) {
+				if(Tile.getUnit() instanceof Creature) {
+					enemyUnit = Tile.getUnit();
+					if (enemyUnit.getCurrentHealth()< enemyUnit.getMaxHealth()) {
+						enemyUnit.setCurrentHealth(0, out, gameState);
+					}
+				}
 			}
 		}
-		if(enemyUnit.getCurrentHealth()<enemyUnit.getMaxHealth()) {
-			enemyUnit.setCurrentHealth(0, out, gameState);
-		}
-		
 		
 	}
 }
