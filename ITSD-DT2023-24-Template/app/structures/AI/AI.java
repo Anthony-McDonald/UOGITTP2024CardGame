@@ -38,13 +38,14 @@ public class AI extends Player {
 	}
 
 	public void makeActions(){
+		unitMakeMoves();
 		playAnySpell();
 		while(this.hasActions()){
 
 			summonUnit();
 
 		}
-		unitMakeMoves();
+
 	}
 
 	public boolean hasActions(){ //expand class as functionality increases
@@ -351,12 +352,20 @@ public class AI extends Player {
 		System.out.println("AI is making moves with units");
 		ArrayList<MoveableUnit>aiUnits = gameState.getBoard().friendlyUnits(false);
 		for (MoveableUnit unit: aiUnits){
+			if (unit instanceof Avatar){
+				if (gameState.getTurnNumber()<3){
+					//this allows the AI avatar to play a safer game and spawn some units in front of it
+					break;
+				}
+			}
 			if (unit.getTurnSummoned()!= gameState.getTurnNumber()){
 				UnitActionChecker unitActionChecker = new UnitActionChecker(unit, gameState, actorRef);
 				unitActionChecker.makeAction();
 				System.out.println("Unit made action, now move on to next unit");
 				try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 			}
+			System.out.println();
+			System.out.println();
 
 			for (MoveableUnit humanUnit : gameState.getBoard().friendlyUnits(true)){
 				if (humanUnit instanceof Avatar){

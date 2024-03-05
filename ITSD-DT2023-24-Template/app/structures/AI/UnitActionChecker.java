@@ -162,6 +162,7 @@ public class UnitActionChecker {
             int randomActionIndex = rand.nextInt(weightedActions.size()); //chooses random action from weighted list
             UnitAction randomAction = weightedActions.get(randomActionIndex);
             randomAction.makeAction(actorRef);
+            System.out.println("The action chosen is: " + randomAction.getActionName());
 
         }
         actionTaker.setLastTurnAttacked(gameState.getTurnNumber()); //to ensure that unitactionchecker doesn't get stuck on this unit
