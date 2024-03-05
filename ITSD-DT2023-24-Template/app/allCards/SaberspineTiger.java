@@ -24,5 +24,6 @@ public class SaberspineTiger extends Creature{
     public void summon(ActorRef out, Tile tile, GameState gameState) {
     	super.summon(out, tile, gameState);
     	this.setTurnSummoned((turnSummoned)-1);
+    	this.setLastTurnAttacked(gameState.getTurnNumber()-1);
     }
 }
