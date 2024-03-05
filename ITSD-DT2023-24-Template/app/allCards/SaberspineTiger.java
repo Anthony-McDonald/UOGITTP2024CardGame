@@ -7,6 +7,7 @@ import structures.basic.Creature;
 import structures.basic.MiniCard;
 import structures.basic.Tile;
 import structures.basic.Unit;
+import utils.UnitCommands;
 
 public class SaberspineTiger extends Creature{
     public SaberspineTiger(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
@@ -22,8 +23,9 @@ public class SaberspineTiger extends Creature{
     //easiest way to do this is to override summon method to set turnsummoned to turn number -1.
     
     public void summon(ActorRef out, Tile tile, GameState gameState) {
-    	super.summon(out, tile, gameState);
-    	this.setTurnSummoned((turnSummoned)-1);
-    	this.setLastTurnAttacked(gameState.getTurnNumber()-1);
+        UnitCommands.summon(this,out,tile, gameState);
+    	this.setTurnSummoned(0);
+    	this.setLastTurnAttacked(0);
+        this.setLastTurnMoved(0);
     }
 }

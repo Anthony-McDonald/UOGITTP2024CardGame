@@ -160,7 +160,7 @@ public class AI extends Player {
 			try {
 				tileToSummonOn = possibleTiles.get(random.nextInt(possibleTiles.size()));
 
-				UnitCommands.summon(creature, actorRef, tileToSummonOn, gameState);
+				creature.summon(actorRef, tileToSummonOn, gameState);
 
 				effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_summon);
 				try {Thread.sleep(BasicCommands.playEffectAnimation(this.actorRef, effect, tileToSummonOn));} catch (InterruptedException e) {e.printStackTrace();}
@@ -358,6 +358,9 @@ public class AI extends Player {
 					//this allows the AI avatar to play a safer game and spawn some units in front of it
 					break;
 				}
+			}
+			if (unit instanceof Creature){
+				System.out.println(((Creature) unit).getCardname()+ " is making action");
 			}
 			if (unit.getTurnSummoned()!= gameState.getTurnNumber()){
 				UnitActionChecker unitActionChecker = new UnitActionChecker(unit, gameState, actorRef);

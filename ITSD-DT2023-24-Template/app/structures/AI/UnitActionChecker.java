@@ -37,6 +37,7 @@ public class UnitActionChecker {
 
     public void makeAction(){
         if (actionTaker.getLastTurnAttacked() == gameState.getTurnNumber()){
+            System.out.println("Unit can't make action, attacked this turn");
             return; //no actions available so don't make action
         }
         ArrayList<UnitAction> weightedActions = new ArrayList<>();
