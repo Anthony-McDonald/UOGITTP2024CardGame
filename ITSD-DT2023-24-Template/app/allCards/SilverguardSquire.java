@@ -29,7 +29,8 @@ public class SilverguardSquire extends Creature implements OpeningGambit{
 
         // Check if there's a unit directly in front (left) of the avatar
         Tile leftAdjacentTile = gameState.getBoard().getTile(ownerAvatarTile.getTilex() - 1, ownerAvatarTile.getTiley());
-        if (leftAdjacentTile != null && leftAdjacentTile.getUnit() != null) {
+        if (leftAdjacentTile != null && leftAdjacentTile.getUnit() != null  &&
+                leftAdjacentTile.getUnit().isUserOwned() == false) {
             leftAdjacentTile.getUnit().setAttack(leftAdjacentTile.getUnit().getAttack() + 1, out);
             leftAdjacentTile.getUnit().setMaxHealth(leftAdjacentTile.getUnit().getMaxHealth() + 1);
             System.out.println("Silverguard Squire Opening Gambit Triggered");
@@ -37,7 +38,8 @@ public class SilverguardSquire extends Creature implements OpeningGambit{
 
         // Check if there's a unit directly behind (right) of the avatar
         Tile rightAdjacentTile = gameState.getBoard().getTile(ownerAvatarTile.getTilex() + 1, ownerAvatarTile.getTiley());
-        if (rightAdjacentTile != null && rightAdjacentTile.getUnit() != null) {
+        if (rightAdjacentTile != null && rightAdjacentTile.getUnit() != null &&
+                rightAdjacentTile.getUnit().isUserOwned() == false) {
             rightAdjacentTile.getUnit().setAttack(rightAdjacentTile.getUnit().getAttack() + 1, out);
             rightAdjacentTile.getUnit().setMaxHealth(rightAdjacentTile.getUnit().getMaxHealth() + 1);
             System.out.println("Silverguard Squire Opening Gambit Triggered");
