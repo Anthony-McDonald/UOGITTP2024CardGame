@@ -27,7 +27,25 @@ public class Shadowdancer extends Creature implements Deathwatch{
 	@Override
 	public void deathWatch(ActorRef out, GameState gameState) {
 		// TODO Auto-generated method stub
-		int newHealth;
+		
+	  
+	    Avatar playerAvatar = gameState.getPlayer1().getAvatar();
+	   
+	    Avatar aiAvatar = gameState.getPlayer2().getAvatar();
+
+	    // Deal 1 damage to the AI's avatar
+	    int newAiAvatarHealth = aiAvatar.getCurrentHealth() - 1;
+	    aiAvatar.setCurrentHealth(newAiAvatarHealth, out, gameState);
+
+	    // Heal the player's avatar by 1 HP
+	    int newPlayerAvatarHealth = playerAvatar.getCurrentHealth() + 1;
+	    playerAvatar.setCurrentHealth(newPlayerAvatarHealth, out, gameState);
+	    
+	    System.out.println("Shadowdancer Deathwatch Activated");
+		
+	    
+	    //Not sure if my way above is better or not.
+		/*int newHealth;
 		MoveableUnit avatar = null;
 		ArrayList<MoveableUnit>AiUnits = gameState.getBoard().friendlyUnits(false);
 		for(MoveableUnit unit: AiUnits) {
@@ -39,6 +57,6 @@ public class Shadowdancer extends Creature implements Deathwatch{
 		avatar.setCurrentHealth(newHealth, out, gameState); //NEED TO CHANGE NULL REFERENCES
 		
 		//need AI class done so i can -1 health to its avatar
-		
+		*/
 	}
 }
