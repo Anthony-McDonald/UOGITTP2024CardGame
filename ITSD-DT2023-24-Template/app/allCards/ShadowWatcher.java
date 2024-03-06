@@ -25,5 +25,6 @@ public class ShadowWatcher extends Creature implements Deathwatch{
 		this.setAttack(getAttack()+1, out);
 		this.setMaxHealth(getMaxHealth()+1);
 		this.setCurrentHealth(getCurrentHealth()+1, out, gameState);
+		System.out.println("Shadow Watcher Deathwatch Activated");
 	}
 }
