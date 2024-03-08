@@ -5,7 +5,11 @@ import structures.GameState;
 import structures.basic.MoveableUnit;
 import utils.UnitCommands;
 
+/**
+ * This action is used to assess the value of attacking the enemy avatar
+ */
 public class AIAttackAvatar extends UnitAction{
+
 
     private MoveableUnit avatar;
     private GameState gameState;
@@ -21,6 +25,11 @@ public class AIAttackAvatar extends UnitAction{
 
     }
 
+    /**
+     * This is the method that is called if this action is chosen by the UnitActionChecker. It makes the unit attack the
+     * enemy avatar.
+     * @param out
+     */
     @Override
     public void makeAction(ActorRef out){
         UnitCommands.actionableTiles(actionTaker,out, gameState);
@@ -28,9 +37,15 @@ public class AIAttackAvatar extends UnitAction{
         actionTaker.attackUnit(out,avatar.getTile(),gameState);
     }
 
+    /**
+     * This method is used to calculate the value (weight) of attacking the enemy avatar.
+     * It assesses if the attack will kill the avatar, whether it will kill the attacker (from counter-attack)
+     * the health of the avatar after the attack and the current turn number. We want to make the game more difficult so
+     * we have increased the weight of attacking the avatar in later turn numbers.
+     */
     public void assessScore(){
         if (!isAttackDangerous(avatar)){
-            //attack will damage enemy unit so keep actionscore high(high weighting)
+            //attack will not kill attacker so keep actionscore high(high weighting)
             if (willAttackKillEnemy(avatar)){
                 this.actionScore = 100; //attack will kill enemy so make weight very high
             }else{
