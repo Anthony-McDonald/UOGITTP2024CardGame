@@ -5,6 +5,9 @@ import structures.GameState;
 import structures.basic.MoveableUnit;
 import structures.basic.Tile;
 
+/**
+ * This is an abstract class for all the actions available to the units to extend off.
+ */
 public abstract class UnitAction {
     protected Tile targetTile;
     protected boolean isActionPossible;
@@ -18,8 +21,13 @@ public abstract class UnitAction {
 
     }
 
+    /**
+     * This method determines if an attack on this unit will kill the attacker.
+     * @param enemyUnit
+     * @return
+     */
     public boolean isAttackDangerous(MoveableUnit enemyUnit){
-        //method for assessing if attack on provoker will kill attacker
+        //method for assessing if attack on unit will kill attacker
         int attackedHealth = enemyUnit.getCurrentHealth();
         int actionTakerHealth = actionTaker.getCurrentHealth();
         int enemyUnitAttack = enemyUnit.getAttack();
@@ -68,6 +76,11 @@ public abstract class UnitAction {
         this.actionTaker = actionTaker;
     }
 
+    /**
+     * This method determines if the attack will kill the enemy.
+     * @param enemy
+     * @return
+     */
     public boolean willAttackKillEnemy (MoveableUnit enemy){
         if (enemy.getCurrentHealth()<=actionTaker.getAttack()){
             return true;
