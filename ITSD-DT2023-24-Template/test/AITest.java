@@ -34,7 +34,7 @@ public class AITest {
 //    }
 
     @Test
-    public void test_ai_can_calculate_distance() {
+    public void testAiCanCalculateDistance() {
         GameState gameState1 = new GameState();
         Board board = gameState1.getBoard();
         Tile tile1 = board.getTile(2, 3);
@@ -47,7 +47,7 @@ public class AITest {
     }
 
     @Test
-    public void test_ai_can_return_best_creature() {
+    public void testAiCanReturnBestCreature() {
         GameState gameState1 = new GameState();
         AI newAI = new AI(false, gameState1);
         newAI.setMana(5, null);

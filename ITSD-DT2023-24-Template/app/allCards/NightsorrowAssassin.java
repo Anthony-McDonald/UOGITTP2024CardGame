@@ -44,4 +44,9 @@ public class NightsorrowAssassin extends Creature implements OpeningGambit{
 		}
 		
 	}
+	@Override
+	public void summon(ActorRef out, Tile tile, GameState gameState){
+		super.summon(out,tile,gameState);
+		this.openingGambit(out,gameState);
+	}
 }

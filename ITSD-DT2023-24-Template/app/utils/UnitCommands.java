@@ -390,8 +390,7 @@ public class UnitCommands {
             if (summon instanceof SaberspineTiger) {
             	((SaberspineTiger) summon).setTurnSummoned(summon.getTurnSummoned()-1);
             }
-            
-            gameState.getBoard().openingGambit(out, gameState);//for opening gambit
+
             gameState.getBoard().renderBoard(out);
             gameState.setLastMessage(GameState.noEvent);
             

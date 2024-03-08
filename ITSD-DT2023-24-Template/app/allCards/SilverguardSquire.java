@@ -45,4 +45,10 @@ public class SilverguardSquire extends Creature implements OpeningGambit{
             System.out.println("Silverguard Squire Opening Gambit Triggered");
         }
     }
+
+    @Override
+    public void summon(ActorRef out, Tile tile, GameState gameState){
+        super.summon(out,tile,gameState);
+        this.openingGambit(out,gameState);
+    }
 }

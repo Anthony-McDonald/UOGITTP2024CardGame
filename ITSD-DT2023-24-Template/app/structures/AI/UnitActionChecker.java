@@ -49,7 +49,8 @@ public class UnitActionChecker {
         MoveableUnit nearestEnemy = findNearestEnemy();
         int attackUnitWeight = 0;
         int moveToUnitWeight = 0;
-        if(this.isNearestEnemyAttackable()){
+        if(this.isNearestEnemyAttackable()&&this.actionTaker.getAttack()>=1){
+            //if can attack and unit has attack (not swamp entangler)
             AIAttackUnit attackUnitAction = new AIAttackUnit(actionTaker,gameState,nearestEnemy);
             int weight = attackUnitAction.getActionScore();
             attackUnitWeight = weight;
@@ -72,8 +73,8 @@ public class UnitActionChecker {
         if (this.isAIAvatarUnderThreat()!=null){ //there is an enemy unit that can attack the enemy avatar
             MoveableUnit threatUnit = isAIAvatarUnderThreat();
             Tile nearestTileToThreat = findNearestTileToUnit(threatUnit);
-            if(UnitCommands.canAttack(actionTaker,threatUnit.getTile(),gameState)){
-                //can attack threat
+            if(UnitCommands.canAttack(actionTaker,threatUnit.getTile(),gameState)&&this.actionTaker.getAttack()>=1){
+                //if can attack threat to AI avatar and unit has attack dmg (not swamp entangler)
 
                 AIAttackAvatarThreat attackAvatarThreat = new AIAttackAvatarThreat(actionTaker, threatUnit, gameState);
                 int weight = attackAvatarThreat.getActionScore();
@@ -102,7 +103,8 @@ public class UnitActionChecker {
             }
         }
         Tile nearestTileToHumanAvatar = findNearestTileToEnemyAvatar();
-        if (this.isEnemyAvatarAttackable()){
+        if (this.isEnemyAvatarAttackable()&&this.actionTaker.getAttack()>=1){
+            //if can attack and unit has attack (not swamp entangler)
             AIAttackAvatar aiAttackAvatar = new AIAttackAvatar(actionTaker,humanAvatar,gameState);
             int weight = aiAttackAvatar.getActionScore();
             attackAvatarWeight = weight;
