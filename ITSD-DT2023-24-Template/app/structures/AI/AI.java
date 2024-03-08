@@ -12,35 +12,44 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This class extends Player and is what is used to represent Player 2 (the enemy AI).
+ * It contains all the methods needed for the AI to perform its actions.
+ */
 public class AI extends Player {
 	private GameState gameState;
 	private ActorRef actorRef;
 	private ArrayList<MoveableUnit> allUnits;
 
+	/**
+	 * This is the constructor for the AI.
+	 * @param userOwned
+	 * @param gameState
+	 */
 	public AI(boolean userOwned, GameState gameState) {
 		super(userOwned);
 		this.gameState = gameState;
 
 	}
 
-	public static void main(String[] args) {
 
-		int number = 15;
-		System.out.println(number);
-		number = (int) (number *0.8);
-		System.out.println(number);
-
-
-	}
-
+	/**
+	 * This sets the actorRef for the AI object. It allows the AI to render its moves on the front end.
+	 * @param out
+	 */
 	public void setActorRef(ActorRef out){
 		this.actorRef = out;
 	}
 
+	/**
+	 * This is how the AI makes actions. First it checks if it can play any spells, checking thw appropriate actions.
+	 * Then it checks if it can summon any units, summoning units until it no longer can. It prioritises summoning units with the
+	 * highest manacost. Then it calls the method unitMakeMoves which loops through all the units, letting each unit make the appropriate move.
+	 */
 	public void makeActions(){
 
 		playAnySpell();
-		while(this.hasActions()){
+		while(this.hasSummons()){
 
 			summonUnit();
 
@@ -49,7 +58,12 @@ public class AI extends Player {
 
 	}
 
-	public boolean hasActions(){ //expand class as functionality increases
+	/**
+	 * This iterates through the hand, checks for any Creature cards and if the AI has enough mana to summon them.
+	 * If it has enough mana, it will return true.
+	 * @return boolean if can summon
+	 */
+	public boolean hasSummons(){ //expand class as functionality increases
 		for (Card card:this.hand) {
 			if (card.getManacost() <= this.mana && card instanceof Creature) { //has enough mana for summoning
 				System.out.println("AI has summons remaining");
@@ -73,6 +87,13 @@ public class AI extends Player {
 		return false;
 	}
 
+	/**
+	 * This is a method used by the AI in multiple methods. It calculates the distance between two tiles, using
+	 * Pythagorus's theorem. This distance is used for weighting actions for units and determining where to summon units.
+	 * @param startingTile
+	 * @param targetTile
+	 * @return
+	 */
 	public static double calculateDistance(Tile startingTile, Tile targetTile){ //method for calculating distance between two tiles. multipurpose.
 		double xDistance = startingTile.getTilex() - targetTile.getTilex();
 		double yDistance = startingTile.getTiley() - targetTile.getTiley();
@@ -81,6 +102,11 @@ public class AI extends Player {
 
 	}
 
+	/**
+	 * this is the method used by the AI to summon a unit. It gets the highest manacost creature from the hand (that it
+	 * can summon), and it then summons the unit in a more offensive position (closer to the enemy Avatar) if the unit
+	 * has more attack than health, or in  a more defensive position if the unit has more health than attack.
+	 */
 	public void summonUnit(){
 		/*
 		if unit has health>attack, much higher chance of choosing tiles closer to AI avatar,
@@ -247,6 +273,15 @@ public class AI extends Player {
 			return null;
 	}
 
+
+	/**
+	 * This method is used to determine the tiles on which the AI player can summon units. It considers the distance
+	 * between the AI's avatar and the human player's avatar to prioritise summoning units on tiles that are ideally
+	 * in between the two avatars. If no such tiles are available, it falls back to a backup list of possible tiles.
+	 * It also returns the tiles in a sorted order based on their distance from the AI avatar. This is used
+	 * to determine how defensive we want the summoning to be.
+	 * @return Tiles for summoning
+	 */
 	public ArrayList<Tile> tilesForAIUnitSummons(){
 
 
@@ -316,6 +351,10 @@ public class AI extends Player {
 		}
 	}
 
+	/**
+	 * This returns the highest manacost creature that the AI can summon. This ensures the AI plays the best cards first
+	 * @return best Creature card
+	 */
 	public Creature returnBestCreature(){
 		Creature creature = new Creature(0, "no creature" ,-1, null, null, true, null);
 		// possible fix to Jackson failing to handle null
@@ -337,18 +376,11 @@ public class AI extends Player {
 		return creature;
 	}
 
-	public boolean unitCanMakeMoves(){
-		ArrayList<MoveableUnit>aiUnits = gameState.getBoard().friendlyUnits(false);
-		for (MoveableUnit unit: aiUnits){
-			if (unit.canStillAttack(gameState.getTurnNumber())&& unit.canStillMove(gameState.getTurnNumber())&&unit.getTurnSummoned()!= gameState.getTurnNumber()){
-				System.out.println("AI has unit that can move or attack");
-				return true; //unit can move or attack
-			}
-		}
-		System.out.println("AI Units have no actions remaining");
-		return false;
-	}
-
+	/**
+	 * This method iterates through each AI unit. It creeates a UnitActionChecker for each unit that can make moves.
+	 * The action checker determines the weighting of each move available and then chooses an action randomly (weighted
+	 * random) for the unit to perform.
+	 */
 	public void unitMakeMoves(){
 		System.out.println("AI is making moves with units");
 		ArrayList<MoveableUnit>aiUnits = gameState.getBoard().friendlyUnits(false);
