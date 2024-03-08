@@ -51,20 +51,20 @@ public class Board {
             }
         }
     }
-
-    public void openingGambit(ActorRef out, GameState gameState){
-        ArrayList<MoveableUnit> allUnits = friendlyUnits(true);//returns human units
-        allUnits.addAll(friendlyUnits(false)); //adds AI units
-        for (MoveableUnit unit : allUnits){
-            if (unit instanceof OpeningGambit){
-                ((OpeningGambit) unit).openingGambit(out, gameState);
-            }
-        }
-
-
-
-
-    }
+//this method has been removed due to opening gambit only occurring when the opening gambit unit is summoned, not when that unit is done
+//    public void openingGambit(ActorRef out, GameState gameState){
+//        ArrayList<MoveableUnit> allUnits = friendlyUnits(true);//returns human units
+//        allUnits.addAll(friendlyUnits(false)); //adds AI units
+//        for (MoveableUnit unit : allUnits){
+//            if (unit instanceof OpeningGambit){
+//                ((OpeningGambit) unit).openingGambit(out, gameState);
+//            }
+//        }
+//
+//
+//
+//
+//    }
 
     public ArrayList <MoveableUnit> friendlyUnits (boolean userOwned){
         ArrayList<MoveableUnit> friendlyUnits = new ArrayList<MoveableUnit>();
