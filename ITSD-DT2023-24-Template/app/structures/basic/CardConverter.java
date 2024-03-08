@@ -102,7 +102,6 @@ public class CardConverter {
             attack = this.getValueMap().get(cardNameToGet).get(0);
             health = this.getValueMap().get(cardNameToGet).get(1);
         } catch (Exception e) {
-            System.out.println("Null pointer found " + cardNameToGet);
         }
 
         boolean userOwned = true;
