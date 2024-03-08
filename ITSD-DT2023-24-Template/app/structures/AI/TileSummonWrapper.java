@@ -2,6 +2,10 @@ package structures.AI;
 
 import structures.basic.Tile;
 
+/**
+ * This is a wrapper class that wraps a Tile. It implements comparable to allow for Tiles to be sorted
+ * based on their distance from the AI avatar.
+ */
 public class TileSummonWrapper implements Comparable<TileSummonWrapper> {
     private double distanceAIAvatar;
     private Tile tile;
