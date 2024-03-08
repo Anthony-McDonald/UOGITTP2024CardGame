@@ -13,6 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UnitCommands {
+	
+	/**
+	 * 
+	 * This method allows everything that inherints Moveable unit i.e. Creatures, Wraithling & Avatar
+	 * and provides logic on the attacking of the attacker, the counter attacking of the target and updating stats of the units appropriately.
+	 * This also checks if the attacker is within an enemy unit with provoke & does the appropriate action.
+	 * The method also updates the player with player notifications, indicating events and also manages appropriate animations.
+	 */
+	
     public static void attackUnit(MoveableUnit attacker, ActorRef out, Tile tile, GameState gameState) {
         MoveableUnit m = tile.getUnit();
         //insert logic about if attack is possible.
@@ -103,6 +112,14 @@ public class UnitCommands {
             gameState.setLastMessage(GameState.noEvent);
         }
     }
+    
+    /**
+     * This method will return a boolean to indicate whether there
+     * is a valid target for the attacker i.e. checks if the target tile
+     * has a unit & also if it is an enemy unit. This also checks for
+     * if there is an enemy unit with provoke within range & does the logic
+     * for not allowing it to attack anything else besides the provoker.
+     */
 
     public static boolean canAttack (MoveableUnit attacker, Tile targetTile, GameState gameState){
         Tile currentTile = attacker.getTile();
@@ -135,6 +152,13 @@ public class UnitCommands {
         return false;
     }
 
+    
+    /**
+     * This method handles the moving of a MoveableUnit when they are clicked.
+     * The logic that is being handled contains a provoke check to ensure that
+     * if provoked they are not able to move. he method also updates the player with player
+     * notifications,indicating events and also manages appropriate animations.
+     */
     public static void moveUnit(MoveableUnit mover, ActorRef out, Tile tile, GameState gameState) {
         //insert logic about if move can occur
         if (gameState.getTurnNumber()!= mover.getLastTurnMoved()) { //hasn't moved this turn
@@ -174,10 +198,15 @@ public class UnitCommands {
                 e.printStackTrace();
             }
         }
-
-
-
     }
+    
+    /**
+     * This method returns a boolean for canMove, which indicates to the player
+     * which tiles are able to move to when the MoveableUnit is clicked.
+     * The tiles that are able to be moved to must be within range & does not already have a unit on it.
+     * This method also handles the ability of "Fly" which is unique to YoungFlamewing
+     */
+    
     public static boolean canMove (MoveableUnit mover, Tile targetTile, Board board){ //method for determining if a unit can move to a tile
         if (mover instanceof YoungFlamewing) {		//Fly ability, can move anywhere on the board
         	return targetTile.getUnit() == null;
