@@ -8,7 +8,12 @@ import commands.BasicCommands;
 import structures.GameState;
 import utils.BasicObjectBuilders;
 import structures.basic.Deathwatch;
-
+/**
+*This class is for storing all the references to the Tile objects.
+ * It contains a 9 by 5 array of Tiles.
+ *It also contains the for rendering the base representation of the board, allowing for resets between different gamestates.
+*
+ */
 public class Board {
     private Tile [][] tiles;
     private ArrayList <MoveableUnit> allUnits;
@@ -21,6 +26,10 @@ public class Board {
             }
         }
     }
+    /**
+     * This method renders the board, it is used for initially loading the board during initialisation.
+     * @param out
+     */
     public void renderBoard (ActorRef out){
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 5; j++) {
@@ -29,6 +38,12 @@ public class Board {
         }
     }
 
+    /**
+     * This method returns a tile at a specified x and y coordinate.
+     * @param x
+     * @param y
+     * @return Tile
+     */
     public Tile getTile (int x, int y){
         if(0<=x && x<9 && 0<= y &&y<5) {
             Tile tile = this.tiles[x][y];
@@ -38,10 +53,22 @@ public class Board {
         }
     }
 
+    /**
+     * This method returns all the tiles on the board.
+     * @return Tile[][]
+     */
+
     public Tile [][] getAllTiles (){
         return this.tiles;
     }
 
+    /**
+     * This method is what is used to facilitate the deathwatch ability. It is called from Creature and Wraithling.
+     * It notifies the board when this unit dies. The board then iterates through all units present on the board,
+     * notifying any that implement the Deathwatch interface to use their deathWatch ability.
+     * @param out
+     * @param gameState
+     */
     public void unitDeath(ActorRef out, GameState gameState) {
         ArrayList<MoveableUnit> allUnits = friendlyUnits(true);//returns human units
         allUnits.addAll(friendlyUnits(false)); //adds AI units
@@ -51,21 +78,12 @@ public class Board {
             }
         }
     }
-//this method has been removed due to opening gambit only occurring when the opening gambit unit is summoned, not when that unit is done
-//    public void openingGambit(ActorRef out, GameState gameState){
-//        ArrayList<MoveableUnit> allUnits = friendlyUnits(true);//returns human units
-//        allUnits.addAll(friendlyUnits(false)); //adds AI units
-//        for (MoveableUnit unit : allUnits){
-//            if (unit instanceof OpeningGambit){
-//                ((OpeningGambit) unit).openingGambit(out, gameState);
-//            }
-//        }
-//
-//
-//
-//
-//    }
 
+    /**
+     * This method returns all the units that possess the given boolean. (True = human units, False = AI units)
+     * @param userOwned
+     * @return
+     */
     public ArrayList <MoveableUnit> friendlyUnits (boolean userOwned){
         ArrayList<MoveableUnit> friendlyUnits = new ArrayList<MoveableUnit>();
         for (int i = 0; i < 9; i++) {
