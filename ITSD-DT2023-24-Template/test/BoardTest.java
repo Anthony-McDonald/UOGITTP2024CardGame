@@ -7,13 +7,13 @@ import static org.junit.Assert.*;
 
 public class BoardTest {
     @Test //tests board reference isn't null with constructor
-    public void test_board_instantiation() {
+    public void testBoardInstantiation() {
         Board board = new Board();
         assertNotNull(board);
     }
 
     @Test
-    public void test_board_initialized_with_correct_size() {
+    public void testBoardInitializedWithCorrectSize() {
         Board board = new Board();
         Tile[][] tiles = board.getAllTiles();
         assertEquals(9, tiles.length);
@@ -21,7 +21,7 @@ public class BoardTest {
     }
 
     @Test
-    public void test_tiles_loaded_with_correct_x_and_y_positions() {
+    public void testTilesLoadedWithCorrectXAndYPositions() {
         Board board = new Board();
         Tile[][] tiles = board.getAllTiles();
         for (int i = 0; i < 9; i++) {
@@ -32,7 +32,7 @@ public class BoardTest {
         }
     }
     @Test
-    public void test_returns_tile_at_given_coordinates() {
+    public void testReturnsTileAtGivenCoordinates() {
         Board board = new Board();
         Tile expectedTile = board.getAllTiles()[2][3];
         Tile actualTile = board.getTile(2, 3);
@@ -48,7 +48,7 @@ public class BoardTest {
     }
 
     @Test
-    public void test_emptyList_noFriendlyUnits() {
+    public void testEmptyListNoFriendlyUnits() {
         Board board = new Board();
         Wraithling wraithling = new Wraithling();
         wraithling.setUserOwned(false);
@@ -60,7 +60,9 @@ public class BoardTest {
         assertEquals(0, result.size());
     }
 
-    public void test_oneFriendlyUnit_matchUserOwned() {
+
+    @Test
+    public void testOneFriendlyUnitMatchUserOwned() {
         Board board = new Board();
         Wraithling wraithling = new Wraithling();
         wraithling.setUserOwned(true);
