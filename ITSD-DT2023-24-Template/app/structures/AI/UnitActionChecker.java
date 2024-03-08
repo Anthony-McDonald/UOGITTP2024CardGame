@@ -11,9 +11,16 @@ import java.util.Random;
 
 import static utils.UnitCommands.attackableTiles;
 
-/*
-class for checking all actions available to a unit
-this class is created and assigned to each AI unit prior to a move
+/**
+ * This is class for checking all the actions available to a singular AI Unit. It will then weight all the actions and
+ * select a random one (however some will have an increased chance due to the weighting).
+ *     The logic of this class is that it assesses the following actions:
+ *      Attacking nearest unit
+ *      Moving towards nearest unit (if attack isn't possible)
+ *      Moving towards enemy avatar
+ *      Attacking enemy avatar
+ *      Moving towards enemy unit that is threatening AI avatar
+ *      Attacking enemy unit that is threatening AI avatar
  */
 public class UnitActionChecker {
     private MoveableUnit actionTaker;
@@ -25,16 +32,13 @@ public class UnitActionChecker {
         this.actorRef = out;
     }
 
-    /*
-    the logic of this class is that it assesses the following actions:
-    Attacking nearest unit
-    Moving towards nearest unit (if attack isn't possible)
-    Moving towards enemy avatar
-    Attacking enemy avatar
-    Moving towards enemy unit that is threatening AI avatar
-    Attacking enemy unit that is threatening AI avatar
-     */
 
+    /**
+     * This is how the AI chooses an action available to the unit.
+     * It assesses which actions the unit can make and places them into an arraylist. It places more into the ArrayList
+     * if the action's weight is higher, thus increasing the chance of the unit performing that action. The method then
+     * selects a random index from the ArrayList to choose that action for the unit to perform.
+     */
     public void makeAction(){
         if (actionTaker.getLastTurnAttacked() == gameState.getTurnNumber()){
             System.out.println("Unit can't make action, attacked this turn");
@@ -171,6 +175,10 @@ public class UnitActionChecker {
         actionTaker.setLastTurnAttacked(gameState.getTurnNumber()); //to ensure that unitactionchecker doesn't get stuck on this unit
     }
 
+    /**
+     * Finds nearest enemy to action making unit
+     * @return
+     */
     public MoveableUnit findNearestEnemy(){
         Tile startTile = actionTaker.getTile();
         Board board = gameState.getBoard();
@@ -193,6 +201,10 @@ public class UnitActionChecker {
 
     }
 
+    /**
+     * Assesses if nearest enemy unit is immediately attackable by the action maker.
+     * @return
+     */
     public boolean isNearestEnemyAttackable(){
         ArrayList<Tile> attackableTiles = UnitCommands.attackableTiles(actionTaker, gameState);
         if (attackableTiles.contains(this.findNearestEnemy().getTile())){
@@ -202,6 +214,11 @@ public class UnitActionChecker {
         }
     }
 
+    /**
+     * finds nearestTile to a given enemy unit.
+     * @param enemyUnit
+     * @return
+     */
     public Tile findNearestTileToUnit(MoveableUnit enemyUnit){
         ArrayList<Tile> moveableTiles = UnitCommands.moveableTiles(actionTaker,gameState);
         MoveableUnit enemy = enemyUnit;
@@ -218,6 +235,10 @@ public class UnitActionChecker {
         return closestTile;
     }
 
+    /**
+     * assesses if Enemy Avatar is directly attackable
+     * @return
+     */
     public boolean isEnemyAvatarAttackable(){
         ArrayList<Tile> attackableTiles = UnitCommands.attackableTiles(actionTaker, gameState);
         ArrayList<MoveableUnit> humanUnits = gameState.getBoard().friendlyUnits(true);
@@ -234,10 +255,10 @@ public class UnitActionChecker {
         }
     }
 
-    public Tile findNearestTiletoNearestEnemy(){
-        return findNearestTileToUnit(findNearestEnemy());
-    }
-
+    /**
+     * find nearest tile to enemy avatar
+     * @return
+     */
     public Tile findNearestTileToEnemyAvatar(){
         ArrayList<MoveableUnit> humanUnits = gameState.getBoard().friendlyUnits(true);
         MoveableUnit humanAvatar = null;
@@ -249,6 +270,11 @@ public class UnitActionChecker {
         return findNearestTileToUnit(humanAvatar);
     }
 
+    /**
+     * Assesses if there is an enemy unit within attacking range of the AI avatar. If there is a unit within range, it
+     * will return this unit, if there isn't one within range, it will return null.
+     * @return
+     */
     public MoveableUnit isAIAvatarUnderThreat(){
         MoveableUnit threatUnit = null; //if this method returns null, no immediate threat to AI avatar
         MoveableUnit aiAvatar = null;
@@ -269,6 +295,11 @@ public class UnitActionChecker {
         return threatUnit;
     }
 
+    /**
+     * Determines if there is a provoker within adjacent tiles and returns the unit. If there is no provoking unit,
+     * it will return null.
+     * @return
+     */
     public MoveableUnit findProvoker (){
         MoveableUnit provoker = null;
         //if return is null then no provoker
