@@ -14,9 +14,10 @@ public class Beamshock extends Spell{
     }
 
     public void spellEffect(Tile tile, ActorRef out, GameState gameState) {
-
+        // Play the animation
         EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_martyrdom);
         try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}
+        // stun the unit targeted and set the counter to 1
         tile.getUnit().setStunned(true);
         gameState.setBeamShockCounter(1);
     }

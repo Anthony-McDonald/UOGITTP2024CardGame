@@ -17,8 +17,10 @@ public class SundropElixir extends Spell{
         System.out.println("TRYING TO PLAY SUNDROP");
         MoveableUnit unit = tileClicked.getUnit();
         int amountToHeal = 4;
+        // Play the animation
         EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff);
         try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tileClicked));} catch (InterruptedException e) {e.printStackTrace();}
+        // Heal the unit targeted
         while (amountToHeal > 0) {
             if (unit.getCurrentHealth() < unit.getMaxHealth()) {
                 unit.setCurrentHealth(unit.getCurrentHealth() + 1, out, gameState);

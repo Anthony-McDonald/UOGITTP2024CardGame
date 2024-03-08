@@ -38,6 +38,7 @@ public class TileClicked implements EventProcessor{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		// Assign the x and y coordinates of the tile clicked to variables
 		int tilex = message.get("tilex").asInt();
 		int tiley = message.get("tiley").asInt();
 
@@ -63,10 +64,7 @@ public class TileClicked implements EventProcessor{
 		}
 
 
-
-
-
-
+		//TileClicked main logic
 		if (gameState.something == true) {
 			// do some logic
 			Tile currentTile = gameState.getBoard().getTile(tilex, tiley);
@@ -81,6 +79,7 @@ public class TileClicked implements EventProcessor{
 					try {
 						Card card = player1.getHand().get(gameState.getLastCardClicked() - 2);
 
+						// If there is an avatar on the current tile, then that is a valid target for horn of the forsaken, cast the card
 						if (currentTile.getUnit() instanceof Avatar) {
 							if (card.getCardname().equals("Horn of the Forsaken")) {
 								if (currentTile.getUnit().getMaxHealth() == 20) {
@@ -98,11 +97,14 @@ public class TileClicked implements EventProcessor{
 					} catch (Exception e) {
 					}
 
+					// Reset the gamestate message if wraithling swarm is done
 					if (gameState.getLastMessage().equals(GameState.wraithlingSwarmCompleted)) {
 						System.out.println("attempting to set to noevent ------------------------------------------------");
 						gameState.setLastMessage(GameState.noEvent);
 						return;
 					}
+
+					// Logic to handle the moving of the avatar
 					if (!currentTile.getUnit().isStunned()) {
 						//if unit clicked was friendly.
 						if (gameState.getLastMessage().equals(GameState.noEvent)){

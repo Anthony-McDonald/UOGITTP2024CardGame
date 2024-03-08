@@ -33,25 +33,9 @@ public class WraithlingSwarm extends Spell{
     public void spellEffect(ActorRef out, GameState gameState, int tileX, int tileY){
         System.out.println("attempting to play wraith swarm");
         BasicCommands.addPlayer1Notification(out, "Choose 3 tiles", 5);
+        // Change the variables in the gamestate that are tested for to see if wraithling swarm still needs to be checked for
         gameState.setWraithlingSwarmSatisfied(false);
         gameState.setWraithlingSwarmCounter(0);
     }
-//    private void summonWraithling(ActorRef out, GameState gameState) {
-//        gameState.setLastMessage(GameState.creatureCardClicked);
-//        UnitCommands.summonableTiles(out,gameState);
-//
-////        for (int i = 0; i )
-//
-//        for (int i  = 0; i < 3; i++) {
-//            Wraithling wraithling = new Wraithling();
-//            Tile currentTile = gameState.getBoard().getTile(gameState.getxCoords().get(i), gameState.getyCoords().get(i));
-//            wraithling.summon(out,currentTile, gameState);
-//        }
-//        gameState.getyCoords().clear();
-//        gameState.getxCoords().clear();
-//        gameState.setWraithlingSwarmSatisfied(true);
-//        gameState.setLastMessage(GameState.wraithlingSwarmCompleted);
-//
-//    }
 
 }

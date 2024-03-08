@@ -16,9 +16,12 @@ public class Truestrike extends Spell{
 
 
     public void spellEffect(Tile tile, ActorRef out, GameState gameState){
+        // If there is a unit on the selected tile
         if (tile.getUnit() != null) {
+            // Play the animation
             EffectAnimation effect = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_inmolation);
             try {Thread.sleep(BasicCommands.playEffectAnimation(out, effect, tile));} catch (InterruptedException e) {e.printStackTrace();}
+            // Damage the unit on the tile
             tile.getUnit().setCurrentHealth(tile.getUnit().getCurrentHealth() - 2,out, gameState);
         } else {
             BasicCommands.addPlayer1Notification(out, "Not a valid target", 2);

@@ -25,6 +25,8 @@ public class EndTurnClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
+		//General end of turn maintenance
+
 		//remove player 1's unspent mana
 		gameState.getPlayer1().setMana(0, out);
 		//insert AI method where AI makes moves
@@ -44,12 +46,15 @@ public class EndTurnClicked implements EventProcessor{
 		gameState.getPlayer1().setMana(gameState.getTurnNumber()+1, out);
 		gameState.getPlayer2().setMana(gameState.getTurnNumber()+1, out);
 
+		// Registers if beam shock has been casted, if so increment the turn counter
 		if (gameState.getBeamShockCounter() > 0) {
 			System.out.println("BEAM SHOCK TRIGGERED AND NOTED, INCREMENTING");
 			gameState.setBeamShockCounter(gameState.getBeamShockCounter() + 1);
 		} if (gameState.getBeamShockCounter() == 3) {
 			gameState.setBeamShockCounter(gameState.getBeamShockCounter() + 1);
 		}
+
+		// if that turn counter > 3, reset the counter and unstun the stunned creature
 		if (gameState.getBeamShockCounter() > 3) {
 			System.out.println(gameState.getBeamShockCounter());
 			System.out.println("TURN WITH STUN OVER, BEAMSHOCK IS NOW FULLY FINISHED, RESETTING");
@@ -73,9 +78,6 @@ public class EndTurnClicked implements EventProcessor{
 //				gameState.getPlayer1().drawSpecificCard(out, card);
 //			}
 //		}
-
-
-
 
 		String nextTurnMessage = "It's now turn " + gameState.getTurnNumber() + "! Make your moves.";
 		BasicCommands.addPlayer1Notification(out, nextTurnMessage, 2 );

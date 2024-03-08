@@ -24,6 +24,8 @@ public class OtherClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
+
+		// If wraithling swarm is still being clicked, inform player to click elsewhere and don't go to the try block below
 		if (!gameState.isWraithlingSwarmSatisfied()) {
 			BasicCommands.addPlayer1Notification(out, "No action available. Select a card, unit or tile.", 2);
 			return;

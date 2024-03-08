@@ -27,6 +27,12 @@ import allCards.YoungFlamewing;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
+
+/*
+    This class exists to convert the default Card class objects, into differentiated Classes for each of the cards.
+    For example, a card with the name Bad Omen will become a BadOmen object.
+ */
+
 public class CardConverter {
     private ArrayList<Card> hand = new ArrayList<>();
     private HashMap<String, Class<? extends Card>> convertMap = new HashMap<>();
@@ -90,7 +96,10 @@ public class CardConverter {
     }
 
     // Makes use of hashmap defined
+
+    // This is the main card differentiator method
     public Card cardDifferentiator(Card card) {
+        // Get all the card variables
         int id = lastCardID++;
         int manacost = card.getManacost();
         MiniCard miniCard = card.getMiniCard();
@@ -105,7 +114,7 @@ public class CardConverter {
         int health = 1;
 //        System.out.println(health);
 
-
+        // Set attack and health to the values in the valuemap defined above
         try {
 //            System.out.println("--nextiteration---");
 
@@ -132,16 +141,16 @@ public class CardConverter {
 
         Class<? extends  Card> classReturned = this.getConvertMap().get(cardNameToGet);
 //        System.out.println(classReturned);
-
+        // If the line above isn't null
         if (classReturned != null) {
+            // try checking if the class returned is a creature
             try {
                 if (Creature.class.isAssignableFrom(classReturned)) {
-
-
+                    // if it is, create a creature of that class and return that object
                     Constructor<? extends Card> constructor = classReturned.getDeclaredConstructor(int.class, String.class, int.class, MiniCard.class, BigCard.class, boolean.class, String.class);
                     return constructor.newInstance(id, cardNameToGet, manacost, miniCard, bigCard, isCreature, unitConfig);
                 } else if (Spell.class.isAssignableFrom(classReturned)) {
-                    // Need to add mana cost and all to spell once spell has been written
+                    // If it isn't, create a spell of that class and return that object
                     Constructor<? extends Card> constructor = classReturned.getDeclaredConstructor(int.class, String.class, int.class, MiniCard.class, BigCard.class, boolean.class, String.class);
                     return constructor.newInstance(id, cardNameToGet, manacost, miniCard, bigCard, isCreature, unitConfig);
                 }
@@ -154,8 +163,9 @@ public class CardConverter {
         return null;
     }
 
-
+    // fills the hashmaps used by the card differentiator
     private void fillHashMaps() {
+        // Assigning all of the card names to variable names for easier usage
         // Player
         String badOmen = "Bad Omen";
         String hornOfTheForsaken = "Horn of the Forsaken";
@@ -179,6 +189,8 @@ public class CardConverter {
         String sundropElixir = "Sundrop Elixir";
         String truestrike = "Truestrike";
 
+
+        // Create an arraylist of spells and add every spell into it
         ArrayList<Integer> spellArray = new ArrayList<>();
         spellArray.add(-1);
         spellArray.add(-1);
@@ -191,7 +203,7 @@ public class CardConverter {
         this.getValueMap().put(wraithlingSwarm, spellArray);
 
 //        this.getValueMap().get(cardNameToGet).get(0));
-
+        // Add in each creature to the hashmap ConvertMap
         this.getConvertMap().put(badOmen, BadOmen.class);
         this.getUserOwnedMap().put(badOmen, true);
 //        System.out.println("attempting to load badOmenUnit");
@@ -394,7 +406,7 @@ public class CardConverter {
 //        return Card.class.isAssignableFrom(clazz);
 //    }
 
-
+// Used for the homogenisation of the formatting of strings entered
     private String camelCasifier(String cardName) {
 
             StringBuilder camelcasify = new StringBuilder();

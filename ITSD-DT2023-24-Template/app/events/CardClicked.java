@@ -30,11 +30,14 @@ public class CardClicked implements EventProcessor {
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 
+
+		// Ensures that after a wraithling swarm cast, all casts go towards summoning wraithlings
 		if (!gameState.isWraithlingSwarmSatisfied()) {
 			BasicCommands.addPlayer1Notification(out, "Click on a tile!", 2);
 			return;
 		}
 
+		// Main card clicked logic
 		int handPosition = message.get("position").asInt();
 		gameState.getBoard().renderBoard(out);
 
@@ -49,9 +52,12 @@ public class CardClicked implements EventProcessor {
 			player1.highlightCardInHand(handPosition, out);
 
 			gameState.setLastCardClicked(handPosition); // position in rendering
+			// if card is a creature, show summonable tiles
 			if (card instanceof Creature) {
 				gameState.setLastMessage(GameState.creatureCardClicked);
 				UnitCommands.summonableTiles(out, gameState);
+
+				// if card is a spell, show summonable tiles depending on the spell
 			} else if (card instanceof Spell) {
 				gameState.setLastMessage(GameState.spellCardClicked); //I think we will have to do this per spell type
 
