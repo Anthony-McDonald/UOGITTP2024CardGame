@@ -11,8 +11,8 @@ import utils.UnitCommands;
  * This class is used to assess the weight of moving towards the enemy avatar.
  */
 public class AIMoveToAvatar extends UnitAction{
-    private Tile nearestTileToAvatar;
-    private MoveableUnit avatar;
+    private final Tile nearestTileToAvatar;
+    private final MoveableUnit avatar;
 
     public AIMoveToAvatar(MoveableUnit actionTaker, GameState gameState, Tile nearestTileToAvatar, MoveableUnit avatar){
         this.actionTaker = actionTaker;

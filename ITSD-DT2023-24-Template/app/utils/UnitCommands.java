@@ -239,9 +239,7 @@ public class UnitCommands {
         if(yPos+2<=4){
             if (board.getTile(xPos,yPos+1).getUnit() == null) { //if space + 1 is empty
                 Tile highlightTile = board.getTile(xPos, yPos+2);
-                if (targetTile.equals(highlightTile)&& highlightTile.getUnit() ==null){
-                    return true;
-                }
+                return targetTile.equals(highlightTile) && highlightTile.getUnit() == null;
             }
         }
         return false;
@@ -388,7 +386,7 @@ public class UnitCommands {
             }
             
             if (summon instanceof SaberspineTiger) {
-            	((SaberspineTiger) summon).setTurnSummoned(summon.getTurnSummoned()-1);
+            	summon.setTurnSummoned(summon.getTurnSummoned()-1);
             }
 
             gameState.getBoard().renderBoard(out);
@@ -566,7 +564,7 @@ public class UnitCommands {
             ArrayList<Tile>adjacentToMoveableTiles = adjacentTiles(tile, gameState);
 
             boolean provokeAdjacent = isTileProvokeAdjacent(tile, gameState ,attacker.isUserOwned());
-            if (provokeAdjacent == false) {
+            if (!provokeAdjacent) {
                 for (Tile adjacentTile : adjacentToMoveableTiles) {
                     if (adjacentTile.getUnit() != null && adjacentTile.getUnit().isUserOwned() != userOwned) {
                         //if adjacent tile has unit and unit is enemy

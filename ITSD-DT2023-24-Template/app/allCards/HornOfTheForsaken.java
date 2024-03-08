@@ -10,12 +10,22 @@ import structures.basic.Spell;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
+
+/**
+ * This is the class for the Horn of the Forsaken implementation.
+ */
+
 public class HornOfTheForsaken extends Spell{
 
     public HornOfTheForsaken(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
 
+    /**
+     * The spellEffect method sets hornOfTheForsaken's health to 4 to facilitate the effect until the health is 0
+     * @param out
+     * @param gameState
+     */
     public void spellEffect(ActorRef out, GameState gameState) {
         // set to 4 to facilitate 3 hits, avoids 1 off error, could edit later for clarity
         // Plays the animation

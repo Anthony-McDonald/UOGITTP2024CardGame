@@ -10,5 +10,5 @@ public interface Provoke {
  Ironcliffe Guardian
  */
 	
-	public void provoke();
+	void provoke();
 }

@@ -23,9 +23,9 @@ import static utils.UnitCommands.attackableTiles;
  *      Attacking enemy unit that is threatening AI avatar
  */
 public class UnitActionChecker {
-    private MoveableUnit actionTaker;
-    private GameState gameState;
-    private ActorRef actorRef;
+    private final MoveableUnit actionTaker;
+    private final GameState gameState;
+    private final ActorRef actorRef;
     public UnitActionChecker(MoveableUnit actionTaker, GameState gameState, ActorRef out){
         this.actionTaker=actionTaker;
         this.gameState =gameState;
@@ -207,11 +207,8 @@ public class UnitActionChecker {
      */
     public boolean isNearestEnemyAttackable(){
         ArrayList<Tile> attackableTiles = UnitCommands.attackableTiles(actionTaker, gameState);
-        if (attackableTiles.contains(this.findNearestEnemy().getTile())){
-            return true; //unit can directly attack
-        }else{
-            return false; //unit can't directly attack
-        }
+        //unit can't directly attack
+        return attackableTiles.contains(this.findNearestEnemy().getTile()); //unit can directly attack
     }
 
     /**
@@ -248,11 +245,7 @@ public class UnitActionChecker {
                 humanAvatar = unit;
             }
         }
-        if (attackableTiles.contains(humanAvatar.getTile())){
-            return true;
-        }else{
-            return false;
-        }
+        return attackableTiles.contains(humanAvatar.getTile());
     }
 
     /**

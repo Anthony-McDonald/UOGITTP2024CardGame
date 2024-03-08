@@ -8,11 +8,22 @@ import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 import utils.UnitCommands;
 
+
+/**
+ * This is the class for the dark terminus implementation.
+ */
+
 public class DarkTerminus extends Spell{
     public DarkTerminus(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
 
+    /**
+     * The spellEffect method handles the stages required for the effect of the spell
+     * @param tile
+     * @param out
+     * @param gameState
+     */
     public void spellEffect(Tile tile, ActorRef out, GameState gameState){
         MoveableUnit unit = tile.getUnit();
         int enemyHealth = unit.getCurrentHealth();
@@ -31,8 +42,6 @@ public class DarkTerminus extends Spell{
         
         gameState.getBoard().renderBoard(out); //resets board
         gameState.setLastMessage(GameState.noEvent); //ONLY DO THIS IF SPELL GOES CORRECTLY
-//        gameState.setLastMessage(GameState.noEvent); //ONLY DO THIS IF SPELL GOES CORRECTLY
-//        try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
     }
 
 }

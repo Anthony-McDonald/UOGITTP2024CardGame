@@ -23,10 +23,10 @@ public class BetterUnit extends Unit {
 
 	public void setKeywords(Set<String> keywords) {
 		this.keywords = keywords;
-	};
-	
-	
-	public static void main(String[] args) {
+	}
+
+
+    public static void main(String[] args) {
 		
 		BetterUnit unit = (BetterUnit)BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 0, BetterUnit.class);
 		Set<String> keywords = new HashSet<String>();

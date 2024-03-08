@@ -1,12 +1,15 @@
 package allCards;
 
-import actors.GameActor;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
+/**
+ * This is the class for Truestrike's implementation
+ */
 
 public class Truestrike extends Spell{
 
@@ -15,6 +18,12 @@ public class Truestrike extends Spell{
     }
 
 
+    /**
+     * The spellEffect method handles dealing 2 damage to the spell's targeted unit
+     * @param tile
+     * @param out
+     * @param gameState
+     */
     public void spellEffect(Tile tile, ActorRef out, GameState gameState){
         // If there is a unit on the selected tile
         if (tile.getUnit() != null) {

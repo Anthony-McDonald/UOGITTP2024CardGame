@@ -14,6 +14,6 @@ public interface DummyTell {
 	 * and call altTell.tell instead.
 	 * @param message
 	 */
-	public void tell(ObjectNode message);
+    void tell(ObjectNode message);
 	
 }

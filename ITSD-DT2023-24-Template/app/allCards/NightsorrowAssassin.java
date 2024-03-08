@@ -34,7 +34,7 @@ public class NightsorrowAssassin extends Creature implements OpeningGambit{
 			if(Tile != null) {
 				if(Tile.getUnit() instanceof Creature) {
 					enemyUnit = Tile.getUnit();
-					if(enemyUnit.isUserOwned()==false)
+					if(!enemyUnit.isUserOwned())
 						if (enemyUnit.getCurrentHealth()< enemyUnit.getMaxHealth()) {
 							enemyUnit.setCurrentHealth(0, out, gameState);
 							System.out.println("Nightsorrow Assassin Opening Gambit Triggered");

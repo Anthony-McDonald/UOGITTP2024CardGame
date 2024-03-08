@@ -4,14 +4,10 @@ import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;
-import utils.BasicObjectBuilders;
-import utils.StaticConfFiles;
-import utils.UnitCommands;
 
-import java.io.File;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Collections;
+/**
+ * This is the class for Wraithling Swarm's implementation
+ */
 
 public class WraithlingSwarm extends Spell{
 
@@ -19,17 +15,14 @@ public class WraithlingSwarm extends Spell{
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
 
-
-//    public void checkSatisfied(ActorRef out, GameState gameState) {
-//        if (gameState.getxCoords().size() == 3) {
-//            System.out.println("WRAITHLING SWARM SATISFIED");
-//            System.out.println(gameState.getxCoords());
-//            System.out.println(gameState.getyCoords());
-//            summonWraithling(out, gameState);
-//        }
-//    }
-
-
+    /**
+     * The spellEffect method sets wraithlingSwarmSatisfied to false and the wraithlingSwarmCounter to 0 in gamestate,
+     * starting the logic that handles the placement of wraithlings.
+     * @param out
+     * @param gameState
+     * @param tileX
+     * @param tileY
+     */
     public void spellEffect(ActorRef out, GameState gameState, int tileX, int tileY){
         System.out.println("attempting to play wraith swarm");
         BasicCommands.addPlayer1Notification(out, "Choose 3 tiles", 5);

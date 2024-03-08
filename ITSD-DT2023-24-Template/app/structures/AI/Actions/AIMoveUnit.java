@@ -11,8 +11,8 @@ import utils.UnitCommands;
  * This class is used to assess the weight of moving towards the nearest enemy unit.
  */
 public class AIMoveUnit extends UnitAction{
-    private Tile nearestTileToEnemy;
-    private MoveableUnit nearestEnemy;
+    private final Tile nearestTileToEnemy;
+    private final MoveableUnit nearestEnemy;
 
     public AIMoveUnit(MoveableUnit actionTaker, GameState gameState, Tile nearestTileToEnemy, MoveableUnit enemy){
         this.actionTaker = actionTaker;

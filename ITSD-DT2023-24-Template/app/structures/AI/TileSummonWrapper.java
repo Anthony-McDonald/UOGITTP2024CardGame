@@ -7,8 +7,8 @@ import structures.basic.Tile;
  * based on their distance from the AI avatar.
  */
 public class TileSummonWrapper implements Comparable<TileSummonWrapper> {
-    private double distanceAIAvatar;
-    private Tile tile;
+    private final double distanceAIAvatar;
+    private final Tile tile;
     public TileSummonWrapper(Tile tile, double distanceAIAvatar){
         this.tile = tile;
         this.distanceAIAvatar = distanceAIAvatar;

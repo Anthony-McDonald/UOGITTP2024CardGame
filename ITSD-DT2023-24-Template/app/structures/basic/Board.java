@@ -15,7 +15,7 @@ import structures.basic.Deathwatch;
 *
  */
 public class Board {
-    private Tile [][] tiles;
+    private final Tile [][] tiles;
     private ArrayList <MoveableUnit> allUnits;
 
     public Board(){

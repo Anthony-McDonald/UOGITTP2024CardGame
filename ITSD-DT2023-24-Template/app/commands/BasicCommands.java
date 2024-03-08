@@ -23,7 +23,7 @@ import structures.basic.UnitAnimationType;
  */
 public class BasicCommands {
 
-	private static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to turn java objects to Strings
+	private static final ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to turn java objects to Strings
 	
 	// An alternative class with a 'tell' implementation can be given if writing unit tests
 	// and need to have a null ActorRef. This should be null during normal operation.

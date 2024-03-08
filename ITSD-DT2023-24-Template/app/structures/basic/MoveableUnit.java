@@ -4,60 +4,60 @@ import akka.actor.ActorRef;
 import structures.GameState;
 
 public interface MoveableUnit {
-	public void attackUnit(ActorRef out, Tile tile, GameState gameState);
-	public void moveUnit(ActorRef out, Tile tile, GameState gameState);
+	void attackUnit(ActorRef out, Tile tile, GameState gameState);
+	void moveUnit(ActorRef out, Tile tile, GameState gameState);
 
-	public boolean isStunned();
-	public void setStunned(boolean stunned);
+	boolean isStunned();
+	void setStunned(boolean stunned);
 
-	public int getMaxHealth();
+	int getMaxHealth();
 	
-	public void setMaxHealth(int maxHealth);
+	void setMaxHealth(int maxHealth);
 
-	public int getCurrentHealth();
+	int getCurrentHealth();
 
-	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState);
+	void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState);
 
-	public int getAttack();
+	int getAttack();
 
-	public void setAttack(int attack, ActorRef out);
+	void setAttack(int attack, ActorRef out);
 
-	public int getTurnSummoned();
+	int getTurnSummoned();
 
-	public void setTurnSummoned(int turnSummoned);
+	void setTurnSummoned(int turnSummoned);
 
-	public int getLastTurnMoved();
+	int getLastTurnMoved();
 
-	public void setLastTurnMoved(int lastTurnMoved);
+	void setLastTurnMoved(int lastTurnMoved);
 	
-	public Unit getUnit();
+	Unit getUnit();
 
-	public void setUnit(Unit unit);
+	void setUnit(Unit unit);
 	
-	public boolean isUserOwned();
+	boolean isUserOwned();
 
-	public void setUserOwned(boolean userOwned);
+	void setUserOwned(boolean userOwned);
 
-	public void actionableTiles(ActorRef out, GameState gameState);
+	void actionableTiles(ActorRef out, GameState gameState);
 
-	public Tile getTile();
+	Tile getTile();
 	
-	public void setTile(Tile tile);
+	void setTile(Tile tile);
 
-	public int getLastTurnAttacked ();
+	int getLastTurnAttacked();
 
-	public void setLastTurnAttacked(int lastTurnAttacked);
+	void setLastTurnAttacked(int lastTurnAttacked);
 
-	public void summon (ActorRef out, Tile tile, GameState gameState);
+	void summon(ActorRef out, Tile tile, GameState gameState);
 
 	
-	public boolean isProvoke();
+	boolean isProvoke();
 		
-	public void setProvoke(boolean provoke);
+	void setProvoke(boolean provoke);
 
 
-	public boolean canStillAttack(int currentTurn);
+	boolean canStillAttack(int currentTurn);
 
-	public boolean canStillMove(int currentTurn);
+	boolean canStillMove(int currentTurn);
 
 }

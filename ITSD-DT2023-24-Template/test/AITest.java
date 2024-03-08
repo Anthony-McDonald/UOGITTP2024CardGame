@@ -41,7 +41,7 @@ public class AITest {
         Tile tile2 = board.getTile(7, 3);
         AI newAI = new AI(false, gameState1);
 
-        double distance = newAI.calculateDistance(tile1, tile2);
+        double distance = AI.calculateDistance(tile1, tile2);
 
         assertEquals(5.0, distance, 0.001);
     }

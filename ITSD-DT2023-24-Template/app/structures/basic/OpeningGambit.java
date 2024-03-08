@@ -11,5 +11,5 @@ public interface OpeningGambit {
  Nightsorrow Assassin
  Silverguard Squire
  */
-	public void openingGambit(ActorRef out, GameState gameState);
+void openingGambit(ActorRef out, GameState gameState);
 }

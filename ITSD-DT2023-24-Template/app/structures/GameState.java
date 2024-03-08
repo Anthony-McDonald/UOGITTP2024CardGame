@@ -13,8 +13,8 @@ import java.util.ArrayList;
  *
  */
 public class GameState {
-	private Player player1;
-	private AI player2; //convert to AI class when we make it?
+	private final Player player1;
+	private final AI player2; //convert to AI class when we make it?
 	private Board board;
 	private int turnNumber = 1;
 	private int lastCardClicked; //gives hand index of card

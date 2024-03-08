@@ -36,12 +36,8 @@ public abstract class UnitAction {
             //attack will kill provoker
             return false;
         }
-        if ((actionTakerHealth - enemyUnitAttack)<=0){
-            return true;
-
-            //counter attack will kill attacker
-        }
-        return false;
+        //counter attack will kill attacker
+        return (actionTakerHealth - enemyUnitAttack) <= 0;
     }
 
     public Tile getTargetTile() {
@@ -82,11 +78,7 @@ public abstract class UnitAction {
      * @return
      */
     public boolean willAttackKillEnemy (MoveableUnit enemy){
-        if (enemy.getCurrentHealth()<=actionTaker.getAttack()){
-            return true;
-        }else{
-            return false;
-        }
+        return enemy.getCurrentHealth() <= actionTaker.getAttack();
     }
 
     public String getActionName() {

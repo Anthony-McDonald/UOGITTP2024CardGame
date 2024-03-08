@@ -22,7 +22,7 @@ public class Avatar implements MoveableUnit {
 	private int turnSummoned;
 	private int lastTurnMoved;
 	private Unit unit;
-	private Player player;
+	private final Player player;
 	private boolean userOwned;
 	@JsonIgnore
 	private Tile tile;
@@ -185,11 +185,8 @@ public class Avatar implements MoveableUnit {
 
 	@Override
 	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState) {
-		boolean damageTaken = false;
-		if (currentHealth < this.player.getHealth()) {
-			damageTaken = true;
-		}
-		this.currentHealth = currentHealth;
+		boolean damageTaken = currentHealth < this.player.getHealth();
+        this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
 		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg
 
@@ -350,21 +347,13 @@ public class Avatar implements MoveableUnit {
 	}
 	@Override
 	public boolean canStillAttack(int currentTurn) {
-		if (this.getLastTurnAttacked()!= currentTurn){
-			return true;
-		}else{
-			return false;
-		}
+        return this.getLastTurnAttacked() != currentTurn;
 	}
 
 	@Override
 	public boolean canStillMove(int currentTurn) {
 		if (this.getLastTurnAttacked()!=currentTurn){
-			if (this.getLastTurnMoved()!= currentTurn){
-				return true;
-			}else{
-				return false;
-			}
+            return this.getLastTurnMoved() != currentTurn;
 		}else{
 			return false;
 		}

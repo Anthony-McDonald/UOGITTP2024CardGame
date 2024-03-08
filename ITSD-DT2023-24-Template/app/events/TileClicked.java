@@ -65,7 +65,7 @@ public class TileClicked implements EventProcessor{
 
 
 		//TileClicked main logic
-		if (gameState.something == true) {
+		if (gameState.something) {
 			// do some logic
 			Tile currentTile = gameState.getBoard().getTile(tilex, tiley);
 			Player player1 = gameState.getPlayer1();

@@ -9,7 +9,7 @@ import utils.UnitCommands;
  * This class is used for assessing the action of attacking the nearest enemy unit.
  */
 public class AIAttackUnit extends UnitAction{
-    private MoveableUnit enemyUnit;
+    private final MoveableUnit enemyUnit;
 
 
     public AIAttackUnit(MoveableUnit actionTaker, GameState gameState, MoveableUnit enemyUnit){

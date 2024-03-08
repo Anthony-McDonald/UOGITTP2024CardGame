@@ -11,8 +11,8 @@ import utils.UnitCommands;
 public class AIAttackAvatar extends UnitAction{
 
 
-    private MoveableUnit avatar;
-    private GameState gameState;
+    private final MoveableUnit avatar;
+    private final GameState gameState;
 
     public AIAttackAvatar(MoveableUnit attacker, MoveableUnit threat, GameState gameState){
         this.actionTaker = attacker;

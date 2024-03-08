@@ -17,7 +17,7 @@ import java.util.Random;
  * It contains all the methods needed for the AI to perform its actions.
  */
 public class AI extends Player {
-	private GameState gameState;
+	private final GameState gameState;
 	private ActorRef actorRef;
 	private ArrayList<MoveableUnit> allUnits;
 
@@ -75,18 +75,6 @@ public class AI extends Player {
 		return false;
 	}
 
-
-	public boolean hasManaActions() {
-		for (Card card: this.hand) {
-			if (card instanceof Spell && card.getManacost() <= this.mana) {
-				System.out.println("Ai has mana for spell -> actions remaining");
-				return true;
-			}
-		}
-		System.out.println("AI has no spell actions remaining");
-		return false;
-	}
-
 	/**
 	 * This is a method used by the AI in multiple methods. It calculates the distance between two tiles, using
 	 * Pythagorus's theorem. This distance is used for weighting actions for units and determining where to summon units.
@@ -120,24 +108,6 @@ public class AI extends Player {
 
 		List<Tile> possibleTiles = this.tilesForAIUnitSummons();
 		List<Tile> backUpPossibleTiles = UnitCommands.getAllSummonableTiles(gameState,false);
-//		int numberOfTiles = possibleTiles.size();
-//		ArrayList<Tile>weightedTiles = new ArrayList<>(); // list for putting weighted array list
-//		if (creature.getMaxHealth()>creature.getAttack()){
-//			for (int i = 0; i<possibleTiles.size();i++){
-//				for (int j = numberOfTiles; j<=1; j--){
-//					weightedTiles.add(possibleTiles.get(i));
-//				} numberOfTiles--;
-//			}
-//		} else if (creature.getAttack()> creature.getMaxHealth()) {
-//			for (int i = possibleTiles.size()-1; i>=0;i--){
-//				for (int j = 1; j<=numberOfTiles; j--){
-//					weightedTiles.add(possibleTiles.get(i));
-//				} numberOfTiles --;
-//			}
-//		} else{ //health is equal to attack
-//			//do nothing since all tiles have an equal chance
-//			weightedTiles.addAll(possibleTiles);
-//		}
 
 		if (creature.getMaxHealth()>creature.getAttack()){
 			System.out.println("defensive placement since unit has more attack than health");
@@ -197,15 +167,10 @@ public class AI extends Player {
 
 	}
 
-	private boolean handHasSpell() {
-		for (Card card : this.hand) {
-			if (card instanceof Spell) {
-				return true;
-			}
-		}
-		return false;
-	}
 
+	/**
+	 * Chooses a tile on the board and if spellChooser returns a spell, plays it there
+	 */
 	public void playAnySpell() {
 		Tile[][] tiles = this.gameState.getBoard().getAllTiles();
 		for (int i = 0; i < tiles.length; i++) {
@@ -222,14 +187,24 @@ public class AI extends Player {
 			}
 		}
 	}
+
+	/**
+	 * Removes spellCard from hand and, decrements mana and plays the spell card
+	 * @param spellCard
+	 * @param tile
+	 */
 	public void playSpell(Spell spellCard, Tile tile) {
-		Player player2 = gameState.getPlayer2();
 		this.hand.remove(spellCard);
 		this.setMana(this.getMana() - spellCard.getManacost(), actorRef);
 		spellCard.spellEffect(tile, this.actorRef, this.gameState);
 	}
 
 
+	/**
+	 * Logic for choosing which spell to play, seees if a spell is in hand and if it is returns it if conditions are met
+	 * @param tile
+	 * @return
+	 */
 	private Spell spellChooser(Tile tile) {
 		for (Card card : this.hand) {
 			if (card instanceof Spell) {
@@ -238,8 +213,6 @@ public class AI extends Player {
 						if (card.getCardname().equals("Beamshock")) {
 							int distanceFromAvatar = Math.abs(gameState.getPlayer2().getAvatar().getTile().getTilex() - tile.getTilex());
 							if (distanceFromAvatar < 2 && tile.getUnit().getAttack() >= 4) {
-//								((Spell) card).spellEffect(tile, actorRef, gameState);
-//								this.getHand().remove(card);
 								return (Spell) card;
 							} else {
 								System.out.println("BEAMSHOCK PLAY CONDITIONS NOT MET");
@@ -247,8 +220,6 @@ public class AI extends Player {
 						}
 						if (card.getCardname().equals("Truestrike")) {
 							if (tile.getUnit().getCurrentHealth() <= 2) {
-//								((Spell) card).spellEffect(tile, actorRef, gameState);
-//								this.getHand().remove(card);
 								return (Spell) card;
 							}else {
 								System.out.println("TRUESTRIKE PLAY CONDITIONS NOT MET");
@@ -257,8 +228,6 @@ public class AI extends Player {
 					} else {
 						if (card.getCardname().equals("Sundrop Elixir")) {
 							if (tile.getUnit().getCurrentHealth() <= tile.getUnit().getMaxHealth() - 4) {
-//								((Spell) card).spellEffect(tile, actorRef, gameState);
-//								this.getHand().remove(card);
 								return (Spell) card;
 							}else {
 								System.out.println("SUNDROP ELIXIR PLAY CONDITIONS NOT MET");

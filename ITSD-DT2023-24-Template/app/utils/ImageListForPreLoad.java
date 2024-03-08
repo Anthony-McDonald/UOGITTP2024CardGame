@@ -1,10 +1,7 @@
 package utils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import structures.basic.Card;
 import structures.basic.Tile;
@@ -76,9 +73,9 @@ public class ImageListForPreLoad {
 	public static List<String> getCardImagesForPreload(String configFile) {
 		Card card = BasicObjectBuilders.loadCard(configFile, 0, Card.class);
 		List<String> images = new ArrayList<String>(card.getMiniCard().getAnimationFrames().length+card.getMiniCard().getCardTextures().length+card.getBigCard().getCardTextures().length);
-		for (String image : card.getMiniCard().getAnimationFrames()) images.add(image);
-		for (String image : card.getMiniCard().getCardTextures()) images.add(image);
-		for (String image :card.getBigCard().getCardTextures()) images.add(image);
+        Collections.addAll(images, card.getMiniCard().getAnimationFrames());
+        Collections.addAll(images, card.getMiniCard().getCardTextures());
+        Collections.addAll(images, card.getBigCard().getCardTextures());
 		return images;
 	}
 	

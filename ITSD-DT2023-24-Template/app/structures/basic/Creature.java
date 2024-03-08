@@ -262,21 +262,13 @@ public class Creature extends Card implements MoveableUnit {
 	}
 
 	public boolean canStillAttack(int currentTurn) {
-		if (this.getLastTurnAttacked()!= currentTurn){
-			return true;
-		}else{
-			return false;
-		}
+        return this.getLastTurnAttacked() != currentTurn;
 	}
 
 	@Override
 	public boolean canStillMove(int currentTurn) {
 		if (this.getLastTurnAttacked()!=currentTurn){
-			if (this.getLastTurnMoved()!= currentTurn){
-				return true;
-			}else{
-				return false;
-			}
+            return this.getLastTurnMoved() != currentTurn;
 		}else{
 			return false;
 		}

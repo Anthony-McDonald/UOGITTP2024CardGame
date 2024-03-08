@@ -31,7 +31,7 @@ public class BloodmoonPriestess extends Creature implements Deathwatch{
             }
         }
         if (emptyAdjacentTiles.size() == 0){
-            return; //no empty adjacent tiles so no effect
+            //no empty adjacent tiles so no effect
         }else{
             Random rand = new Random();
             int size = emptyAdjacentTiles.size();
