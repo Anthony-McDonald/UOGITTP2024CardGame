@@ -185,13 +185,17 @@ public class Avatar implements MoveableUnit {
 
 	@Override
 	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState) {
+		boolean damageTaken = false;
+		if (currentHealth < this.currentHealth) {
+			damageTaken = true;
+		}
 		this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
 		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg
 		this.player.setHornOfTheForsakenHealth(this.player.getHornOfTheForsakenHealth() - 1);
 		Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
 
-		if (this == gameState.getPlayer1().getAvatar()) {
+		if (this == gameState.getPlayer1().getAvatar() && damageTaken) {
 			System.out.println("Horn health is " + player.getHornOfTheForsakenHealth());
 			if (gameState.getPlayer1().getHornOfTheForsakenHealth() > 0 ) {
 				boolean wraithlingSummoned = false;
