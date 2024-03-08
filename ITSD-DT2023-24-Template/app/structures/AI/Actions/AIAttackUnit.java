@@ -5,6 +5,9 @@ import structures.GameState;
 import structures.basic.MoveableUnit;
 import utils.UnitCommands;
 
+/**
+ * This class is used for assessing the action of attacking the nearest enemy unit.
+ */
 public class AIAttackUnit extends UnitAction{
     private MoveableUnit enemyUnit;
 
@@ -20,13 +23,21 @@ public class AIAttackUnit extends UnitAction{
 
     }
 
+    /**
+     * This method is what's called if the UnitActionChecker chooses this action. It attacked the nearest enemy unit.
+     * @param out
+     */
     @Override
     public void makeAction(ActorRef out){
         UnitCommands.actionableTiles(actionTaker,out, gameState);
         try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
         actionTaker.attackUnit(out, enemyUnit.getTile(), gameState);
     }
-
+    /**
+     * Calculates the score for the attack action based on the potential damage to the enemy and the AI unit.
+     * It considers factors such as whether the attack will damage the threat, whether it will kill the enemy,
+     * and whether the attack is dangerous to the AI unit.
+     */
     public void assessScore(){
         if (!isAttackDangerous(enemyUnit)){
             //attack will damage enemy unit so keep actionscore as 7 (high weighting)

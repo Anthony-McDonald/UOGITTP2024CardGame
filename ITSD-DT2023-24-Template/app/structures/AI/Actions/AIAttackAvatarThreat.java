@@ -5,6 +5,9 @@ import structures.GameState;
 import structures.basic.MoveableUnit;
 import utils.UnitCommands;
 
+/**
+ * This class is used for assessing the action of attacking a threat to the AI avatar
+ */
 public class AIAttackAvatarThreat extends UnitAction{
 
     private MoveableUnit threat;
@@ -21,6 +24,11 @@ public class AIAttackAvatarThreat extends UnitAction{
 
     }
 
+    /**
+     * If this action is chosen by UnitActionChecker, it will call this method. It will attack the threat to the AI
+     * avatar.
+     * @param out
+     */
     @Override
     public void makeAction(ActorRef out){
         UnitCommands.actionableTiles(actionTaker,out, gameState);
@@ -28,6 +36,11 @@ public class AIAttackAvatarThreat extends UnitAction{
         actionTaker.attackUnit(out,threat.getTile(),gameState);
     }
 
+    /**
+     * Calculates the score for the attack action based on the potential damage to the threat and the AI unit.
+     * It considers factors such as whether the attack will damage the threat, whether it will kill the threat,
+     * and whether the attack is dangerous to the AI unit.
+     */
     public void assessScore(){
         if (!isAttackDangerous(threat)){
             //attack will damage enemy unit so keep actionscore as 7 (high weighting)
