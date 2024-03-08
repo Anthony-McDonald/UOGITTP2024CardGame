@@ -186,27 +186,32 @@ public class Avatar implements MoveableUnit {
 	@Override
 	public void setCurrentHealth(int currentHealth, ActorRef out, GameState gameState) {
 		boolean damageTaken = false;
-		if (currentHealth < this.currentHealth) {
+		if (currentHealth < this.player.getHealth()) {
 			damageTaken = true;
 		}
 		this.currentHealth = currentHealth;
 		BasicCommands.setUnitHealth(out, this.unit,this.currentHealth); //renders on front end
 		this.player.setHealth(this.currentHealth, out); // to set player health when avatar takes dmg
-		this.player.setHornOfTheForsakenHealth(this.player.getHornOfTheForsakenHealth() - 1);
-		Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
 
+		Tile avatarTile = gameState.getPlayer1().getAvatar().getTile();
+		// If player has taken damage and the avatar taking damage is the avatar we are working with
 		if (this == gameState.getPlayer1().getAvatar() && damageTaken) {
+			this.player.setHornOfTheForsakenHealth(this.player.getHornOfTheForsakenHealth() - 1);
 			System.out.println("Horn health is " + player.getHornOfTheForsakenHealth());
+			// If horn of the forsaken still has health
 			if (gameState.getPlayer1().getHornOfTheForsakenHealth() > 0 ) {
 				boolean wraithlingSummoned = false;
 				int tileX = avatarTile.getTilex();
 				int tileY = avatarTile.getTiley();
 
+				// List of coords that can be used to get all squares around the unit
 					int[][] areaAroundUnit = {
 							{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}
 					};
 
+					// While a wraithling hasn't been summoned yet
 					while (!wraithlingSummoned) {
+						// Choose a random number
 						Random random = new Random();
 
 						int randomSelection = random.nextInt(8);
@@ -218,9 +223,11 @@ public class Avatar implements MoveableUnit {
 						int xToCheck = tileX + randomArea[0];
 						int yToCheck = tileY + randomArea[1];
 
+						// Choose a random tile from the random above
 						Tile tileToCheck = gameState.getBoard().getTile(xToCheck, yToCheck);
 
 						System.out.println("ATTEMPTING TO SUMMON A WRAITHLING ---------------");
+						// If summonable, summon a wraithling and set the wraithlingSummoned boolean to true
 						if (UnitCommands.canSummon(gameState, true, tileToCheck)) {
 							Wraithling wraithling = new Wraithling();
 							wraithling.summon(out, tileToCheck, gameState);
@@ -229,10 +236,13 @@ public class Avatar implements MoveableUnit {
 						}
 					}
 			}
+			// If the avatar getting its health changed is the AI avatar
 		} else if (this == gameState.getPlayer2().getAvatar()) {
+			// Check all tiles on the board
 			Tile[][] tileList = gameState.getBoard().getAllTiles();
 			for (Tile[] tileL : tileList) {
 				for (Tile tileI : tileL) {
+					// If a SilverguardKnight is on the board, increase it's attack by 2
 					if (tileI.getUnit() instanceof SilverguardKnight) {
 						tileI.getUnit().setAttack(tileI.getUnit().getAttack() + 2,out);
 					}
@@ -240,13 +250,10 @@ public class Avatar implements MoveableUnit {
 			}
 		}
 
+		// If either player's avatar's health reaches 0 or less, end the game
 		if (this.getCurrentHealth() <= 0) {
 			BasicCommands.addPlayer1Notification(out, "Avatar health is 0, game over folks!", 20);
 		}
-		 /* try {
-	            Thread.sleep(50);
-	        } catch (InterruptedException e) {
-	            e.printStackTrace();}*/
 		
 	}
 
