@@ -7,6 +7,9 @@ import structures.basic.MoveableUnit;
 import structures.basic.Tile;
 import utils.UnitCommands;
 
+/**
+ * This class is used to assess the weight of moving towards a threat to the AI avatar
+ */
 public class AIMoveToAvatarThreat extends UnitAction{
     private Tile nearestTileToEnemy;
     private MoveableUnit threat;
@@ -22,6 +25,11 @@ public class AIMoveToAvatarThreat extends UnitAction{
 
     }
 
+    /**
+     * This method is what's called if the UnitActionChecker chooses this action. It moves the unit to the nearest possible
+     * tile to the avatar threat.
+     * @param out
+     */
     @Override
     public void makeAction(ActorRef out){
         UnitCommands.actionableTiles(actionTaker,out, gameState);
@@ -29,6 +37,10 @@ public class AIMoveToAvatarThreat extends UnitAction{
         actionTaker.moveUnit(out, nearestTileToEnemy,gameState);
     }
 
+    /**
+     * This method assesses the weight of this action. It increases the weight based on the distance it has to move to
+     * reach the unit.
+     */
     public void assessScore(){
         if (this.actionTaker.getLastTurnAttacked()==gameState.getTurnNumber()||this.actionTaker.getLastTurnMoved() == gameState.getTurnNumber()){
             this.actionScore = 0; //unit can't move so it can't perform action so weighting of 0 given

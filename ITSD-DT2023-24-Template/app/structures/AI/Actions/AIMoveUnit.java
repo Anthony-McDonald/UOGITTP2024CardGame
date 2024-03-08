@@ -7,6 +7,9 @@ import structures.basic.MoveableUnit;
 import structures.basic.Tile;
 import utils.UnitCommands;
 
+/**
+ * This class is used to assess the weight of moving towards the nearest enemy unit.
+ */
 public class AIMoveUnit extends UnitAction{
     private Tile nearestTileToEnemy;
     private MoveableUnit nearestEnemy;
@@ -21,14 +24,21 @@ public class AIMoveUnit extends UnitAction{
         this.actionName = "Move towards human unit";
 
     }
-
+    /**
+     * This method is what's called if the UnitActionChecker chooses this action. It moves the unit to the nearest possible
+     * tile to the nearest enemy unit.
+     * @param out
+     */
     @Override
     public void makeAction(ActorRef out){
         UnitCommands.actionableTiles(actionTaker,out, gameState);
         try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
         actionTaker.moveUnit(out, nearestTileToEnemy,gameState);
     }
-
+    /**
+     * This method assesses the weight of this action. It increases the weight based on the distance it has to move to
+     * reach the unit.
+     */
     public void assessScore(){
         if (this.actionTaker.getLastTurnAttacked()==gameState.getTurnNumber()||this.actionTaker.getLastTurnMoved() == gameState.getTurnNumber()){
             this.actionScore = 0; //unit can't move so it can't perform action so weighting of 0 given
