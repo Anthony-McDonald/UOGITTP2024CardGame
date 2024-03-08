@@ -33,4 +33,10 @@ public class GloomChaser extends Creature implements OpeningGambit{
 	        BasicCommands.addPlayer1Notification(out, "OpeningGambit ability triggered, spawning Wraithling", 3);
 	    }
 	}
+
+	@Override
+	public void summon(ActorRef out, Tile tile, GameState gameState){
+		super.summon(out,tile,gameState);
+		this.openingGambit(out,gameState);
+	}
 }
