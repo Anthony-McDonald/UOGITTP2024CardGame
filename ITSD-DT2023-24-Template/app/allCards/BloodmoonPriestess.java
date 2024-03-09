@@ -7,7 +7,9 @@ import utils.UnitCommands;
 
 import java.util.ArrayList;
 import java.util.Random;
-
+/**
+ * This is the class for Bloodmoon Priestess implementation
+ */
 public class BloodmoonPriestess extends Creature implements Deathwatch{
 
 
@@ -18,8 +20,12 @@ public class BloodmoonPriestess extends Creature implements Deathwatch{
         this.currentHealth = 3;
         this.maxHealth = currentHealth;
     }
-
-    //Summon a Wraithling on a randomly selected unoccupied adjacent tile
+    /**
+     * The deathWatch summon a Wraithling on a randomly selected unoccupied adjacent tile
+     * @param out
+     * @param gameState
+     */ 
+    
     @Override
     public void deathWatch(ActorRef out, GameState gameState) {
         Tile currentTile = this.getTile();

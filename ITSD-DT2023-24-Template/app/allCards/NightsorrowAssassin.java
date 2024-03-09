@@ -29,7 +29,6 @@ public class NightsorrowAssassin extends Creature implements OpeningGambit{
 		MoveableUnit enemyUnit = null;
 		Tile unitTile = this.getTile();
 		ArrayList<Tile> adjacentTiles = UnitCommands.adjacentTiles(unitTile, gameState);
-		//ArrayList<MoveableUnit> AiUnits = gameState.getBoard().friendlyUnits(false);
 		for (Tile Tile :adjacentTiles) {
 			if(Tile != null) {
 				if(Tile.getUnit() instanceof Creature) {

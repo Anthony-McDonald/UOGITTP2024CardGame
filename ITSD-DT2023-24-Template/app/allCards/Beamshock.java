@@ -7,7 +7,7 @@ import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 /**
- * This is the class for BeamShock implementation
+ * This is the class for Beamshock implementation
  */
 public class Beamshock extends Spell{
 
@@ -15,7 +15,7 @@ public class Beamshock extends Spell{
         super(id, cardname, manacost, miniCard, bigCard, isCreature, unitConfig);
     }
     /**
-     * The spellEffect method stun the unit targeted and set the counter to 1
+     * The spellEffect method stun the unit targeted and let it cannot move and attack next turn
      * @param tile
      * @param out
      * @param gameState
