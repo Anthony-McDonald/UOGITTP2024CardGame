@@ -9,7 +9,9 @@ import structures.basic.MiniCard;
 import structures.basic.OpeningGambit;
 import structures.basic.Tile;
 import structures.basic.Unit;
-
+/**
+* This is the class for Silverguard Squire's implementation
+*/
 public class SilverguardSquire extends Creature implements OpeningGambit{
 
     public SilverguardSquire(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
@@ -19,7 +21,12 @@ public class SilverguardSquire extends Creature implements OpeningGambit{
         this.currentHealth = 1;
         this.maxHealth = currentHealth;
     }
-
+    /**
+     * The openingGambit method increase the health and attack of the AI's avatar by 1
+     * The method will be triggered if the AI's avatar in front or behind of Silverguard Squire
+     * @param out
+     * @param gameState
+     */
 	@Override
 	public void openingGambit(ActorRef out, GameState gameState) {
 		Avatar ownerAvatar = gameState.getPlayer2().getAvatar();
