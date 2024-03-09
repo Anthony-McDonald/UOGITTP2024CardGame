@@ -156,7 +156,7 @@ public class UnitCommands {
     /**
      * This method handles the moving of a MoveableUnit when they are clicked.
      * The logic that is being handled contains a provoke check to ensure that
-     * if provoked they are not able to move. he method also updates the player with player
+     * if provoked they are not able to move. the method also updates the player with player
      * notifications,indicating events and also manages appropriate animations.
      */
     public static void moveUnit(MoveableUnit mover, ActorRef out, Tile tile, GameState gameState) {
@@ -274,6 +274,13 @@ public class UnitCommands {
         return false;
     }
 
+    /**
+     * This method manages the highlighting of tiles & what actions are 
+     * available for the mover when clicked, taking account of whether
+     * they have moved or attacked already & whether they have been provoked.
+     * The method also updates the player with player notifications, indicating events and also manages appropriate animations.
+     */
+    
     public static void actionableTiles(MoveableUnit mover, ActorRef out, GameState gameState){
         //need to add logic about last turnMoved and lastTurn attacked and turnSummoned
         System.out.println("Actionable tiles is running.");
@@ -382,6 +389,13 @@ public class UnitCommands {
         }
     }
 
+    /**
+     * This method manages summoning of units onto the board
+     * it utilises the helper method canSummon to ensure the
+     * tiles are able to be summoned on based on game rules.
+     * The method also utilises the ability rush which enables
+     * Saberspine Tiger to attack & move on the turn it was summoned.
+     */
 
     public static void summon (MoveableUnit summon, ActorRef out, Tile tile, GameState gameState){
         boolean userOwned = summon.isUserOwned();
@@ -426,6 +440,14 @@ public class UnitCommands {
         }
     }
 
+    
+    /**
+     * This method highlights the tiles where the player can
+     * summon units based on adjacency to friendly units already
+     * on the board. It ensures that the tile does not have any units
+     * already on it to avoid errors.
+     */
+    
     public static void summonableTiles(ActorRef out, GameState gameState){
         Board board = gameState.getBoard();
         ArrayList<MoveableUnit> friendlyUnits = board.friendlyUnits(true); //returns all player owned units
@@ -447,6 +469,11 @@ public class UnitCommands {
         }
     }
 
+    /**
+     * This method handles ensures the tiles are able to be summoned onto.
+     * It loops through the adjacent tiles around a friendly unit & ensures that
+     * there the tiles able to be summoned on can only do so if they have no units.
+     */
     public static boolean canSummon (GameState gameState, boolean userOwned, Tile possibleTile){
         Board board = gameState.getBoard();
         ArrayList<MoveableUnit> friendlyUnits = board.friendlyUnits(userOwned); //returns all player owned units
@@ -469,6 +496,12 @@ public class UnitCommands {
         return false;
     }
 
+    /**
+     * This method determines if there is a provoke unit within range of
+     * unit that is wanting to take action - move or attack. If so it
+     * should limit the actions the actionTaker are allowed to take
+     * in accordance to the provoke ability.
+     */
     public static boolean isProvokeAdjacent (MoveableUnit actionTaker, GameState gameState){
         Board board = gameState.getBoard();
         boolean userOwned = actionTaker.isUserOwned();
@@ -495,6 +528,12 @@ public class UnitCommands {
         return false;
     }
 
+    /**
+     * This method returns a list of tiles adjacent to a tile
+     * which is a helper method which will help moveableTiles &
+     * attackableTiles.
+     */
+    
     public static ArrayList<Tile> adjacentTiles(Tile selectedTile, GameState gameState){
         //method for returning all adjacent tiles
         ArrayList<Tile>adjacentTiles = new ArrayList<>();
@@ -514,6 +553,10 @@ public class UnitCommands {
         return adjacentTiles;
     }
 
+    /**
+     * The method generates a list of tiles to which when a 
+     * unit is selected can move, considering game rules.
+     */
     public static ArrayList<Tile> moveableTiles(MoveableUnit selectedUnit, GameState gameState){
         Tile selectedTile = selectedUnit.getTile();
         //method for returning arraylist of all moveable tiles (to be used in AI methods)
@@ -578,6 +621,11 @@ public class UnitCommands {
         return moveableTiles;
     }
 
+    /**
+     * This method identifies tiles where the attacking unit can 
+     * initiate an attack. This takes into consideration of whether 
+     * the tiles is provoked utilising the method isProvokeAdjacent.
+     */
     public static ArrayList<Tile>attackableTiles(MoveableUnit attacker, GameState gameState){
         //returns all possible attackableTiles, for use within AI
         boolean userOwned = attacker.isUserOwned();
@@ -616,6 +664,11 @@ public class UnitCommands {
         return attackableTiles;
     }
 
+    /**
+     * This method returns a list of all possible tiles where
+     * the player is able to summon units, based on current
+     * units on the board.
+     */
     public static List<Tile> getAllSummonableTiles (GameState gameState, boolean userOwned){
         ArrayList<MoveableUnit>friendlyUnits = gameState.getBoard().friendlyUnits(userOwned);
         List <Tile> allSummonableTiles = new ArrayList<>();
@@ -630,6 +683,10 @@ public class UnitCommands {
         return allSummonableTiles;
     }
 
+    /**
+     * This method checks if a given tile is within range of a enemy
+     * unit that has the provoke ability.
+     */
     public static boolean isTileProvokeAdjacent(Tile tile, GameState gameState, boolean userOwned){
         ArrayList<Tile>adjacentTiles = UnitCommands.adjacentTiles(tile, gameState);
         for (Tile adjacentTile : adjacentTiles){
