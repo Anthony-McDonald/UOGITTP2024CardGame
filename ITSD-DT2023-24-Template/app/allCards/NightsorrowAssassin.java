@@ -13,7 +13,9 @@ import structures.basic.OpeningGambit;
 import structures.basic.Tile;
 import structures.basic.Unit;
 import utils.UnitCommands;
-
+/**
+ * This is the class for Nightsorrow Assassin's implementation
+ */
 public class NightsorrowAssassin extends Creature implements OpeningGambit{
 
     public NightsorrowAssassin(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
@@ -23,7 +25,12 @@ public class NightsorrowAssassin extends Creature implements OpeningGambit{
         this.currentHealth = 2;
         this.maxHealth = currentHealth;
     }
-
+    /**
+     * The openingGambit method destroy an enemy unit in adjacent tile square
+     * The method will be triggered if the enemy unit's current health is less than its maximum health 
+     * @param out
+     * @param gameState
+     */
 	@Override
 	public void openingGambit(ActorRef out, GameState gameState) {
 		MoveableUnit enemyUnit = null;
