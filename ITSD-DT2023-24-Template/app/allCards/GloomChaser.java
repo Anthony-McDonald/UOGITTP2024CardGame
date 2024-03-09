@@ -10,7 +10,9 @@ import structures.basic.OpeningGambit;
 import structures.basic.Tile;
 import structures.basic.Unit;
 import structures.basic.Wraithling;
-
+/**
+ * This is the class for Gloom Chaser's implementation
+ */
 public class GloomChaser extends Creature implements OpeningGambit{
 
     public GloomChaser(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard, boolean isCreature,  String unitConfig) {
@@ -20,7 +22,12 @@ public class GloomChaser extends Creature implements OpeningGambit{
         this.currentHealth = 1;
         this.maxHealth = currentHealth;
     }
-
+    /**
+     * The openingGambit method summons a Wraithling directly behind itself
+     * the method will check if the tile behind currently has a unit 
+     * @param out
+     * @param gameState
+     */
 	@Override
 	public void openingGambit(ActorRef out, GameState gameState) {
 		// TODO Auto-generated method stub

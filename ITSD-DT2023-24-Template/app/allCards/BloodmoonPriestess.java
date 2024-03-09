@@ -8,7 +8,7 @@ import utils.UnitCommands;
 import java.util.ArrayList;
 import java.util.Random;
 /**
- * This is the class for Bloodmoon Priestess implementation
+ * This is the class for Bloodmoon Priestess's implementation
  */
 public class BloodmoonPriestess extends Creature implements Deathwatch{
 

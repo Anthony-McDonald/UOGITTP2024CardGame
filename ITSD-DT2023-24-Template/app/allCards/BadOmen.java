@@ -9,7 +9,7 @@ import structures.basic.Deathwatch;
 import structures.basic.MiniCard;
 import structures.basic.Unit;
 /**
- * This is the class for Bad Omen implementation
+ * This is the class for Bad Omen's implementation
  */
 public class BadOmen extends Creature implements Deathwatch{
 

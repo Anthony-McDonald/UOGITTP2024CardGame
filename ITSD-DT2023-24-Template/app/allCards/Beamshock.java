@@ -7,7 +7,7 @@ import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 /**
- * This is the class for Beamshock implementation
+ * This is the class for Beamshock's implementation
  */
 public class Beamshock extends Spell{
 
