@@ -2,6 +2,7 @@ package allCards;
 
 import java.util.ArrayList;
 
+
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
@@ -12,6 +13,9 @@ import structures.basic.Deathwatch;
 import structures.basic.MiniCard;
 import structures.basic.Unit;
 import structures.basic.*;
+/**
+* This is the class for Shadowdaner's implementation
+*/
 public class Shadowdancer extends Creature implements Deathwatch{
 
 //had to make a reference to avatar as I dont want to change the signature of the Deathwatch interface method
@@ -23,7 +27,11 @@ public class Shadowdancer extends Creature implements Deathwatch{
 		this.currentHealth = 4;
 		this.maxHealth = currentHealth;
     }
-
+    /**
+     * The deathWatch method deal 1 damage to the aiAvatar and heal playerAvater for 1
+     * @param out
+     * @param gameState
+     */
 	@Override
 	public void deathWatch(ActorRef out, GameState gameState) {
 		// TODO Auto-generated method stub

@@ -21,6 +21,7 @@ public class SaberspineTiger extends Creature{
     }
     /**
      * This card has rush which can move and attack on the turn it is summoned
+     * @param out
      * @param tile
      * @param gameState
      */
