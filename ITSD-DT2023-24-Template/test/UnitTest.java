@@ -3,15 +3,18 @@
 import structures.basic.Tile;
 import structures.basic.Unit;
 import structures.basic.UnitAnimationType;
+import structures.basic.Position;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 public class UnitTest {
 
     private Unit unit;
-    ptivate Tile tile;
+    private Tile tile;
 
     @Before 
     public void setUp() {
@@ -21,14 +24,20 @@ public class UnitTest {
 
     @Test
     public void testUnitInitialization() {
+        assertNotNull(unit);
+        assertEquals(1, unit.getId());
+        assertNotNull("Position should be initialized", unit.getPosition());
+        assertEquals(tile.getXpos(), unit.getPosition().getX());
+        assertEquals(tile.getYpos(), unit.getPosition().getY());
        
     }
 
     public void testProperties() {
-        // Test the properties, including stunning and animations, of the unit.
+        unit.setPosition(newPosition);
+        assertEquals("Position should be updated correctly", newPosition, unit.getPosition());
     }
 
-    
+
 
     // Add more test methods maybe.
 }
