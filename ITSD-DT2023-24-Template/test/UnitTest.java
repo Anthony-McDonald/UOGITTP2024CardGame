@@ -3,6 +3,7 @@
 import structures.basic.Tile;
 import structures.basic.Unit;
 import structures.basic.UnitAnimationType;
+import structures.basic.ImageCorrection;
 import structures.basic.Position;
 
 import static org.junit.Assert.*;
@@ -37,12 +38,6 @@ public class UnitTest {
     }
 
     @Test
-    public void testUnitId() {
-        unit.setId(2);
-        assertEquals(2, unit.getId());
-    }
-
-    @Test
     void testIsStunned() {
         unit.setStunned(true);
         assertTrue(unit.isStunned());
@@ -54,7 +49,21 @@ public class UnitTest {
         unit.setId(id);
         assertEquals(id, unit.getId());
     }
-    
+
+    @Test
+    void testSetAndGetAnimation() {
+        UnitAnimationType animation = UnitAnimationType.MOVE;
+        unit.setAnimation(animation);
+        assertEquals(animation, unit.getAnimation());
+    }
+
+        @Test
+    void testSetAndGetCorrection() {
+        ImageCorrection correction = new ImageCorrection();
+        unit.setCorrection(correction);
+        assertEquals(correction, unit.getCorrection());
+    }
+
     @Test
     public void testProperties() {
         Position newPosition = new Position(); 
