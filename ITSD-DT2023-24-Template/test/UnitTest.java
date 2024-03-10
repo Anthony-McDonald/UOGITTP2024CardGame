@@ -26,15 +26,16 @@ public class UnitTest {
     public void testUnitInitialization() {
         assertNotNull(unit);
         assertEquals(1, unit.getId());
-        assertNotNull("Position should be initialized", unit.getPosition());
+        assertNotNull(unit.getPosition());
         assertEquals(tile.getXpos(), unit.getPosition().getX());
         assertEquals(tile.getYpos(), unit.getPosition().getY());
        
     }
 
     public void testProperties() {
+        Position newPosition = new Position(); 
         unit.setPosition(newPosition);
-        assertEquals("Position should be updated correctly", newPosition, unit.getPosition());
+        assertEquals(newPosition, unit.getPosition());
     }
 
 
