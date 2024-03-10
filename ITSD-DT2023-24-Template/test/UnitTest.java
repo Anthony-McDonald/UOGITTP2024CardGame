@@ -57,7 +57,7 @@ public class UnitTest {
         assertEquals(animation, unit.getAnimation());
     }
 
-        @Test
+    @Test
     void testSetAndGetCorrection() {
         ImageCorrection correction = new ImageCorrection();
         unit.setCorrection(correction);
@@ -87,7 +87,11 @@ public class UnitTest {
         unit.setStunned(true);
         assertTrue(unit.isStunned());
     }
-    
+
+    @AfterEach
+    void tearDown() {
+        // Clean up the test data
+    }
     
 
 
