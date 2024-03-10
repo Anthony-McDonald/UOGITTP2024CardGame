@@ -13,7 +13,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
 import java.io.File;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.beans.Transient;
 
 import static org.junit.Assert.assertEquals;
@@ -57,9 +58,9 @@ public class UnitTest {
 
     @Test
     void testSetAndGetAnimation() {
-        UnitAnimationType animation = UnitAnimationType.MOVE;
-        unit.setAnimation(animation);
-        assertEquals(animation, unit.getAnimation());
+         Map<UnitAnimationType, Animation> animations = new HashMap<>();
+         unit.setAnimations(animations);
+        assertEquals(animations, unit.getAnimations());
     }
 
     @Test
