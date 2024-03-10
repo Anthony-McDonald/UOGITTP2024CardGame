@@ -50,6 +50,9 @@ public class UnitTest {
         UnitAnimationType animation = UnitAnimationType.MOVE; // or any other animation
         unit.setAnimation(animation);
         assertEquals(animation, unit.getAnimation());
+
+        // Test with a null animation
+        assertThrows(NullPointerException.class, () -> unit.setAnimation(null));
     }
 
     @Test
@@ -57,6 +60,9 @@ public class UnitTest {
         ImageCorrection correction = new ImageCorrection();
         unit.setCorrection(correction);
         assertEquals(correction, unit.getCorrection());
+
+        // Test with a null correction
+         assertThrows(NullPointerException.class, () -> unit.setCorrection(null));
     }
 
     @Test
