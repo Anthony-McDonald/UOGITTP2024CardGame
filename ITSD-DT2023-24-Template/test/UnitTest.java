@@ -11,6 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.jupiter.api.AfterEach;
+import java.io.File;
+
 import java.beans.Transient;
 
 import static org.junit.Assert.assertEquals;
@@ -41,6 +44,8 @@ public class UnitTest {
     void testIsStunned() {
         unit.setStunned(true);
         assertTrue(unit.isStunned());
+        unit.setStunned(false);
+        assertFalse(unit.isStunned());
     }
 
     @Test
@@ -90,12 +95,19 @@ public class UnitTest {
 
         unit.setStunned(true);
         assertTrue(unit.isStunned());
+
+
     }
 
     @AfterEach
     void tearDown() {
-        // Clean up the test data
+        File tempFile = new File("temp.txt");
+        if (tempFile.exists()) {
+        tempFile.delete();
     }
+        // Method for Cleaning up the test data just in case
+    }
+    
     
 
 
