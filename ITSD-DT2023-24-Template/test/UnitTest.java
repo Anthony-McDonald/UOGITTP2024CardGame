@@ -13,6 +13,7 @@ import static org.junit.Assert.assertNotNull;
 import java.beans.Transient;
 
 import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 public class UnitTest {
 
@@ -35,6 +36,30 @@ public class UnitTest {
        
     }
 
+    @Test
+    public void testUnitId() {
+        unit.setId(2);
+        assertEquals(2, unit.getId());
+    }
+
+    @Test
+    void testIsStunned() {
+        unit.setStunned(true);
+        assertTrue(unit.isStunned());
+    }
+
+    @Test
+    void testGetId() {
+        assertEquals(1, unit.getId());
+    }
+
+    @Test
+    void testSetId() {
+        unit.setId(2);
+        assertEquals(2, unit.getId());
+    }
+
+    @Test
     public void testProperties() {
         Position newPosition = new Position(); 
         unit.setPosition(newPosition);
@@ -43,21 +68,22 @@ public class UnitTest {
 
     @Test
     void testUnitBehavior() {
-   
-    unit.setAnimation(UnitAnimationType.attack);
-    assertEquals(UnitAnimationType.attack, unit.getAnimation());
+        unit.setAnimation(UnitAnimationType.attack);
+        assertEquals(UnitAnimationType.attack, unit.getAnimation());
 
-    Tile tile = new Tile(1, 2, 3, 4);
-    unit.setPositionByTile(tile);
-    assertEquals(tile.getXpos(), unit.getPosition().getX());
-    assertEquals(tile.getYpos(), unit.getPosition().getY());
-    assertEquals(tile.getTilex(), unit.getPosition().getTileX());
-    assertEquals(tile.getTiley(), unit.getPosition().getTileY());
+        Tile tile = new Tile(1, 2, 3, 4);
+        unit.setPositionByTile(tile);
+        assertEquals(tile.getXpos(), unit.getPosition().getX());
+        assertEquals(tile.getYpos(), unit.getPosition().getY());
+        assertEquals(tile.getTilex(), unit.getPosition().getTileX());
+        assertEquals(tile.getTiley(), unit.getPosition().getTileY());
 
-    unit.setStunned(true);
-    assertTrue(unit.isStunned());
-}
+        unit.setStunned(true);
+        assertTrue(unit.isStunned());
+    }
     
+    
+
 
 
     // Add more test methods maybe.
