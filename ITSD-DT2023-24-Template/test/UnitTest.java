@@ -73,10 +73,11 @@ public class UnitTest {
 
         Tile tile = new Tile(1, 2, 3, 4);
         unit.setPositionByTile(tile);
-        assertEquals(tile.getXpos(), unit.getPosition().getX());
-        assertEquals(tile.getYpos(), unit.getPosition().getY());
-        assertEquals(tile.getTilex(), unit.getPosition().getTileX());
-        assertEquals(tile.getTiley(), unit.getPosition().getTileY());
+        Position position = unit.getPosition();
+        assertEquals(tile.getXpos(), position.getX());
+        assertEquals(tile.getYpos(), position.getY());
+        assertEquals(tile.getTilex(), position.getTileX());
+        assertEquals(tile.getTiley(), position.getTileY());
 
         unit.setStunned(true);
         assertTrue(unit.isStunned());
