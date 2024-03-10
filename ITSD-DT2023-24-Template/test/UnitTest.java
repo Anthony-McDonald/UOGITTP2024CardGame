@@ -9,16 +9,8 @@ import structures.basic.Position;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.jupiter.api.AfterEach;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.beans.Transient;
-
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
 
 public class UnitTest {
 
@@ -42,14 +34,6 @@ public class UnitTest {
     }
 
     @Test
-    void testIsStunned() {
-        unit.setStunned(true);
-        assertTrue(unit.isStunned());
-        unit.setStunned(false);
-        assertFalse(unit.isStunned());
-    }
-
-    @Test
     void testSetAndGetId() {
         int id = 1;
         unit.setId(id);
@@ -58,9 +42,9 @@ public class UnitTest {
 
     @Test
     void testSetAndGetAnimation() {
-         Map<UnitAnimationType, Animation> animations = new HashMap<>();
-         unit.setAnimations(animations);
-        assertEquals(animations, unit.getAnimations());
+        UnitAnimationType animation = UnitAnimationType.MOVE; // or any other animation
+        unit.setAnimation(animation);
+        assertEquals(animation, unit.getAnimation());
     }
 
     @Test
@@ -83,9 +67,17 @@ public class UnitTest {
 
     @Test
     void testUnitBehavior() {
+
+        //testIsStunned
+        unit.setStunned(true);
+        assertTrue(unit.isStunned());
+        unit.setStunned(false);
+        assertFalse(unit.isStunned());
+
         unit.setAnimation(UnitAnimationType.attack);
         assertEquals(UnitAnimationType.attack, unit.getAnimation());
 
+        //test for positions
         Tile tile = new Tile(1, 2, 3, 4);
         unit.setPositionByTile(tile);
         Position position = unit.getPosition();
@@ -93,10 +85,6 @@ public class UnitTest {
         assertEquals(tile.getYpos(), position.getY());
         assertEquals(tile.getTilex(), position.getTileX());
         assertEquals(tile.getTiley(), position.getTileY());
-
-        unit.setStunned(true);
-        assertTrue(unit.isStunned());
-
 
     }
 
