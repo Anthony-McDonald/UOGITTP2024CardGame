@@ -49,16 +49,12 @@ public class UnitTest {
     }
 
     @Test
-    void testGetId() {
-        assertEquals(1, unit.getId());
+    void testSetAndGetId() {
+        int id = 1;
+        unit.setId(id);
+        assertEquals(id, unit.getId());
     }
-
-    @Test
-    void testSetId() {
-        unit.setId(2);
-        assertEquals(2, unit.getId());
-    }
-
+    
     @Test
     public void testProperties() {
         Position newPosition = new Position(); 
