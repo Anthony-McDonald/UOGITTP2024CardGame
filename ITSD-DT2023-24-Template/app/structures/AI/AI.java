@@ -1,5 +1,6 @@
 package structures.AI;
 import akka.actor.ActorRef;
+import allCards.YoungFlamewing;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;
@@ -381,7 +382,5 @@ public class AI extends Player {
 			}
 		}
 	}
-
-
 }
 

@@ -18,7 +18,7 @@ public abstract class UnitAction {
     protected String actionName;
 
     public void makeAction(ActorRef out) {
-
+    	
     }
 
     /**

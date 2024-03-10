@@ -110,7 +110,7 @@ public class Initalize implements EventProcessor{
 		//Friendly YoungFlameWing for testing purposes
 		/*YoungFlamewing youngFlamewing = new YoungFlamewing(400, "Young Flamewing", 0, null, null, true, "conf/gameconfs/units/young_flamewing.json");
 		youngFlamewing.setUserOwned(true);	
-		Tile youngFlameWingTile = gameState.getBoard().getTile(2,2);
+		Tile youngFlameWingTile = gameState.getBoard().getTile(0,2);
 		youngFlamewing.summon(out, youngFlameWingTile, gameState);*/
 		
 		
@@ -126,6 +126,13 @@ public class Initalize implements EventProcessor{
 		Tile SilverguardSquireTile = gameState.getBoard().getTile(1,1);
 		SilverguardSquire.summon(out, SilverguardSquireTile, gameState);
 		*/
+		
+		//AI YoungFlameWing for testing purposes
+		/*YoungFlamewing youngFlamewing = new YoungFlamewing(400, "Young Flamewing", 0, null, null, true, "conf/gameconfs/units/young_flamewing.json");
+		youngFlamewing.setUserOwned(false);	
+		Tile youngFlameWingTile = gameState.getBoard().getTile(8,2);
+		youngFlamewing.summon(out, youngFlameWingTile, gameState);*/
+		
 	}
 
 }
