@@ -7,7 +7,7 @@ import structures.basic.ImageCorrection;
 import structures.basic.Position;
 
 import static org.junit.Assert.*;
-import org.junit.Before;
+import org.junit.BeforeEach;
 import org.junit.Test;
 
 public class UnitTest {
@@ -15,7 +15,7 @@ public class UnitTest {
     private Unit unit;
     private Tile tile;
 
-    @Before 
+    @BeforeEach 
     public void setUp() {
         unit = new Unit();
         tile = new Tile();
