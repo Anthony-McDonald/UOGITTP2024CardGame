@@ -43,6 +43,14 @@ public class UnitTest {
         int id = 1;
         unit.setId(id);
         assertEquals(id, unit.getId());
+
+        // Test with a null id
+        assertThrows(IllegalArgumentException.class, () -> unit.setId(-1));
+
+        // Test with a large id
+        int largeId = Integer.MAX_VALUE;
+        unit.setId(largeId);
+        assertEquals(largeId, unit.getId());
     }
 
     @Test
