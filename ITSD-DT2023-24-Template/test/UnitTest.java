@@ -21,6 +21,11 @@ public class UnitTest {
     public void setUp() {
         unit = new Unit();
         tile = new Tile();
+        
+        // Set the position of the unit and the tile
+        Position position = new Position(1, 2); // or any other position
+        unit.setPosition(position);
+        tile.setPosition(position);
     }
 
     @Test
@@ -111,6 +116,4 @@ public class UnitTest {
     
 
 
-
-    // Add more test methods maybe.
 }
