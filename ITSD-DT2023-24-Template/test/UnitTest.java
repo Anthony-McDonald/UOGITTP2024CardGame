@@ -69,6 +69,10 @@ public class UnitTest {
         Position newPosition = new Position(); 
         unit.setPosition(newPosition);
         assertEquals(newPosition, unit.getPosition());
+
+        // Test for getting the position
+        Position fetchedPosition = unit.getPosition();
+        assertEquals(newPosition, fetchedPosition); 
     }
 
     @Test
