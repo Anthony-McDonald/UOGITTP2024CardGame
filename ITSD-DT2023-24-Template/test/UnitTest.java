@@ -1,4 +1,9 @@
-// This class tests the Unit class to make sure it works correctly.
+/**
+ * Tests for the Unit class.
+ * 
+ * Each test method checks a specific feature of the Unit class.
+ * 
+ */
 
 import structures.basic.Tile;
 import structures.basic.Unit;
@@ -107,6 +112,12 @@ public class UnitTest {
         assertNotNull(newUnit.getPosition());
         assertNotNull(newUnit.getCorrection());
         assertTrue(newUnit.isStunned());
-} // this method seems redundant, but it is for testing the constructor in the Unit class, rather than any other method or attributes.
+} 
+
+/**
+ * Tests the constructor of the Unit class.
+ * 
+ * Checks if the constructor in Unit is normal with the given attributes.
+ */
 
 }
