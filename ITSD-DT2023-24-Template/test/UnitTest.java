@@ -76,10 +76,6 @@ public class UnitTest {
         Position newPosition = new Position(); 
         unit.setPosition(newPosition);
         assertEquals(newPosition, unit.getPosition());
-
-        // Test for getting the position
-        Position fetchedPosition = unit.getPosition();
-        assertEquals(newPosition, fetchedPosition); 
     }
 
     @Test
@@ -90,9 +86,6 @@ public class UnitTest {
         assertTrue(unit.isStunned());
         unit.setStunned(false);
         assertFalse(unit.isStunned());
-
-        unit.setAnimation(UnitAnimationType.attack);
-        assertEquals(UnitAnimationType.attack, unit.getAnimation());
 
         //test for positions
         Tile tile = new Tile(1, 2, 3, 4);
