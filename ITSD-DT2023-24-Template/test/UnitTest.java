@@ -9,8 +9,6 @@ import structures.basic.Position;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import java.io.File;
 
 public class UnitTest {
 
@@ -117,17 +115,5 @@ public class UnitTest {
         assertNotNull(newUnit.getCorrection());
         assertTrue(newUnit.isStunned());
 } // this method seems redundant, but it is for testing the constructor in the Unit class, rather than any other method or attributes.
-
-    @AfterEach
-    void tearDown() {
-        File tempFile = new File("temp.txt");
-        if (tempFile.exists()) {
-        tempFile.delete();
-    }
-        // Method for Cleaning up the test data just in case
-    }
-    
-    
-
 
 }
