@@ -88,6 +88,17 @@ public class UnitTest {
 
     }
 
+    @Test
+    public void testUnitConstructor() {
+        Unit newUnit = new Unit(1, UnitAnimationType.attack, new Position(), new ImageCorrection(), true);
+        assertNotNull(newUnit);
+        assertEquals(1, newUnit.getId());
+        assertEquals(UnitAnimationType.attack, newUnit.getAnimation());
+        assertNotNull(newUnit.getPosition());
+        assertNotNull(newUnit.getCorrection());
+        assertTrue(newUnit.isStunned());
+} // this method seems redundant, but it is for testing the constructor in the Unit class, rather than any other method or attributes.
+
     @AfterEach
     void tearDown() {
         File tempFile = new File("temp.txt");
