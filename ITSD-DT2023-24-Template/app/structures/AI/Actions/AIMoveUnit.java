@@ -1,6 +1,7 @@
 package structures.AI.Actions;
 
 import akka.actor.ActorRef;
+import allCards.YoungFlamewing;
 import structures.AI.AI;
 import structures.GameState;
 import structures.basic.MoveableUnit;
@@ -31,10 +32,17 @@ public class AIMoveUnit extends UnitAction{
      */
     @Override
     public void makeAction(ActorRef out){
+    	if (actionTaker instanceof YoungFlamewing) {
+    		actionTaker.moveUnit(out, targetTile, gameState);
+    		actionTaker.setLastTurnMoved(gameState.getTurnNumber());
+    		
+    		
+    	} else {
         UnitCommands.actionableTiles(actionTaker,out, gameState);
         try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
         actionTaker.moveUnit(out, nearestTileToEnemy,gameState);
     }
+}
     /**
      * This method assesses the weight of this action. It increases the weight based on the distance it has to move to
      * reach the unit.

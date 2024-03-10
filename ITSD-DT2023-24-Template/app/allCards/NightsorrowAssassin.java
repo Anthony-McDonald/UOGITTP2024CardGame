@@ -1,7 +1,6 @@
 package allCards;
 
 import java.util.ArrayList;
-
 import akka.actor.ActorRef;
 import structures.GameState;
 import structures.basic.Avatar;
