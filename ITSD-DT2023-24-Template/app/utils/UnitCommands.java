@@ -161,6 +161,18 @@ public class UnitCommands {
      */
     public static void moveUnit(MoveableUnit mover, ActorRef out, Tile tile, GameState gameState) {
         //insert logic about if move can occur
+    	if (mover instanceof YoungFlamewing) {
+    		mover.getTile().setUnit(null);
+    		tile.setUnit(mover);
+    		mover.setLastTurnMoved(gameState.getTurnNumber()); // Update the last turn moved
+            BasicCommands.moveUnitToTile(out, mover.getUnit(), tile); // Command to move unit on the frontend
+            try {
+                Thread.sleep(1000); // Wait for animation to complete
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            gameState.getBoard().renderBoard(out); // Re-render the board to reflect the new unit position
+    	} else {
         if (gameState.getTurnNumber()!= mover.getLastTurnMoved()) { //hasn't moved this turn
             if (isProvokeAdjacent(mover,gameState)){ //is provoked
                 BasicCommands.addPlayer1Notification(out, "Unit can't move, it's provoked.", 3);
@@ -199,6 +211,7 @@ public class UnitCommands {
             }
         }
     }
+ }
     
     /**
      * This method returns a boolean for canMove, which indicates to the player
@@ -220,7 +233,7 @@ public class UnitCommands {
         	}
         }
         return true;*/
-    }
+    } else {
     	
     	Tile currentTile = mover.getTile();
         int xPos = currentTile.getTilex();
@@ -273,6 +286,7 @@ public class UnitCommands {
         }
         return false;
     }
+ }
 
     /**
      * This method manages the highlighting of tiles & what actions are 

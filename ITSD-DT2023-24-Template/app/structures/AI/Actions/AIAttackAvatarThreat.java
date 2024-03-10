@@ -1,6 +1,7 @@
 package structures.AI.Actions;
 
 import akka.actor.ActorRef;
+import allCards.YoungFlamewing;
 import structures.GameState;
 import structures.basic.MoveableUnit;
 import utils.UnitCommands;
