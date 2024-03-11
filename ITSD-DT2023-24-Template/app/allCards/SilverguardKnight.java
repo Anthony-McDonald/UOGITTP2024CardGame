@@ -18,7 +18,7 @@ public class SilverguardKnight extends Creature implements Provoke{
         this.maxHealth = currentHealth;
     }
     /**
-     * The provoke set enemy units only be able to attack Silverguard Knight
+     * The provoke set enemy units only be able to attack Silverguard Knight & unable to move
      */
 	@Override
 	public void provoke() {

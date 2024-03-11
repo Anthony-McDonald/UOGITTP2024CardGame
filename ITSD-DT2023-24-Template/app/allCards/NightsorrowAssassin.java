@@ -25,8 +25,8 @@ public class NightsorrowAssassin extends Creature implements OpeningGambit{
         this.maxHealth = currentHealth;
     }
     /**
-     * The openingGambit method destroy an enemy unit in adjacent tile square
-     * The method will be triggered if the enemy unit's current health is less than its maximum health 
+     * The openingGambit method will destroy an enemy unit in an adjacent tile square
+     * This will only be triggered if the enemy unit's current health is less than its maximum health 
      * @param out
      * @param gameState
      */

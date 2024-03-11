@@ -17,7 +17,7 @@ public class SwampEntangler extends Creature implements Provoke{
         this.maxHealth = currentHealth;
     }
     /**
-     * The provoke set enemy units only be able to attack Swamp Entangler
+     * The provoke set enemy units only be able to attack Swamp Entangler & unable to move
      */
 	@Override
 	public void provoke() {

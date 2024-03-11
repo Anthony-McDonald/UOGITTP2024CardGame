@@ -17,7 +17,7 @@ public class IroncliffGuardian extends Creature implements Provoke{
         this.maxHealth = currentHealth;
     }
     /**
-     * The provoke set enemy units only be able to attack Ironcliff Guardian 
+     * The provoke set enemy units only be able to attack Ironcliff Guardian & also not be able to move
      */
 	@Override
 	public void provoke() {

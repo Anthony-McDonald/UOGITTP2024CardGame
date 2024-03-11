@@ -14,7 +14,7 @@ import structures.basic.MiniCard;
 import structures.basic.Unit;
 import structures.basic.*;
 /**
-* This is the class for Shadowdaner's implementation
+* This is the class for Shadowdancer's implementation
 */
 public class Shadowdancer extends Creature implements Deathwatch{
 

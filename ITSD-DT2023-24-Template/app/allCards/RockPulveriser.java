@@ -18,7 +18,7 @@ public class RockPulveriser extends Creature implements Provoke{
         this.maxHealth = currentHealth;
     }
     /**
-     * The provoke set enemy units only be able to attack Rock Pulveriser
+     * The provoke set enemy units only be able to attack Rock Pulveriser & unable to move
      */
 	@Override
 	public void provoke() {

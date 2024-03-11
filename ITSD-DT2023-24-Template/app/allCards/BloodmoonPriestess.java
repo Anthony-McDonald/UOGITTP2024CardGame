@@ -21,7 +21,7 @@ public class BloodmoonPriestess extends Creature implements Deathwatch{
         this.maxHealth = currentHealth;
     }
     /**
-     * The deathWatch summon a Wraithling on a randomly selected unoccupied adjacent tile
+     * The deathWatch ability summons a Wraithling on a randomly selected unoccupied adjacent tile
      * @param out
      * @param gameState
      */ 
