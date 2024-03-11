@@ -12,20 +12,17 @@ import structures.basic.ImageCorrection;
 import structures.basic.Position;
 
 import static org.junit.Assert.*;
-import org.junit.BeforeEach;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class UnitTest {
 
     private Unit unit;
     private Tile tile;
 
-    @BeforeEach 
     public void setUp() {
         unit = new Unit();
         tile = new Tile();
-        
+        unit.setId(1);
         // Set the position of the unit and the tile
         Position position = new Position(1, 2, 3, 4); // or any other position
         unit.setPosition(position);
@@ -35,6 +32,7 @@ public class UnitTest {
 
     @Test
     public void testUnitInitialization() {
+    	setUp();
         assertNotNull(unit);
         assertEquals(1, unit.getId());
         assertNotNull(unit.getPosition());
@@ -44,7 +42,7 @@ public class UnitTest {
     }
 
     @Test
-    void testSetAndGetId() {
+    public void testSetAndGetId() {
         int id = 1;
         unit.setId(id);
         assertEquals(id, unit.getId());
@@ -59,7 +57,7 @@ public class UnitTest {
     }
 
     @Test
-    void testSetAndGetAnimation() {
+    public void testSetAndGetAnimation() {
         UnitAnimationType animation = UnitAnimationType.move; // or any other animation
         unit.setAnimation(animation);
         assertEquals(animation, unit.getAnimation());
@@ -69,7 +67,7 @@ public class UnitTest {
     }
 
     @Test
-    void testSetAndGetCorrection() {
+    public void testSetAndGetCorrection() {
         ImageCorrection correction = new ImageCorrection();
         unit.setCorrection(correction);
         assertEquals(correction, unit.getCorrection());
@@ -86,7 +84,7 @@ public class UnitTest {
     }
 
     @Test
-    void testUnitBehavior() {
+    public void testUnitBehavior() {
 
         //testIsStunned
         unit.setStunned(true);
