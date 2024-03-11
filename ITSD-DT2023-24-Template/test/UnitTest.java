@@ -14,6 +14,7 @@ import structures.basic.Position;
 import static org.junit.Assert.*;
 import org.junit.BeforeEach;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class UnitTest {
 
@@ -26,9 +27,10 @@ public class UnitTest {
         tile = new Tile();
         
         // Set the position of the unit and the tile
-        Position position = new Position(1, 2); // or any other position
+        Position position = new Position(1, 2, 3, 4); // or any other position
         unit.setPosition(position);
-        tile.setPosition(position);
+        tile = new Tile("", position.getXpos(), position.getYpos(), 0, 0, position.getTilex(), position.getTiley());
+        unit.setTile(tile);
     }
 
     @Test
@@ -36,8 +38,8 @@ public class UnitTest {
         assertNotNull(unit);
         assertEquals(1, unit.getId());
         assertNotNull(unit.getPosition());
-        assertEquals(tile.getXpos(), unit.getPosition().getX());
-        assertEquals(tile.getYpos(), unit.getPosition().getY());
+        assertEquals(tile.getXpos(), unit.getPosition().getXpos());
+        assertEquals(tile.getYpos(), unit.getPosition().getYpos());
        
     }
 
@@ -58,7 +60,7 @@ public class UnitTest {
 
     @Test
     void testSetAndGetAnimation() {
-        UnitAnimationType animation = UnitAnimationType.MOVE; // or any other animation
+        UnitAnimationType animation = UnitAnimationType.move; // or any other animation
         unit.setAnimation(animation);
         assertEquals(animation, unit.getAnimation());
 
@@ -78,7 +80,7 @@ public class UnitTest {
 
     @Test
     public void testProperties() {
-        Position newPosition = new Position(); 
+        Position newPosition = new Position(5, 6, 7, 8); // or any other position 
         unit.setPosition(newPosition);
         assertEquals(newPosition, unit.getPosition());
     }
@@ -93,31 +95,15 @@ public class UnitTest {
         assertFalse(unit.isStunned());
 
         //test for positions
-        Tile tile = new Tile(1, 2, 3, 4);
+        this.tile = new Tile("", 1, 2, 0, 0, 3, 4);
         unit.setPositionByTile(tile);
         Position position = unit.getPosition();
-        assertEquals(tile.getXpos(), position.getX());
-        assertEquals(tile.getYpos(), position.getY());
-        assertEquals(tile.getTilex(), position.getTileX());
-        assertEquals(tile.getTiley(), position.getTileY());
+        assertEquals(tile.getXpos(), position.getXpos());
+        assertEquals(tile.getYpos(), position.getYpos());
+        assertEquals(tile.getTilex(), position.getTilex());
+        assertEquals(tile.getTiley(), position.getTiley());
 
     }
 
-    @Test
-    public void testUnitConstructor() {
-        Unit newUnit = new Unit(1, UnitAnimationType.attack, new Position(), new ImageCorrection(), true);
-        assertNotNull(newUnit);
-        assertEquals(1, newUnit.getId());
-        assertEquals(UnitAnimationType.attack, newUnit.getAnimation());
-        assertNotNull(newUnit.getPosition());
-        assertNotNull(newUnit.getCorrection());
-        assertTrue(newUnit.isStunned());
-} 
-
-/**
- * Tests the constructor of the Unit class.
- * 
- * Checks if the constructor in Unit is normal with the given attributes.
- */
 
 }

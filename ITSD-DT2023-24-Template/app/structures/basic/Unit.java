@@ -114,6 +114,17 @@ public class Unit {
 	public void setPositionByTile(Tile tile) {
 		position = new Position(tile.getXpos(),tile.getYpos(),tile.getTilex(),tile.getTiley());
 	}
+
+	// new methods here for returning the tile in the unit for UnitTest
+	private Tile tile;
+
+    public void setTile(Tile tile) {
+        this.tile = tile;
+    }
+
+    public Tile getTile() {
+        return this.tile;
+    }
 	
 	
 }
