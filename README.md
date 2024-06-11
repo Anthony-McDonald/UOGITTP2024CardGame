@@ -6,8 +6,9 @@ Our version of Duelyst by Counterplay Games:
 ## Initial Differences ##
 
 # Original #
-![proxy-image-1](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/847c2ce0-4b3b-43f4-987e-dce39100d8c4)
+![](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/847c2ce0-4b3b-43f4-987e-dce39100d8c4)
 
 # Ours #
-![proxy-image-1](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/6e598476-f4e9-4ae4-b10a-92396fa12307)
+![](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/5da242f0-b3e4-4046-af3f-16d9b9fc94a2)
+
 
