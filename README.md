@@ -1,5 +1,6 @@
 # Duelyst # 
 **Achieved A1 personally for this project**
+
 ![](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/24365f47-80f4-4dc7-8f5a-b08110aae58a)
 
 Our version of Duelyst by Counterplay Games:
