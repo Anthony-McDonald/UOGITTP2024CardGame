@@ -29,9 +29,7 @@ then putting them into excel to update development progress during the duration 
 ![](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/22baf639-3d7f-4478-a196-6937b3095794)
 
 
-
-
-As seen here, the story cards I worked on were of a rather varied bunch
+As seen here, the story cards I worked on were of a rather varied bunch but we managed to do a good enough job to achieve top marks. I would be more than happy to explain more should you be interested and want some further clarification.
 
 
 
