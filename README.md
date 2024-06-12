@@ -26,7 +26,8 @@ As a team we worked on various aspects of the functionality, using trello to ini
 
 then putting them into excel to update development progress during the duration of the development. Personally I worked on the story cards as follows:
 
-![](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/4d0a7681-6cb4-4038-8113-c49bfccb4922)
+![](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/22baf639-3d7f-4478-a196-6937b3095794)
+
 
 
 
