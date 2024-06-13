@@ -15,7 +15,7 @@ Throughout this README, minimal pictures of the frontend shall be used, seeing a
 ## Our Play Area ##
 ![](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/9ee77208-48f4-452d-9dc0-102a22892f92)
 
-As seen in our board above, there are some notable differences between our board and the original board, however all key functionality is present. Namely you can see the following highlighted:
+As seen in the images above, there are some notable differences between our board and the original board, however all key functionality is present. Namely, you can see the following highlighted:
   - Life scores in red
   - Mana amount in blue
   - Player hand in green
@@ -24,12 +24,12 @@ As seen in our board above, there are some notable differences between our board
 As a team we worked on various aspects of the functionality, using trello to initially create the story cards,
 ![](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/c16805ba-6854-4dd8-a0e1-52ec00662e04)
 
-then putting them into excel to update development progress during the duration of the development. Personally I worked on the story cards as follows:
+then putting them into excel to update development progress during the duration of the development. Personally, I worked on the following story cards:
 
 ![](https://github.com/Anthony-McDonald/UOGITTP2024CardGame/assets/89093671/22baf639-3d7f-4478-a196-6937b3095794)
 
 
-As seen here, the story cards I worked on were of a rather varied bunch but we managed to do a good enough job to achieve top marks. I would be more than happy to explain more should you be interested and want some further clarification.
+As you can see, the story cards I worked on were a rather varied bunch. Through the contributions of the whole team, we managed to achieve top marks. I would be happy to explain this project and my contributions more, should you want some further clarification.
 
 
 
